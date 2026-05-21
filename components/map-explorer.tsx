@@ -18,7 +18,9 @@ export function MapExplorer({
 }: MapExplorerProps) {
   const [city, setCity] = useState("All");
   const [type, setType] = useState("All");
-  const [selectedSlug, setSelectedSlug] = useState<string | undefined>(buildings[0]?.slug);
+  const [selectedSlug, setSelectedSlug] = useState<string | undefined>(
+    buildings[0]?.slug
+  );
 
   const filtered = useMemo(() => {
     const next = buildings.filter((building) => {
@@ -80,7 +82,8 @@ export function MapExplorer({
         <div className="catalog-toolbar">
           <p className="catalog-toolbar__count">{filtered.length} map-ready entries</p>
           <p className="catalog-toolbar__hint">
-            This page is designed for the Google Maps JavaScript API with browser-restricted keys.
+            This page is designed for the Google Maps JavaScript API with
+            browser-restricted keys.
           </p>
         </div>
 
@@ -89,12 +92,14 @@ export function MapExplorer({
             <button
               key={building.slug}
               type="button"
-              className={`map-list__item${building.slug === selected?.slug ? " map-list__item--active" : ""}`}
+              className={`map-list__item${
+                building.slug === selected?.slug ? " map-list__item--active" : ""
+              }`}
               onClick={() => setSelectedSlug(building.slug)}
             >
               <span className="map-list__title">{building.title}</span>
               <span className="map-list__meta">
-                {building.city} · {building.district} · {building.type}
+                {[building.city, building.district, building.type].join(" / ")}
               </span>
               <span className="map-list__address">{building.roadAddress}</span>
             </button>

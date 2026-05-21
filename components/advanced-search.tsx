@@ -51,7 +51,9 @@ export function AdvancedSearch({
   const [imagesOnly, setImagesOnly] = useState(false);
   const [yearMin, setYearMin] = useState(String(yearRange.min));
   const [yearMax, setYearMax] = useState(String(yearRange.max));
-  const [selectedSlug, setSelectedSlug] = useState<string | undefined>(buildings[0]?.slug);
+  const [selectedSlug, setSelectedSlug] = useState<string | undefined>(
+    buildings[0]?.slug
+  );
 
   const deferredQuery = useDeferredValue(query.trim().toLowerCase());
 
@@ -64,7 +66,10 @@ export function AdvancedSearch({
         .map((slug) => architectNameMap[slug])
         .join(" ")
         .toLowerCase();
-      const sourceText = building.sourceRefs.map((source) => source.system).join(" ").toLowerCase();
+      const sourceText = building.sourceRefs
+        .map((source) => source.system)
+        .join(" ")
+        .toLowerCase();
       const tagText = building.tags.join(" ").toLowerCase();
       const materialText = building.materials.join(" ").toLowerCase();
       const addressText = `${building.address} ${building.roadAddress}`.toLowerCase();
@@ -87,9 +92,12 @@ export function AdvancedSearch({
       const matchesType = type === "All" || building.type === type;
       const matchesStatus = status === "All" || building.status === status;
       const matchesAccess = access === "All" || building.publicAccess === access;
-      const matchesMaterial = material === "All" || building.materials.includes(material);
-      const matchesStructure = structure === "All" || building.structureLabel === structure;
-      const matchesHeritage = heritage === "All" || building.heritageClass === heritage;
+      const matchesMaterial =
+        material === "All" || building.materials.includes(material);
+      const matchesStructure =
+        structure === "All" || building.structureLabel === structure;
+      const matchesHeritage =
+        heritage === "All" || building.heritageClass === heritage;
       const matchesSource =
         sourceSystem === "All" ||
         building.sourceRefs.some((source) => source.system === sourceSystem);
@@ -131,7 +139,8 @@ export function AdvancedSearch({
     yearRange.min
   ]);
 
-  const selected = filtered.find((building) => building.slug === selectedSlug) ?? filtered[0];
+  const selected =
+    filtered.find((building) => building.slug === selectedSlug) ?? filtered[0];
 
   return (
     <div className="search-layout">
@@ -142,7 +151,9 @@ export function AdvancedSearch({
             <h2>Filter with schema-ready facets</h2>
           </div>
           <p className="section-heading__copy">
-            These filters are aligned to fields that official Korean building and tourism datasets already expose: usage, structure, location, approval timeline, coordinates, and source system.
+            These filters are aligned to fields that official Korean building and
+            tourism datasets already expose: usage, structure, location, approval
+            timeline, coordinates, and source system.
           </p>
         </div>
 
@@ -160,7 +171,11 @@ export function AdvancedSearch({
 
           <label className="field">
             <span className="field__label">City</span>
-            <select className="field__select" value={city} onChange={(event) => setCity(event.target.value)}>
+            <select
+              className="field__select"
+              value={city}
+              onChange={(event) => setCity(event.target.value)}
+            >
               <option value="All">All cities</option>
               {cityOptions.map((option) => (
                 <option key={option} value={option}>
@@ -188,7 +203,11 @@ export function AdvancedSearch({
 
           <label className="field">
             <span className="field__label">Type</span>
-            <select className="field__select" value={type} onChange={(event) => setType(event.target.value)}>
+            <select
+              className="field__select"
+              value={type}
+              onChange={(event) => setType(event.target.value)}
+            >
               <option value="All">All types</option>
               {typeOptions.map((option) => (
                 <option key={option} value={option}>
@@ -325,13 +344,15 @@ export function AdvancedSearch({
             checked={imagesOnly}
             onChange={(event) => setImagesOnly(event.target.checked)}
           />
-          <span>Only show entries that already have image-ready media metadata.</span>
+          <span>
+            Only show entries that already have image-ready media metadata.
+          </span>
         </label>
 
         <div className="catalog-toolbar">
           <p className="catalog-toolbar__count">{filtered.length} entries match</p>
           <p className="catalog-toolbar__hint">
-            Current range: {yearMin}–{yearMax}
+            Current range: {yearMin} to {yearMax}
           </p>
         </div>
       </section>
@@ -362,7 +383,9 @@ export function AdvancedSearch({
             />
             <div className="catalog-card__head">
               <p className="catalog-card__meta">
-                {building.city} · {building.district} · {building.heritageClass}
+                {[building.city, building.district, building.heritageClass].join(
+                  " / "
+                )}
               </p>
               <h2 className="catalog-card__title">{building.title}</h2>
             </div>
@@ -382,7 +405,9 @@ export function AdvancedSearch({
               </div>
               <div>
                 <dt>Source systems</dt>
-                <dd>{building.sourceRefs.map((source) => source.system).join(", ")}</dd>
+                <dd>
+                  {building.sourceRefs.map((source) => source.system).join(", ")}
+                </dd>
               </div>
             </dl>
           </button>

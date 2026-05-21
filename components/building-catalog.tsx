@@ -2,7 +2,6 @@
 
 import { useDeferredValue, useState } from "react";
 
-import { ArchitectureArt } from "@/components/architecture-art";
 import type { Building } from "@/lib/site-data";
 
 type BuildingCatalogProps = {
@@ -54,7 +53,7 @@ export function BuildingCatalog({
           <input
             className="field__input"
             type="search"
-            placeholder="Search by building, city, type, or architect"
+            placeholder="Building, city, type, or architect"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
           />
@@ -96,49 +95,44 @@ export function BuildingCatalog({
       <div className="catalog-toolbar">
         <p className="catalog-toolbar__count">{filtered.length} entries visible</p>
         <p className="catalog-toolbar__hint">
-          This pilot list is seeded to validate structure before a larger archive is connected.
+          Buildings are listed as an editorial archive rather than a card wall.
         </p>
       </div>
 
-      <div className="catalog-grid">
-        {filtered.map((building) => (
-          <article key={building.slug} id={building.slug} className="catalog-card">
-            <ArchitectureArt
-              title={building.title}
-              label={`${building.city} / ${building.year}`}
-              palette={building.palette}
-              mode="compact"
-            />
-            <div className="catalog-card__head">
-              <p className="catalog-card__meta">
-                {building.city} · {building.district}
-              </p>
-              <h2 className="catalog-card__title">{building.title}</h2>
+      <div className="archive-list archive-list--catalog">
+        {filtered.map((building, index) => (
+          <article
+            key={building.slug}
+            id={building.slug}
+            className="archive-row archive-row--catalog"
+          >
+            <div className="archive-row__number">
+              {String(index + 1).padStart(2, "0")}
             </div>
-            <p className="catalog-card__summary">{building.summary}</p>
-            <dl className="detail-list">
-              <div>
-                <dt>Type</dt>
-                <dd>{building.type}</dd>
-              </div>
-              <div>
-                <dt>Status</dt>
-                <dd>{building.status}</dd>
-              </div>
-              <div>
-                <dt>Architect</dt>
-                <dd>
-                  {building.architectSlugs
-                    .map((slug) => architectNameMap[slug])
-                    .join(", ")}
-                </dd>
-              </div>
-              <div>
-                <dt>Materials</dt>
-                <dd>{building.materials.join(", ")}</dd>
-              </div>
-            </dl>
-            <p className="catalog-card__highlight">{building.highlight}</p>
+
+            <div className="archive-row__title">
+              <p className="archive-row__kicker">
+                {[building.city, building.district].join(" / ")}
+              </p>
+              <h2 className="archive-row__name">{building.title}</h2>
+              <p className="archive-row__minor">
+                {building.architectSlugs
+                  .map((slug) => architectNameMap[slug])
+                  .join(", ")}
+              </p>
+            </div>
+
+            <div className="archive-row__desc">
+              <p>{building.summary}</p>
+              <p className="archive-row__highlight">{building.highlight}</p>
+            </div>
+
+            <div className="archive-row__meta">
+              <span>{building.year}</span>
+              <span>{building.type}</span>
+              <span>{building.status}</span>
+              <span>{building.materials.slice(0, 2).join(", ")}</span>
+            </div>
           </article>
         ))}
       </div>

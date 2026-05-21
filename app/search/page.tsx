@@ -19,10 +19,12 @@ export default function SearchPage() {
   return (
     <PageShell active="search">
       <section className="page-head">
-        <p className="eyebrow">Search</p>
-        <h1 className="page-title">Advanced search built on real public-data facets.</h1>
+        <p className="eyebrow">Schema route</p>
+        <h1 className="page-title">search</h1>
         <p className="page-intro">
-          This search layer is intentionally broader than the current seed dataset. It matches fields already exposed by Korean building-ledger, GIS building, tourism, and heritage sources so the archive can scale without redesigning the interface.
+          The extended search stays tied to fields that public building, GIS,
+          heritage, and tourism datasets already expose, so the guide can scale
+          without changing the interface logic.
         </p>
       </section>
 

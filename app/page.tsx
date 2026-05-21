@@ -1,103 +1,84 @@
 import Link from "next/link";
 
-import { FeaturedCarousel } from "@/components/featured-carousel";
 import { PageShell } from "@/components/page-shell";
-import {
-  architectNameMap,
-  buildings,
-  collections,
-  focusPrinciples,
-  siteStats
-} from "@/lib/site-data";
+import { buildings, collections, siteStats } from "@/lib/site-data";
 
 const browseLinks = [
   {
     href: "/buildings",
     label: "Buildings",
     count: siteStats.buildings,
-    text: "Browse entries by city, type, material, and architectural intent."
+    text: "Move through the archive project by project, with city and type filtering ready from the first screen."
   },
   {
     href: "/architects",
     label: "Architects",
     count: siteStats.architects,
-    text: "Track how offices and authors recur across different regions and programs."
+    text: "Trace recurring authorship, offices, and spatial attitudes across different programs."
   },
   {
     href: "/types",
     label: "Types",
     count: siteStats.types,
-    text: "Study how housing, archives, libraries, and civic halls behave as categories."
+    text: "Read libraries, markets, housing, and civic spaces as categories with their own logic."
   },
   {
     href: "/cities",
     label: "Cities",
     count: siteStats.cities,
-    text: "Read projects through local contexts instead of treating the archive as placeless."
+    text: "See how district, climate, and geography change the reading of architecture."
   },
   {
     href: "/map",
     label: "Map",
     count: siteStats.buildings,
-    text: "Place entries on a Google-powered map with WGS84-ready coordinates."
+    text: "Open the archive geographically through coordinates, markers, and regional clusters."
   },
   {
     href: "/search",
     label: "Search",
     count: siteStats.buildings,
-    text: "Use advanced filters based on structure, access, heritage, and source system."
+    text: "Use a schema-based search layer for structure, heritage, access, and source data."
   }
 ];
 
-const homeStats = [
-  {
-    label: "Pilot buildings",
-    value: String(siteStats.buildings).padStart(2, "0")
-  },
-  {
-    label: "Architect practices",
-    value: String(siteStats.architects).padStart(2, "0")
-  },
-  {
-    label: "Regional city nodes",
-    value: String(siteStats.cities).padStart(2, "0")
-  }
-];
+const featuredBuildings = buildings.slice(0, 3);
 
 export default function HomePage() {
   return (
     <PageShell active="home">
-      <section className="hero-grid">
-        <div className="panel panel--hero">
-          <p className="eyebrow">Modern guide prototype</p>
-          <h1 className="page-title">
-            A Korean architecture guide built as a browsing system, not just a landing page.
-          </h1>
-          <p className="page-intro">
-            The reference site succeeds because it opens with structure: categories, counts, and a rotating sequence of representative projects. This version keeps that editorial logic and translates it into a responsive, extensible product for Korean architecture.
-          </p>
-          <div className="button-row">
-            <Link className="button button--solid" href="/buildings">
-              Start with buildings
-            </Link>
-            <Link className="button button--ghost" href="/about">
-              Read the method
-            </Link>
-          </div>
-        </div>
+      <section className="home-hero">
+        <h1 className="home-hero__title">
+          a guide for reading
+          <br />
+          korean architecture
+        </h1>
+        <p className="home-hero__note">
+          Browse buildings, architects, types, cities, map layers, and search as
+          one connected archive.
+        </p>
+        <p className="home-hero__meta">pilot dataset / 2026</p>
+      </section>
 
-        <div className="panel">
-          <p className="eyebrow">Why this shape works</p>
-          <div className="stat-strip">
-            {homeStats.map((stat) => (
-              <div key={stat.label} className="stat-card">
-                <span className="stat-card__value">{stat.value}</span>
-                <span className="stat-card__label">{stat.label}</span>
-              </div>
-            ))}
-          </div>
-          <p className="panel-copy">
-            Instead of copying the original page literally, the goal is to preserve its strengths: immediate orientation, database-first discovery, and a sense that each project belongs to a larger field of relationships.
+      <section className="manifesto-grid">
+        <div className="manifesto-grid__lead">
+          <p className="eyebrow">What this guide does</p>
+          <h2>
+            It turns Korean architecture into a browsable field, not a static
+            showcase.
+          </h2>
+        </div>
+        <div className="manifesto-grid__copy">
+          <p>
+            Archiguide KR starts from the idea that buildings make more sense when
+            they are read next to one another. This pilot keeps the archive close
+            to the surface: category routes stay visible, search is tied to real
+            data fields, and projects can be entered through city, type, map, or
+            author.
+          </p>
+          <p className="manifesto-grid__meta">
+            {siteStats.buildings} buildings / {siteStats.architects} architects /{" "}
+            {siteStats.cities} cities / {siteStats.types} types
           </p>
         </div>
       </section>
@@ -105,30 +86,65 @@ export default function HomePage() {
       <section className="panel">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Featured projects</p>
-            <h2>Editorial entry through a rotating sequence</h2>
+            <p className="eyebrow">Featured buildings</p>
+            <h2>Selected entries from the current archive</h2>
           </div>
-          <p className="section-heading__copy">
-            The original homepage relies on a long-running image sequence. Here, the featured rail becomes a cleaner, more legible way into the archive.
-          </p>
         </div>
 
-        <FeaturedCarousel
-          buildings={buildings.slice(0, 5)}
-          architectNameMap={architectNameMap}
-        />
+        <div className="archive-list">
+          {featuredBuildings.map((building, index) => (
+            <article
+              key={building.slug}
+              className="archive-row archive-row--feature"
+            >
+              <div className="archive-row__number">
+                {String(index + 1).padStart(2, "0")}
+              </div>
+              <div className="archive-row__title">
+                <p className="archive-row__kicker">
+                  {[building.city, building.district].join(" / ")}
+                </p>
+                <h3 className="archive-row__name">{building.title}</h3>
+                <p className="archive-row__minor">{building.type}</p>
+              </div>
+              <div className="archive-row__desc">
+                <p>{building.summary}</p>
+                <p className="archive-row__highlight">{building.highlight}</p>
+              </div>
+              <div className="archive-row__meta">
+                <span>{building.year}</span>
+                <span>{building.status}</span>
+                <span>{building.primaryUseLabel}</span>
+              </div>
+              <div className="archive-row__media">
+                <span>IMAGE</span>
+              </div>
+            </article>
+          ))}
+        </div>
       </section>
 
-      <section className="browse-grid browse-grid--expanded">
-        {browseLinks.map((item) => (
-          <Link key={item.href} href={item.href} className="browse-card">
-            <div className="browse-card__top">
-              <span className="browse-card__count">{item.count}</span>
-              <span className="browse-card__label">{item.label}</span>
-            </div>
-            <p>{item.text}</p>
-          </Link>
-        ))}
+      <section className="panel">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">Routes through the archive</p>
+            <h2>Primary browsing paths</h2>
+          </div>
+        </div>
+
+        <div className="browse-grid">
+          {browseLinks.map((item) => (
+            <Link key={item.href} href={item.href} className="browse-card">
+              <div className="browse-card__top">
+                <span className="browse-card__label">{item.label}</span>
+                <span className="browse-card__count">
+                  {String(item.count).padStart(2, "0")}
+                </span>
+              </div>
+              <p>{item.text}</p>
+            </Link>
+          ))}
+        </div>
       </section>
 
       <section className="two-column">
@@ -136,7 +152,7 @@ export default function HomePage() {
           <div className="section-heading">
             <div>
               <p className="eyebrow">Curated routes</p>
-              <h2>Editorial groupings for guided reading</h2>
+              <h2>Editorial groupings</h2>
             </div>
           </div>
 
@@ -157,19 +173,35 @@ export default function HomePage() {
         <div className="panel">
           <div className="section-heading">
             <div>
-              <p className="eyebrow">Translation principles</p>
-              <h2>What we kept from the Dutch guide</h2>
+              <p className="eyebrow">Archive posture</p>
+              <h2>What stays visible</h2>
             </div>
           </div>
 
           <div className="stack-list">
-            {focusPrinciples.map((principle) => (
-              <article key={principle} className="principle-card">
-                <p>{principle}</p>
-              </article>
-            ))}
+            <article className="principle-card">
+              <p>The guide stays readable as a list, a field, and a map at the same time.</p>
+            </article>
+            <article className="principle-card">
+              <p>Counts, categories, and routes remain visible instead of hiding behind a landing-page hero.</p>
+            </article>
+            <article className="principle-card">
+              <p>The visual system is restrained so the archive structure and the writing carry most of the weight.</p>
+            </article>
           </div>
         </div>
+      </section>
+
+      <section className="cta-band">
+        <h2>
+          explore
+          <br />
+          the archive
+        </h2>
+        <Link href="/buildings" className="cta-link">
+          <span>Buildings</span>
+          <span className="cta-link__arrow">↗</span>
+        </Link>
       </section>
     </PageShell>
   );

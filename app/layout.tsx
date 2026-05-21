@@ -15,12 +15,12 @@ export const metadata: Metadata = {
     template: "%s | Archiguide KR"
   },
   description:
-    "A Korean architecture guide prototype inspired by the structural clarity of the Dutch architectuurgids reference.",
+    "A Korean architecture guide prototype for browsing buildings, architects, cities, and types as one connected archive.",
   metadataBase: new URL(siteUrl),
   openGraph: {
     title: "Archiguide KR",
     description:
-      "A database-first architecture guide for browsing Korean buildings, architects, cities, and types.",
+      "A paper-first architecture guide for reading Korean buildings through projects, cities, types, maps, and search.",
     siteName: "Archiguide KR",
     url: siteUrl
   }

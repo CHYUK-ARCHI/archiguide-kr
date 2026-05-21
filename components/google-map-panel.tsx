@@ -37,8 +37,12 @@ function loadGoogleMapsApi(apiKey: string) {
     );
 
     if (existing) {
-      existing.addEventListener("load", () => resolve((window as MapsWindow).google));
-      existing.addEventListener("error", () => reject(new Error("Google Maps script failed to load.")));
+      existing.addEventListener("load", () =>
+        resolve((window as MapsWindow).google)
+      );
+      existing.addEventListener("error", () =>
+        reject(new Error("Google Maps script failed to load."))
+      );
       return;
     }
 
@@ -76,7 +80,9 @@ export function GoogleMapPanel({
   const mapRef = useRef<any>(null);
   const infoWindowRef = useRef<any>(null);
   const markersRef = useRef<any[]>([]);
-  const [status, setStatus] = useState<"loading" | "ready" | "missing-key" | "error">("loading");
+  const [status, setStatus] = useState<
+    "loading" | "ready" | "missing-key" | "error"
+  >("loading");
   const [errorMessage, setErrorMessage] = useState("");
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
   const mapId = process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID || "DEMO_MAP_ID";
@@ -106,7 +112,8 @@ export function GoogleMapPanel({
         }
 
         const { Map, InfoWindow } = await google.maps.importLibrary("maps");
-        const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
+        const { AdvancedMarkerElement, PinElement } =
+          await google.maps.importLibrary("marker");
 
         if (!mapRef.current) {
           mapRef.current = new Map(containerRef.current, {
@@ -134,9 +141,9 @@ export function GoogleMapPanel({
 
         buildings.forEach((building) => {
           const pin = new PinElement({
-            background: building.slug === selectedSlug ? "#ca6a39" : "#f3eadb",
-            borderColor: "#17262d",
-            glyphColor: "#17262d"
+            background: building.slug === selectedSlug ? "#903f1e" : "#f8f5ee",
+            borderColor: "#1d1d1b",
+            glyphColor: "#1d1d1b"
           });
 
           const marker = new AdvancedMarkerElement({
@@ -152,8 +159,8 @@ export function GoogleMapPanel({
                 <div style="max-width:240px;color:#171311;font-family:Segoe UI, sans-serif;">
                   <strong style="display:block;margin-bottom:6px;">${building.title}</strong>
                   <div style="font-size:12px;line-height:1.5;">
-                    ${building.city} · ${building.district}<br/>
-                    ${building.type} · ${building.year}<br/>
+                    ${building.city} / ${building.district}<br/>
+                    ${building.type} / ${building.year}<br/>
                     ${building.roadAddress}
                   </div>
                 </div>
@@ -182,7 +189,9 @@ export function GoogleMapPanel({
 
         setStatus("ready");
       } catch (error) {
-        setErrorMessage(error instanceof Error ? error.message : "Unknown map error");
+        setErrorMessage(
+          error instanceof Error ? error.message : "Unknown map error"
+        );
         setStatus("error");
       }
     }
@@ -208,7 +217,10 @@ export function GoogleMapPanel({
         <div className="map-fallback">
           <strong>Google Maps API key is not configured.</strong>
           <p>
-            Add <code>NEXT_PUBLIC_GOOGLE_MAPS_API_KEY</code> and optionally <code>NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID</code> to enable the interactive map. The filtered entries and coordinates are already ready for live rendering.
+            Add <code>NEXT_PUBLIC_GOOGLE_MAPS_API_KEY</code> and optionally{" "}
+            <code>NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID</code> to enable the interactive
+            map. The filtered entries and coordinates are already ready for live
+            rendering.
           </p>
         </div>
       ) : null}
@@ -224,7 +236,11 @@ export function GoogleMapPanel({
 
       <div className="map-panel__legend">
         <span>{buildings.length} visible markers</span>
-        <span>{selectedBuilding ? `Selected: ${selectedBuilding.title}` : "Select a marker or list entry."}</span>
+        <span>
+          {selectedBuilding
+            ? `Selected: ${selectedBuilding.title}`
+            : "Select a marker or list entry."}
+        </span>
       </div>
     </section>
   );

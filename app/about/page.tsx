@@ -4,10 +4,12 @@ export default function AboutPage() {
   return (
     <PageShell active="about">
       <section className="page-head">
-        <p className="eyebrow">Method</p>
-        <h1 className="page-title">Reference-led, not reference-copied.</h1>
+        <p className="eyebrow">Archive note</p>
+        <h1 className="page-title">method</h1>
         <p className="page-intro">
-          The Dutch homepage is valuable because it is unapologetically a guide. It prioritizes orientation, category counts, and representative projects over generic branding. This prototype keeps that product logic while deliberately changing the visual system, layout behavior, and browsing quality.
+          Archiguide KR treats architecture as a navigable reading system. The
+          archive is structured first, then extended through map, search, and
+          public-data fields so the guide can grow without losing clarity.
         </p>
       </section>
 
@@ -15,19 +17,19 @@ export default function AboutPage() {
         <article className="panel">
           <div className="section-heading">
             <div>
-              <p className="eyebrow">What was kept</p>
-              <h2>Structural strengths</h2>
+              <p className="eyebrow">What is kept visible</p>
+              <h2>Core archive rules</h2>
             </div>
           </div>
           <div className="stack-list">
             <article className="principle-card">
-              <p>Persistent side navigation with direct access to architects, buildings, types, and cities.</p>
+              <p>Buildings, architects, types, cities, map, and search remain separate entry routes.</p>
             </article>
             <article className="principle-card">
-              <p>A homepage that behaves like an archive threshold instead of a marketing billboard.</p>
+              <p>Counts and categories stay near the surface so the archive can be scanned quickly.</p>
             </article>
             <article className="principle-card">
-              <p>A rotating featured sequence that gives the archive an editorial face.</p>
+              <p>The interface is restrained so the structure and the writing remain primary.</p>
             </article>
           </div>
         </article>
@@ -35,19 +37,19 @@ export default function AboutPage() {
         <article className="panel">
           <div className="section-heading">
             <div>
-              <p className="eyebrow">What changed</p>
-              <h2>Necessary upgrades</h2>
+              <p className="eyebrow">What is prepared</p>
+              <h2>Future expansion</h2>
             </div>
           </div>
           <div className="stack-list">
             <article className="principle-card">
-              <p>Table layout and fixed widths were replaced with responsive grids and mobile-safe spacing.</p>
+              <p>Google Maps is already wired for coordinate-based browsing and marker selection.</p>
             </article>
             <article className="principle-card">
-              <p>Old image rotation behavior was reworked into a cleaner, controllable carousel.</p>
+              <p>Search fields align with Korean building-ledger, GIS, heritage, and tourism data structures.</p>
             </article>
             <article className="principle-card">
-              <p>The visual language was rebuilt around a contemporary editorial palette instead of direct imitation.</p>
+              <p>The seed dataset can be replaced gradually without rebuilding the interface foundation.</p>
             </article>
           </div>
         </article>

@@ -1,6 +1,11 @@
 import { BuildingCatalog } from "@/components/building-catalog";
 import { PageShell } from "@/components/page-shell";
-import { architectNameMap, buildings, siteStats, typeSummaries } from "@/lib/site-data";
+import {
+  architectNameMap,
+  buildings,
+  siteStats,
+  typeSummaries
+} from "@/lib/site-data";
 
 export default function BuildingsPage() {
   const cities = Array.from(new Set(buildings.map((building) => building.city)));
@@ -9,13 +14,16 @@ export default function BuildingsPage() {
   return (
     <PageShell active="buildings">
       <section className="page-head">
-        <p className="eyebrow">Buildings</p>
-        <h1 className="page-title">Browse the archive through projects first.</h1>
+        <p className="eyebrow">Primary archive</p>
+        <h1 className="page-title">buildings</h1>
         <p className="page-intro">
-          The reference site opens quickly into buildings, and that remains the strongest doorway. This catalog keeps the same bias while making search and filtering cleaner for mobile and future scale.
+          Projects remain the clearest doorway into the guide. This list keeps the
+          archive readable at a glance while still allowing city and type filtering
+          from the top.
         </p>
         <p className="page-footnote">
-          {siteStats.buildings} pilot entries across {siteStats.cities} cities and {siteStats.types} building types.
+          {siteStats.buildings} entries across {siteStats.cities} cities and{" "}
+          {siteStats.types} types.
         </p>
       </section>
 

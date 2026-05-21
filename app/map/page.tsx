@@ -6,10 +6,11 @@ export default function MapPage() {
   return (
     <PageShell active="map">
       <section className="page-head">
-        <p className="eyebrow">Map</p>
-        <h1 className="page-title">Google Maps as the geographic reading layer.</h1>
+        <p className="eyebrow">Geographic route</p>
+        <h1 className="page-title">map</h1>
         <p className="page-intro">
-          The Dutch reference emphasizes category browsing. This map adds the missing geographic layer so Korean architecture can also be read by proximity, coast, district, and regional cluster.
+          The map adds a geographic reading layer to the archive so projects can be
+          entered by district, proximity, and regional cluster as well as by name.
         </p>
       </section>
 

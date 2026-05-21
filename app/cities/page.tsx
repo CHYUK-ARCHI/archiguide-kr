@@ -5,10 +5,12 @@ export default function CitiesPage() {
   return (
     <PageShell active="cities">
       <section className="page-head">
-        <p className="eyebrow">Cities</p>
-        <h1 className="page-title">Group the archive by regional context, not only by fame.</h1>
+        <p className="eyebrow">Regional route</p>
+        <h1 className="page-title">cities</h1>
         <p className="page-intro">
-          The Dutch reference uses cities as a major navigation mode. For a Korean guide, this is just as important because regional climates, slopes, coastlines, and public cultures change the reading of architecture immediately.
+          Cities change the reading of architecture immediately. This route keeps
+          regional context visible instead of treating the archive as a placeless
+          list.
         </p>
       </section>
 

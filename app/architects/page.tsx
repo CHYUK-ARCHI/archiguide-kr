@@ -6,10 +6,12 @@ export default function ArchitectsPage() {
   return (
     <PageShell active="architects">
       <section className="page-head">
-        <p className="eyebrow">Architects</p>
-        <h1 className="page-title">Read the archive through authorship and recurring attitudes.</h1>
+        <p className="eyebrow">Authorship route</p>
+        <h1 className="page-title">architects</h1>
         <p className="page-intro">
-          Practices are useful not only as names but as threads. This directory begins to show which spatial ideas repeat across place, program, and material.
+          Practices are listed as recurring voices in the archive, not only as
+          names. This directory makes it easier to see which attitudes repeat
+          across place, program, and material.
         </p>
       </section>
 

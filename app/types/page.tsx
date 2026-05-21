@@ -5,10 +5,12 @@ export default function TypesPage() {
   return (
     <PageShell active="types">
       <section className="page-head">
-        <p className="eyebrow">Building types</p>
-        <h1 className="page-title">Treat program as a lens, not just metadata.</h1>
+        <p className="eyebrow">Program route</p>
+        <h1 className="page-title">types</h1>
         <p className="page-intro">
-          The original site makes building type a first-class path. That is worth preserving because type reveals how different architects solve similar public or spatial problems.
+          Building type works as a lens rather than background metadata. This page
+          groups projects by program so similar public or spatial problems can be
+          read together.
         </p>
       </section>
 

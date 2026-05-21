@@ -38,6 +38,17 @@ Create a local environment file from `.env.example` and set:
 - `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY`
 - `NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID` (optional, defaults to `DEMO_MAP_ID`)
 
+## Deployment
+
+The repository is configured for GitHub Pages deployment through GitHub Actions.
+
+- Expected project site URL:
+  `https://chyuk-archi.github.io/archiguide-kr/`
+- To enable the live Google map on the deployed site, add a repository secret:
+  `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY`
+- Optionally add a repository variable:
+  `NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID`
+
 ## Notes
 
 - The current content is pilot data for layout and product validation.

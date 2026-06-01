@@ -20,10 +20,12 @@ type SidebarNavProps = {
 };
 
 type NavItem = {
-  key: Exclude<NavKey, "home">;
+  key: Exclude<NavKey, "home" | "about">;
   href: string;
-  label: string;
-  labelEn: string;
+  label: {
+    ko: string;
+    en: string;
+  };
   count?: number;
 };
 
@@ -31,49 +33,37 @@ const navItems: NavItem[] = [
   {
     key: "architects",
     href: "/architects",
-    label: "건축가",
-    labelEn: "Architects",
+    label: { ko: "건축가", en: "Architects" },
     count: siteStats.architects
   },
   {
     key: "buildings",
     href: "/buildings",
-    label: "건물",
-    labelEn: "Buildings",
+    label: { ko: "건물", en: "Buildings" },
     count: siteStats.buildings
   },
   {
     key: "types",
     href: "/types",
-    label: "유형",
-    labelEn: "Types",
+    label: { ko: "유형", en: "Types" },
     count: siteStats.types
   },
   {
     key: "cities",
     href: "/cities",
-    label: "도시",
-    labelEn: "Cities",
+    label: { ko: "도시", en: "Cities" },
     count: siteStats.cities
   },
   {
     key: "map",
     href: "/map",
-    label: "지도",
-    labelEn: "Map",
+    label: { ko: "지도", en: "Map" },
     count: siteStats.buildings
   },
   {
     key: "search",
     href: "/search",
-    label: "고급검색",
-    labelEn: "Search"
-  },
-  {
-    key: "about",
-    href: "/about",
-    label: "방법",
-    labelEn: "Method"
+    label: { ko: "고급검색", en: "Advanced Search" }
   }
 ];
 
@@ -81,25 +71,53 @@ export function SidebarNav({ active }: SidebarNavProps) {
   const { language, setLanguage } = useLanguage();
 
   return (
-    <>
-      <aside className="sidebar">
-        <div className="sidebar__head">
-          <Link href="/" className="sidebar__brand">
-            <span className="sidebar__brand-main">ARCHIGUIDE.KR</span>
-            <span className="sidebar__brand-sub">
-              {language === "ko"
-                ? "한국 건축 아카이브 가이드"
-                : "Korean architecture guide"}
-            </span>
-          </Link>
-          <p className="sidebar__intro">
-            {language === "ko"
-              ? "한국 건축을 건물, 건축가, 유형, 도시, 지도, 검색으로 읽는 파일럿 아카이브입니다."
-              : "A pilot archive for reading Korean architecture through buildings, architects, types, cities, maps, and search."}
-          </p>
+    <header className="site-header">
+      <div className="site-header__top">
+        <div className="site-header__mark" aria-hidden="true">
+          AG
         </div>
 
-        <nav className="sidebar__menu" aria-label="Primary">
+        <Link href="/" className="site-header__brand">
+          <span className="site-header__wordmark">archiguide</span>
+          <span className="site-header__sub">
+            {language === "ko"
+              ? "korean architecture archive"
+              : "korean architecture archive"}
+          </span>
+        </Link>
+
+        <div className="site-header__meta" aria-label="Meta controls">
+          <Link
+            href="/about"
+            className={`site-header__meta-link${
+              active === "about" ? " site-header__meta-link--active" : ""
+            }`}
+          >
+            INFO
+          </Link>
+          <span className="site-header__meta-separator">/</span>
+          <button
+            type="button"
+            className={`site-header__meta-button${
+              language === "en" ? " site-header__meta-button--active" : ""
+            }`}
+            onClick={() => setLanguage("en")}
+          >
+            EN
+          </button>
+          <span className="site-header__meta-separator">/</span>
+          <button
+            type="button"
+            className={`site-header__meta-button${
+              language === "ko" ? " site-header__meta-button--active" : ""
+            }`}
+            onClick={() => setLanguage("ko")}
+          >
+            KR
+          </button>
+        </div>
+
+        <nav className="site-header__stack" aria-label="Primary">
           {navItems.map((item) => {
             const isActive = item.key === active;
 
@@ -107,15 +125,15 @@ export function SidebarNav({ active }: SidebarNavProps) {
               <Link
                 key={item.key}
                 href={item.href}
-                className={`sidebar__menu-item${
-                  isActive ? " sidebar__menu-item--active" : ""
+                className={`site-header__stack-link${
+                  isActive ? " site-header__stack-link--active" : ""
                 }`}
               >
-                <span className="sidebar__menu-label">
-                  {language === "ko" ? item.label : item.labelEn}
+                <span className="site-header__stack-label">
+                  {item.label[language]}
                 </span>
                 {typeof item.count === "number" ? (
-                  <span className="sidebar__menu-count">
+                  <span className="site-header__stack-count">
                     ({String(item.count).padStart(2, "0")})
                   </span>
                 ) : null}
@@ -124,83 +142,46 @@ export function SidebarNav({ active }: SidebarNavProps) {
           })}
         </nav>
 
-        <div className="sidebar__foot">
-          <div className="language-switch" aria-label="Language switch">
-            <button
-              type="button"
-              className={`language-switch__button${
-                language === "ko" ? " language-switch__button--active" : ""
-              }`}
-              onClick={() => setLanguage("ko")}
-            >
-              한국어
-            </button>
-            <button
-              type="button"
-              className={`language-switch__button${
-                language === "en" ? " language-switch__button--active" : ""
-              }`}
-              onClick={() => setLanguage("en")}
-            >
-              EN
-            </button>
-          </div>
-          <Link
-            href="/about"
-            className={`sidebar__info-link${
-              active === "about" ? " sidebar__info-link--active" : ""
-            }`}
-          >
-            {language === "ko" ? "방법" : "INFO / METHOD"}
-          </Link>
-          <p className="sidebar__footnote">
-            {language === "ko" ? "파일럿 데이터셋 / 2026" : "pilot dataset / 2026"}
-          </p>
-        </div>
-      </aside>
+        <p className="site-header__footnote">
+          {language === "ko"
+            ? "파일럿 데이터셋 / 2026"
+            : "pilot dataset / 2026"}
+        </p>
+      </div>
 
-      <header className="mobile-header">
-        <Link href="/" className="mobile-header__brand">
-          ARCHIGUIDE.KR
+      <nav className="site-header__rail" aria-label="Mobile navigation">
+        <Link
+          href="/"
+          className={`site-header__rail-link${
+            active === "home" ? " site-header__rail-link--active" : ""
+          }`}
+        >
+          {language === "ko" ? "홈" : "Home"}
         </Link>
-        <nav className="mobile-header__rail" aria-label="Primary">
-          {navItems.map((item) => {
-            const isActive = item.key === active;
+        {navItems.map((item) => {
+          const isActive = item.key === active;
 
-            return (
-              <Link
-                key={item.key}
-                href={item.href}
-                className={`mobile-header__link${
-                  isActive ? " mobile-header__link--active" : ""
-                }`}
-              >
-                {language === "ko" ? item.label : item.labelEn}
-              </Link>
-            );
-          })}
-        </nav>
-        <div className="language-switch language-switch--mobile" aria-label="Language switch">
-          <button
-            type="button"
-            className={`language-switch__button${
-              language === "ko" ? " language-switch__button--active" : ""
-            }`}
-            onClick={() => setLanguage("ko")}
-          >
-            한국어
-          </button>
-          <button
-            type="button"
-            className={`language-switch__button${
-              language === "en" ? " language-switch__button--active" : ""
-            }`}
-            onClick={() => setLanguage("en")}
-          >
-            EN
-          </button>
-        </div>
-      </header>
-    </>
+          return (
+            <Link
+              key={item.key}
+              href={item.href}
+              className={`site-header__rail-link${
+                isActive ? " site-header__rail-link--active" : ""
+              }`}
+            >
+              {item.label[language]}
+            </Link>
+          );
+        })}
+        <Link
+          href="/about"
+          className={`site-header__rail-link${
+            active === "about" ? " site-header__rail-link--active" : ""
+          }`}
+        >
+          INFO
+        </Link>
+      </nav>
+    </header>
   );
 }

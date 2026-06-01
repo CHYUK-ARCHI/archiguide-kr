@@ -3,8 +3,11 @@ import type { Language } from "@/lib/i18n";
 export type Architect = {
   slug: string;
   name: string;
+  sortName: string;
+  scope: "korean" | "international";
+  prominence: "featured" | "core" | "reference";
   city: string;
-  founded: number;
+  founded?: number;
   focus: string;
   summary: string;
   palette: [string, string, string];
@@ -72,8 +75,284 @@ export type Collection = {
 
 export const architects: Architect[] = [
   {
+    slug: "alvaro-siza",
+    name: "Alvaro Siza",
+    sortName: "Alvaro Siza",
+    scope: "international",
+    prominence: "featured",
+    city: "Porto",
+    founded: 1958,
+    focus: "Quiet civic form and exact urban placement",
+    summary: "A useful reference for architects who study how restraint, proportion, and context can carry a project.",
+    palette: ["#d9d6ce", "#7f7b74", "#f3f1eb"]
+  },
+  {
+    slug: "big",
+    name: "BIG",
+    sortName: "BIG",
+    scope: "international",
+    prominence: "featured",
+    city: "Copenhagen",
+    founded: 2005,
+    focus: "Diagrammatic form and public spectacle",
+    summary: "A high-visibility office often referenced for strong concepts, civic branding, and accessible massing logic.",
+    palette: ["#d8d2c5", "#202020", "#f1eee7"]
+  },
+  {
+    slug: "cho-byoung-soo",
+    name: "Cho Byoung Soo",
+    sortName: "Cho Byoung Soo",
+    scope: "korean",
+    prominence: "featured",
+    city: "Seoul",
+    founded: 1991,
+    focus: "Material restraint and slow spatial sequences",
+    summary: "Often referenced for architecture that feels calm, tactile, and deeply edited rather than over-explained.",
+    palette: ["#8e7d6c", "#3a3631", "#ece5d8"]
+  },
+  {
+    slug: "cho-min-suk",
+    name: "Cho Min-suk",
+    sortName: "Cho Min-suk",
+    scope: "korean",
+    prominence: "featured",
+    city: "Seoul",
+    founded: 2003,
+    focus: "Public institutions and contemporary cultural form",
+    summary: "A strong contemporary Korean reference for architects interested in civic identity, narrative form, and exhibition logic.",
+    palette: ["#7c6a5a", "#1f1f1f", "#eee7dc"]
+  },
+  {
+    slug: "choi-wook",
+    name: "Choi Wook",
+    sortName: "Choi Wook",
+    scope: "korean",
+    prominence: "featured",
+    city: "Seoul",
+    founded: 1999,
+    focus: "Urban density, mixed programs, and sharp public profiles",
+    summary: "Useful when studying how Korean mixed-use and urban projects balance identity, speed, and visibility.",
+    palette: ["#9a6d54", "#26221e", "#f0e6da"]
+  },
+  {
+    slug: "david-chipperfield-architects",
+    name: "David Chipperfield Architects",
+    sortName: "David Chipperfield Architects",
+    scope: "international",
+    prominence: "featured",
+    city: "London",
+    founded: 1985,
+    focus: "Museum clarity and disciplined urban form",
+    summary: "A clean reference for architects interested in measured detail, institutional calm, and long-lived public architecture.",
+    palette: ["#cfc9bc", "#44403a", "#f4f1eb"]
+  },
+  {
+    slug: "herzog-de-meuron",
+    name: "Herzog & de Meuron",
+    sortName: "Herzog and de Meuron",
+    scope: "international",
+    prominence: "featured",
+    city: "Basel",
+    founded: 1978,
+    focus: "Envelope experimentation and cultural scale",
+    summary: "A recurring reference when facade logic, material transformation, and public landmark character matter.",
+    palette: ["#8b7968", "#2e2a26", "#eee7dc"]
+  },
+  {
+    slug: "iroje",
+    name: "IROJE",
+    sortName: "IROJE",
+    scope: "korean",
+    prominence: "featured",
+    city: "Seoul",
+    founded: 1989,
+    focus: "Korean architectural discourse and spatial authorship",
+    summary: "Important when reading late twentieth-century Korean architecture through essays, houses, and civic work.",
+    palette: ["#6d6256", "#2b2a28", "#ebe3d7"]
+  },
+  {
+    slug: "jun-itami",
+    name: "Jun Itami",
+    sortName: "Jun Itami",
+    scope: "korean",
+    prominence: "featured",
+    city: "Jeju",
+    focus: "Stone, wind, ritual, and landscape sequence",
+    summary: "A key reference for architecture that turns weather, terrain, and silence into the main design material.",
+    palette: ["#5f584f", "#252321", "#e9e1d3"]
+  },
+  {
+    slug: "kim-swoo-geun",
+    name: "Kim Swoo Geun",
+    sortName: "Kim Swoo Geun",
+    scope: "korean",
+    prominence: "featured",
+    city: "Seoul",
+    focus: "Modern Korean civic language and cultural infrastructure",
+    summary: "Essential to any Korean architecture archive because so much later work is still read against his spatial and institutional legacy.",
+    palette: ["#78695d", "#312c28", "#ece4d8"]
+  },
+  {
+    slug: "lacaton-vassal",
+    name: "Lacaton & Vassal",
+    sortName: "Lacaton and Vassal",
+    scope: "international",
+    prominence: "featured",
+    city: "Paris",
+    founded: 1987,
+    focus: "Reuse, generosity, and minimum demolition",
+    summary: "A strong benchmark for architects studying transformation, budget intelligence, and spatial generosity.",
+    palette: ["#d4cfc5", "#35312d", "#f3f0ea"]
+  },
+  {
+    slug: "min-hyun-sik",
+    name: "Min Hyun-sik",
+    sortName: "Min Hyun-sik",
+    scope: "korean",
+    prominence: "core",
+    city: "Seoul",
+    focus: "Layered domesticity and urban memory",
+    summary: "Useful for reading how Korean houses and cultural buildings can hold complexity without becoming loud.",
+    palette: ["#907866", "#332c26", "#ede4d8"]
+  },
+  {
+    slug: "moon-hoon",
+    name: "Moon Hoon",
+    sortName: "Moon Hoon",
+    scope: "korean",
+    prominence: "core",
+    city: "Seoul",
+    founded: 2001,
+    focus: "Expressive domestic form and experimental character",
+    summary: "A reference point for architects who want to understand a more playful and image-forward Korean design language.",
+    palette: ["#a36b58", "#30231f", "#efe5d8"]
+  },
+  {
+    slug: "mvrdv",
+    name: "MVRDV",
+    sortName: "MVRDV",
+    scope: "international",
+    prominence: "featured",
+    city: "Rotterdam",
+    founded: 1993,
+    focus: "Density, data-driven form, and bold mixed use",
+    summary: "Often referenced for readable concepts, stacked programs, and public-facing experimentation at city scale.",
+    palette: ["#d0cbc2", "#292725", "#f4f0e8"]
+  },
+  {
+    slug: "obba",
+    name: "OBBA",
+    sortName: "OBBA",
+    scope: "korean",
+    prominence: "core",
+    city: "Seoul",
+    founded: 2010,
+    focus: "Compact housing and crisp residential form",
+    summary: "A practical Korean reference when studying contemporary housing, repetition, and clear facade discipline.",
+    palette: ["#8b7562", "#2e2925", "#ede5d9"]
+  },
+  {
+    slug: "oma",
+    name: "OMA",
+    sortName: "OMA",
+    scope: "international",
+    prominence: "featured",
+    city: "Rotterdam",
+    founded: 1975,
+    focus: "Programmatic thinking and metropolitan scale",
+    summary: "An enduring reference for architects interested in narrative diagrams, institutional complexity, and urban argument.",
+    palette: ["#cbc6bc", "#232323", "#f2eee7"]
+  },
+  {
+    slug: "peter-zumthor",
+    name: "Peter Zumthor",
+    sortName: "Peter Zumthor",
+    scope: "international",
+    prominence: "featured",
+    city: "Haldenstein",
+    founded: 1979,
+    focus: "Atmosphere, tactility, and patient detail",
+    summary: "Useful whenever the archive needs a benchmark for mood, construction precision, and sensory depth.",
+    palette: ["#b9afa2", "#2d2926", "#f0e8dc"]
+  },
+  {
+    slug: "renzo-piano-building-workshop",
+    name: "Renzo Piano Building Workshop",
+    sortName: "Renzo Piano Building Workshop",
+    scope: "international",
+    prominence: "featured",
+    city: "Genoa",
+    founded: 1981,
+    focus: "Lightness, public institutions, and technical clarity",
+    summary: "A frequent reference for buildings that need civic dignity without visual heaviness.",
+    palette: ["#cec7bb", "#34312d", "#f3efe9"]
+  },
+  {
+    slug: "sanaa",
+    name: "SANAA",
+    sortName: "SANAA",
+    scope: "international",
+    prominence: "featured",
+    city: "Tokyo",
+    founded: 1995,
+    focus: "Thin boundaries, soft circulation, and visual lightness",
+    summary: "Important for architects studying how openness and ambiguity can still remain precise.",
+    palette: ["#dad5cc", "#2b2928", "#f5f2ec"]
+  },
+  {
+    slug: "seung-h-sang",
+    name: "Seung H-Sang",
+    sortName: "Seung H-Sang",
+    scope: "korean",
+    prominence: "featured",
+    city: "Seoul",
+    founded: 1989,
+    focus: "Void, restraint, and Korean civic language",
+    summary: "One of the clearest Korean references for architects interested in emptiness, discipline, and spatial ethics.",
+    palette: ["#7d6b5b", "#2f2a26", "#ede4d7"]
+  },
+  {
+    slug: "soa",
+    name: "SoA",
+    sortName: "SoA",
+    scope: "korean",
+    prominence: "core",
+    city: "Seoul",
+    founded: 2003,
+    focus: "Everyday urbanism and carefully edited small programs",
+    summary: "A good reference for younger Korean practices working between subtle detail and strong urban reading.",
+    palette: ["#8c7766", "#302a26", "#eee5d9"]
+  },
+  {
+    slug: "sou-fujimoto",
+    name: "Sou Fujimoto",
+    sortName: "Sou Fujimoto",
+    scope: "international",
+    prominence: "featured",
+    city: "Tokyo",
+    founded: 2000,
+    focus: "Ambiguous boundaries and nest-like structure",
+    summary: "Useful for reading how light structures and open systems can still produce memorable identity.",
+    palette: ["#d3cec5", "#2d2c2a", "#f4f1eb"]
+  },
+  {
+    slug: "steven-holl-architects",
+    name: "Steven Holl Architects",
+    sortName: "Steven Holl Architects",
+    scope: "international",
+    prominence: "core",
+    city: "New York",
+    founded: 1977,
+    focus: "Light, section, and conceptual spatial episodes",
+    summary: "A useful reference for architects who think through section, light, and experiential sequence.",
+    palette: ["#c8c1b6", "#36322f", "#f1ede6"]
+  },
+  {
     slug: "studio-layer",
     name: "Studio Layer",
+    sortName: "Studio Layer",
+    scope: "korean",
+    prominence: "reference",
     city: "Seoul",
     founded: 2014,
     focus: "Civic interiors and adaptive reuse",
@@ -83,6 +362,9 @@ export const architects: Architect[] = [
   {
     slug: "atelier-gonggan",
     name: "Atelier Gonggan",
+    sortName: "Atelier Gonggan",
+    scope: "korean",
+    prominence: "reference",
     city: "Jeonju",
     founded: 2011,
     focus: "Hanok hybrids and climate-aware retrofits",
@@ -92,6 +374,9 @@ export const architects: Architect[] = [
   {
     slug: "field-office-seoul",
     name: "Field Office Seoul",
+    sortName: "Field Office Seoul",
+    scope: "korean",
+    prominence: "reference",
     city: "Seoul",
     founded: 2018,
     focus: "Urban stitching and public circulation",
@@ -101,6 +386,9 @@ export const architects: Architect[] = [
   {
     slug: "coastal-common",
     name: "Coastal Common",
+    sortName: "Coastal Common",
+    scope: "korean",
+    prominence: "reference",
     city: "Busan",
     founded: 2016,
     focus: "Waterfront culture and regional commons",
@@ -110,11 +398,50 @@ export const architects: Architect[] = [
   {
     slug: "north-wall-lab",
     name: "North Wall Lab",
+    sortName: "North Wall Lab",
+    scope: "korean",
+    prominence: "reference",
     city: "Daejeon",
     founded: 2020,
     focus: "Research buildings and compact learning environments",
     summary: "Explores dense campus buildings, research labs, and small-scale cultural institutions.",
     palette: ["#583f52", "#c7a971", "#f1e8d8"]
+  },
+  {
+    slug: "tadao-ando",
+    name: "Tadao Ando",
+    sortName: "Tadao Ando",
+    scope: "international",
+    prominence: "featured",
+    city: "Osaka",
+    founded: 1969,
+    focus: "Concrete, light, and ritual procession",
+    summary: "A foundational reference when architects want to study how a small set of means can produce strong atmosphere.",
+    palette: ["#c7c1b7", "#262626", "#f1ede7"]
+  },
+  {
+    slug: "unsangdong-architects",
+    name: "Unsangdong Architects",
+    sortName: "Unsangdong Architects",
+    scope: "korean",
+    prominence: "core",
+    city: "Seoul",
+    founded: 2001,
+    focus: "Public identity, complex envelopes, and Korean urban scale",
+    summary: "A strong local reference for projects that negotiate density, image, and public program at once.",
+    palette: ["#8d7664", "#2f2924", "#eee4d8"]
+  },
+  {
+    slug: "zaha-hadid-architects",
+    name: "Zaha Hadid Architects",
+    sortName: "Zaha Hadid Architects",
+    scope: "international",
+    prominence: "featured",
+    city: "London",
+    founded: 1980,
+    focus: "Fluid geometry and landmark-driven public form",
+    summary: "Still a strong reference when studying the relationship between iconic form, engineering ambition, and global visibility.",
+    palette: ["#d3cdc2", "#1f1f1f", "#f4f1eb"]
   }
 ];
 

@@ -1043,11 +1043,219 @@ code {
   text-align: right;
 }
 
+.architect-browser {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+.architect-browser__sidebar {
+  position: sticky;
+  top: 2rem;
+  display: grid;
+  gap: 1rem;
+  align-self: start;
+  padding-bottom: 1rem;
+}
+
+.architect-browser__search {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.architect-browser__input {
+  width: 100%;
+  border: 1px solid var(--rule);
+  border-radius: 0;
+  background: transparent;
+  padding: 0.8rem 0.85rem;
+  color: var(--ink);
+}
+
+.architect-browser__input::placeholder {
+  color: var(--ink-muted);
+}
+
+.architect-browser__alphabet {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.6rem;
+  padding: 0.8rem 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+
+.architect-browser__alphabet-link,
+.architect-browser__group-count {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.architect-browser__alphabet-link--disabled {
+  color: var(--ink-faint);
+  pointer-events: none;
+}
+
+.architect-browser__list {
+  display: grid;
+  gap: 1rem;
+  max-height: calc(100vh - 15rem);
+  overflow-y: auto;
+  padding-right: 0.35rem;
+}
+
+.architect-browser__group {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.architect-browser__group-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.architect-browser__group-letter {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.architect-browser__name-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.1rem;
+}
+
+.architect-browser__name-button {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  padding: 0.45rem 0;
+  text-align: left;
+  cursor: pointer;
+  color: var(--ink-soft);
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.architect-browser__name-button:hover,
+.architect-browser__name-button--active {
+  color: var(--ink);
+}
+
+.architect-browser__content {
+  min-width: 0;
+}
+
+.architect-browser__hero,
+.architect-browser__projects,
+.architect-browser__empty--panel {
+  border-top: 1px solid var(--rule);
+}
+
+.architect-browser__hero {
+  display: grid;
+  gap: 0.45rem;
+  padding-top: 1rem;
+}
+
+.architect-browser__title {
+  margin: 0;
+  font-size: clamp(2.4rem, 6vw, 5.5rem);
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+}
+
+.architect-browser__meta {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.architect-browser__focus,
+.architect-browser__summary,
+.architect-browser__project-summary {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.architect-browser__focus {
+  color: var(--ink);
+}
+
+.architect-browser__projects {
+  margin-top: 1.6rem;
+  padding-top: 1rem;
+}
+
+.architect-browser__project-list {
+  display: grid;
+  border-top: 1px solid var(--rule);
+}
+
+.architect-browser__project {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.architect-browser__project-number {
+  color: var(--ink-faint);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.architect-browser__project-body {
+  min-width: 0;
+}
+
+.architect-browser__project-title {
+  margin: 0;
+  font-size: 1.45rem;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.architect-browser__project-meta {
+  margin: 0.35rem 0 0;
+  color: var(--ink-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.architect-browser__empty {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.architect-browser__empty--panel {
+  padding-top: 1rem;
+}
+
 @media (max-width: 1080px) {
   .manifesto-grid,
   .two-column,
   .explorer-grid,
-  .catalog-grid {
+  .catalog-grid,
+  .architect-browser {
     grid-template-columns: 1fr;
   }
 
@@ -1087,6 +1295,14 @@ code {
     justify-items: start;
     padding-left: 1.5rem;
     text-align: left;
+  }
+
+  .architect-browser__sidebar {
+    position: static;
+  }
+
+  .architect-browser__list {
+    max-height: none;
   }
 }
 

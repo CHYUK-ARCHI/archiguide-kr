@@ -44,6 +44,10 @@ The repository is configured for GitHub Pages deployment through GitHub Actions.
 
 - Expected project site URL:
   `https://chyuk-archi.github.io/archiguide-kr/`
+- Source branch:
+  `main`
+- Published Pages branch:
+  `gh-pages`
 - To enable the live Google map on the deployed site, add a repository secret:
   `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY`
 - Optionally add a repository variable:

@@ -10,3 +10,19 @@ yarn-error.log*
 .next-dev.log
 .next-dev.err.log
 .DS_Store
+
+# GitHub Pages export belongs on gh-pages, never on main.
+/.nojekyll
+/404
+/404.html
+/_next
+/about
+/architects
+/buildings
+/cities
+/fonts
+/index.html
+/index.txt
+/map
+/search
+/types

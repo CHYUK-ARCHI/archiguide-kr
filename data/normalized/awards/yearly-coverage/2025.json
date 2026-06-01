@@ -1,0 +1,57 @@
+{
+  "year": 2025,
+  "collection_rule": "year-first",
+  "awards": [
+    {
+      "program_id": "award-program-korean-architecture-culture-award",
+      "status": "planned"
+    },
+    {
+      "program_id": "award-program-korean-architecture-exhibition",
+      "status": "planned"
+    },
+    {
+      "program_id": "award-program-young-architect-award",
+      "status": "partial",
+      "normalized_files": [
+        "../young-architect-award-2025.json"
+      ]
+    },
+    {
+      "program_id": "award-program-public-architecture-award",
+      "status": "planned"
+    },
+    {
+      "program_id": "award-program-hanok-contest",
+      "status": "planned"
+    },
+    {
+      "program_id": "award-program-green-building-award",
+      "status": "planned"
+    },
+    {
+      "program_id": "award-program-kia-award",
+      "status": "planned"
+    },
+    {
+      "program_id": "award-program-kim-swoo-geun-prize",
+      "status": "planned"
+    },
+    {
+      "program_id": "award-program-seoul-architecture-award",
+      "status": "planned"
+    },
+    {
+      "program_id": "award-program-busan-down-architecture-award",
+      "status": "planned"
+    },
+    {
+      "program_id": "award-program-gyeonggi-architecture-culture-award",
+      "status": "planned"
+    },
+    {
+      "program_id": "award-program-ulsan-architecture-award",
+      "status": "planned"
+    }
+  ]
+}

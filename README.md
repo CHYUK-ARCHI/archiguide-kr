@@ -58,4 +58,9 @@ The repository is configured for GitHub Pages deployment through GitHub Actions.
 - The current content is pilot data for layout and product validation.
 - The reference analysis that informed this scaffold is documented in [docs/reference-analysis.md](./docs/reference-analysis.md).
 - The normalized Korean architecture data model is documented in [docs/korean-architecture-data-schema.md](./docs/korean-architecture-data-schema.md).
+- The revised product direction is documented in [docs/product-direction.md](./docs/product-direction.md).
+- The revised black-on-white archive design rules are documented in [docs/design-guidelines.md](./docs/design-guidelines.md).
+- The new archive DB structure is documented in [docs/data-model.md](./docs/data-model.md).
+- The unified yearly award intake rules are documented in [docs/award-yearly-collection-rules.md](./docs/award-yearly-collection-rules.md).
+- The first structured acquisition batch is documented in [docs/initial-dataset-young-architect-award.md](./docs/initial-dataset-young-architect-award.md).
 - The next logical step is replacing seed data with a structured content source and adding map/search indexing.

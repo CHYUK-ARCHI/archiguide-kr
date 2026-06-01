@@ -2,7 +2,18 @@
 
 import { useDeferredValue, useState } from "react";
 
-import type { Building } from "@/lib/site-data";
+import { useLanguage } from "@/components/language-provider";
+import {
+  getBuildingHighlight,
+  getBuildingSummary,
+  getBuildingTitle,
+  getCityLabel,
+  getDistrictLabel,
+  getMaterialLabel,
+  getStatusLabel,
+  getTypeLabel,
+  type Building
+} from "@/lib/site-data";
 
 type BuildingCatalogProps = {
   buildings: Building[];
@@ -17,6 +28,7 @@ export function BuildingCatalog({
   cities,
   types
 }: BuildingCatalogProps) {
+  const { language } = useLanguage();
   const [query, setQuery] = useState("");
   const [selectedCity, setSelectedCity] = useState("All");
   const [selectedType, setSelectedType] = useState("All");
@@ -31,10 +43,14 @@ export function BuildingCatalog({
 
     const matchesQuery =
       deferredQuery.length === 0 ||
-      building.title.toLowerCase().includes(deferredQuery) ||
-      building.summary.toLowerCase().includes(deferredQuery) ||
-      building.city.toLowerCase().includes(deferredQuery) ||
-      building.type.toLowerCase().includes(deferredQuery) ||
+      getBuildingTitle(building, "en").toLowerCase().includes(deferredQuery) ||
+      getBuildingTitle(building, "ko").toLowerCase().includes(deferredQuery) ||
+      getBuildingSummary(building, "en").toLowerCase().includes(deferredQuery) ||
+      getBuildingSummary(building, "ko").toLowerCase().includes(deferredQuery) ||
+      getCityLabel(building.city, "en").toLowerCase().includes(deferredQuery) ||
+      getCityLabel(building.city, "ko").toLowerCase().includes(deferredQuery) ||
+      getTypeLabel(building.type, "en").toLowerCase().includes(deferredQuery) ||
+      getTypeLabel(building.type, "ko").toLowerCase().includes(deferredQuery) ||
       architectNames.includes(deferredQuery);
 
     const matchesCity =
@@ -49,43 +65,53 @@ export function BuildingCatalog({
     <section className="catalog-panel">
       <div className="catalog-controls">
         <label className="field">
-          <span className="field__label">Search</span>
+          <span className="field__label">
+            {language === "ko" ? "검색" : "Search"}
+          </span>
           <input
             className="field__input"
             type="search"
-            placeholder="Building, city, type, or architect"
+            placeholder={
+              language === "ko"
+                ? "건물명, 도시, 유형, 건축가"
+                : "Building, city, type, or architect"
+            }
             value={query}
             onChange={(event) => setQuery(event.target.value)}
           />
         </label>
 
         <label className="field">
-          <span className="field__label">City</span>
+          <span className="field__label">{language === "ko" ? "도시" : "City"}</span>
           <select
             className="field__select"
             value={selectedCity}
             onChange={(event) => setSelectedCity(event.target.value)}
           >
-            <option value="All">All cities</option>
+            <option value="All">
+              {language === "ko" ? "모든 도시" : "All cities"}
+            </option>
             {cities.map((city) => (
               <option key={city} value={city}>
-                {city}
+                {getCityLabel(city, language)}
               </option>
             ))}
           </select>
         </label>
 
         <label className="field">
-          <span className="field__label">Type</span>
+          <span className="field__label">{language === "ko" ? "유형" : "Type"}</span>
           <select
             className="field__select"
             value={selectedType}
             onChange={(event) => setSelectedType(event.target.value)}
           >
-            <option value="All">All types</option>
+            <option value="All">
+              {language === "ko" ? "모든 유형" : "All types"}
+            </option>
             {types.map((type) => (
               <option key={type} value={type}>
-                {type}
+                {getTypeLabel(type, language)}
               </option>
             ))}
           </select>
@@ -93,9 +119,15 @@ export function BuildingCatalog({
       </div>
 
       <div className="catalog-toolbar">
-        <p className="catalog-toolbar__count">{filtered.length} entries visible</p>
+        <p className="catalog-toolbar__count">
+          {language === "ko"
+            ? `${filtered.length}개 항목 표시`
+            : `${filtered.length} entries visible`}
+        </p>
         <p className="catalog-toolbar__hint">
-          Buildings are listed as an editorial archive rather than a card wall.
+          {language === "ko"
+            ? "건물은 카드 묶음보다 편집된 아카이브 목록으로 정리됩니다."
+            : "Buildings are listed as an editorial archive rather than a card wall."}
         </p>
       </div>
 
@@ -112,9 +144,14 @@ export function BuildingCatalog({
 
             <div className="archive-row__title">
               <p className="archive-row__kicker">
-                {[building.city, building.district].join(" / ")}
+                {[
+                  getCityLabel(building.city, language),
+                  getDistrictLabel(building.district, language)
+                ].join(" / ")}
               </p>
-              <h2 className="archive-row__name">{building.title}</h2>
+              <h2 className="archive-row__name">
+                {getBuildingTitle(building, language)}
+              </h2>
               <p className="archive-row__minor">
                 {building.architectSlugs
                   .map((slug) => architectNameMap[slug])
@@ -123,15 +160,22 @@ export function BuildingCatalog({
             </div>
 
             <div className="archive-row__desc">
-              <p>{building.summary}</p>
-              <p className="archive-row__highlight">{building.highlight}</p>
+              <p>{getBuildingSummary(building, language)}</p>
+              <p className="archive-row__highlight">
+                {getBuildingHighlight(building, language)}
+              </p>
             </div>
 
             <div className="archive-row__meta">
               <span>{building.year}</span>
-              <span>{building.type}</span>
-              <span>{building.status}</span>
-              <span>{building.materials.slice(0, 2).join(", ")}</span>
+              <span>{getTypeLabel(building.type, language)}</span>
+              <span>{getStatusLabel(building.status, language)}</span>
+              <span>
+                {building.materials
+                  .slice(0, 2)
+                  .map((material) => getMaterialLabel(material, language))
+                  .join(", ")}
+              </span>
             </div>
           </article>
         ))}

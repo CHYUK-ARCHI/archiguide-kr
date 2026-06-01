@@ -1,0 +1,87 @@
+[
+  {
+    "id": "architect-kim-sunhyeong",
+    "name_ko": "김선형",
+    "name_en": "Sunhyeong Kim",
+    "country_code": "KR",
+    "scope": "korean",
+    "office_ids": ["office-frame-works"],
+    "bio_ko": "전남대학교와 Frame Works 건축연구소에서 활동하는 건축가.",
+    "bio_en": "Architect working with Chonnam National University and Frame Works.",
+    "source_refs": [
+      {
+        "type": "article",
+        "label": "BRIQUE 2025 Young Architect Award article",
+        "url": "https://magazine.brique.co/brq-news/2025-korean-young-architect-award/"
+      }
+    ]
+  },
+  {
+    "id": "architect-lee-changgyu",
+    "name_ko": "이창규",
+    "name_en": "Changgyu Lee",
+    "country_code": "KR",
+    "scope": "korean",
+    "office_ids": ["office-a-root"],
+    "bio_ko": "에이루트건축사사무소 공동설립자.",
+    "bio_en": "Co-founder of A-Root Architects.",
+    "source_refs": [
+      {
+        "type": "article",
+        "label": "BRIQUE 2025 Young Architect Award article",
+        "url": "https://magazine.brique.co/brq-news/2025-korean-young-architect-award/"
+      }
+    ]
+  },
+  {
+    "id": "architect-kang-jeongyun",
+    "name_ko": "강정윤",
+    "name_en": "Jeongyun Kang",
+    "country_code": "KR",
+    "scope": "korean",
+    "office_ids": ["office-a-root"],
+    "bio_ko": "에이루트건축사사무소 공동설립자.",
+    "bio_en": "Co-founder of A-Root Architects.",
+    "source_refs": [
+      {
+        "type": "article",
+        "label": "BRIQUE 2025 Young Architect Award article",
+        "url": "https://magazine.brique.co/brq-news/2025-korean-young-architect-award/"
+      }
+    ]
+  },
+  {
+    "id": "architect-jeong-isak",
+    "name_ko": "정이삭",
+    "name_en": "Isak Jeong",
+    "country_code": "KR",
+    "scope": "korean",
+    "office_ids": ["office-acolab"],
+    "bio_ko": "에이코랩건축사사무소 설립자이자 공동 작업자.",
+    "bio_en": "Founder and principal collaborator at ACOLAB.",
+    "source_refs": [
+      {
+        "type": "article",
+        "label": "BRIQUE 2025 Young Architect Award article",
+        "url": "https://magazine.brique.co/brq-news/2025-korean-young-architect-award/"
+      }
+    ]
+  },
+  {
+    "id": "architect-hong-jinpyo",
+    "name_ko": "홍진표",
+    "name_en": "Jinpyo Hong",
+    "country_code": "KR",
+    "scope": "korean",
+    "office_ids": ["office-acolab"],
+    "bio_ko": "에이코랩건축사사무소 공동 작업자.",
+    "bio_en": "Collaborating architect at ACOLAB.",
+    "source_refs": [
+      {
+        "type": "article",
+        "label": "BRIQUE 2025 Young Architect Award article",
+        "url": "https://magazine.brique.co/brq-news/2025-korean-young-architect-award/"
+      }
+    ]
+  }
+]

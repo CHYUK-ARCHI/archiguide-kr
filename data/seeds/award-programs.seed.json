@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "focus": "award-program-catalog",
+  "files": [
+    "../normalized/awards/award-programs.json",
+    "../normalized/awards/yearly-coverage/2025.json"
+  ]
+}

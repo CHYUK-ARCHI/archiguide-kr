@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { LanguageProvider } from "@/components/language-provider";
+
 import "./globals.css";
 
 const repositoryName =
@@ -33,7 +35,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body>{children}</body>
+      <body>
+        <LanguageProvider>{children}</LanguageProvider>
+      </body>
     </html>
   );
 }

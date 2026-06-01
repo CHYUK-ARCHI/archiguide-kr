@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "focus": "young-architect-award-projects",
+  "notes": [
+    "First seed buildings come from Young Architect Award winners and representative works mentioned in verified public coverage.",
+    "Awards are intended to appear in detail metadata, not as the primary browse axis."
+  ],
+  "files": [
+    "../normalized/buildings/young-architect-award-2025-projects.json"
+  ]
+}

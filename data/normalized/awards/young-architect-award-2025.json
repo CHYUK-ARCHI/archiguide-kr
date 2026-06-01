@@ -1,0 +1,25 @@
+[
+  {
+    "id": "award-young-architect-2025",
+    "name_ko": "젊은 건축가상",
+    "name_en": "Korean Young Architect Award",
+    "organizer": "문화체육관광부 외",
+    "award_year": 2025,
+    "category_ko": "수상",
+    "category_en": "Winner",
+    "result_ko": "2025 수상자",
+    "result_en": "2025 winner",
+    "source_refs": [
+      {
+        "type": "article",
+        "label": "BRIQUE 2025 Young Architect Award article",
+        "url": "https://magazine.brique.co/brq-news/2025-korean-young-architect-award/"
+      },
+      {
+        "type": "notice",
+        "label": "AIK notice referencing official Young Architect Award site",
+        "url": "https://www.aik.or.kr/board/?_0000_method=view&ncode=d001&num=8017"
+      }
+    ]
+  }
+]

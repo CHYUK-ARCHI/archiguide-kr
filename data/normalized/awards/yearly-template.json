@@ -1,0 +1,11 @@
+{
+  "year": 0,
+  "collection_rule": "year-first",
+  "awards": [
+    {
+      "program_id": "award-program-example",
+      "status": "planned",
+      "normalized_files": []
+    }
+  ]
+}

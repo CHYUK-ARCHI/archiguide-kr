@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "focus": "award-metadata",
+  "files": [
+    "../normalized/awards/young-architect-award-2025.json",
+    "../normalized/relations/young-architect-award-2025.json"
+  ]
+}

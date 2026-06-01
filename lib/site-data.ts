@@ -1,3 +1,5 @@
+import type { Language } from "@/lib/i18n";
+
 export type Architect = {
   slug: string;
   name: string;
@@ -515,6 +517,234 @@ export const collections: Collection[] = [
   }
 ];
 
+const architectKoCopy: Record<
+  string,
+  {
+    focus: string;
+    summary: string;
+  }
+> = {
+  "studio-layer": {
+    focus: "공공 실내와 적응형 재생",
+    summary:
+      "공공 실내, 아카이브 공간, 그리고 두 번째 문화적 생명을 필요로 하는 건물을 다룹니다."
+  },
+  "atelier-gonggan": {
+    focus: "한옥 하이브리드와 기후 대응 리트로핏",
+    summary:
+      "전통적 공간 시퀀스를 현대적 환경 성능과 결합하는 작업을 이어갑니다."
+  },
+  "field-office-seoul": {
+    focus: "도시 연결과 공공 동선",
+    summary:
+      "거리, 시장, 계단, 공공실이 하나의 연결된 장처럼 작동하는 프로젝트를 설계합니다."
+  },
+  "coastal-common": {
+    focus: "수변 문화와 지역 커먼즈",
+    summary:
+      "해안, 옛 항만 인프라, 공공 수변 프로그램을 중심으로 작업합니다."
+  },
+  "north-wall-lab": {
+    focus: "연구시설과 압축된 학습 환경",
+    summary:
+      "밀도 높은 캠퍼스 건물, 연구소, 소규모 문화시설을 탐구합니다."
+  }
+};
+
+const buildingKoCopy: Record<
+  string,
+  {
+    title: string;
+    summary: string;
+    highlight: string;
+    address: string;
+    roadAddress: string;
+  }
+> = {
+  "floating-courtyard-library": {
+    title: "부유하는 중정 도서관",
+    summary:
+      "가로시장과 맞닿은 다공성 1층과 들어 올린 중정을 중심으로 구성한 소형 공공도서관입니다.",
+    highlight:
+      "이 프로젝트는 낮에는 도시의 지름길처럼, 밤에는 독서실처럼 작동하는 공공건물의 가능성을 실험합니다.",
+    address: "서울특별시 마포구",
+    roadAddress: "서울특별시 마포구 성미산로 28"
+  },
+  "seongsu-river-workshop": {
+    title: "성수 리버 워크숍",
+    summary:
+      "산업용 외피를 공공 워크숍, 카페, 강연장, 제작 공간으로 전환한 복합시설입니다.",
+    highlight:
+      "공장의 리듬을 지우지 않고 긴 스팬의 골조를 그대로 드러내며 새로운 기반시설로 재구성합니다.",
+    address: "서울특별시 성동구 성수동",
+    roadAddress: "서울특별시 성동구 아차산로9길 42"
+  },
+  "hanok-climate-lab": {
+    title: "한옥 기후 연구소",
+    summary:
+      "한옥의 중정을 유산 복제가 아니라 환경 장치로 다시 읽어내는 연구시설입니다.",
+    highlight:
+      "겹겹의 경계, 깊은 처마, 열완충 홀이 기후 자체를 공간 경험으로 바꾸는 평면을 만듭니다.",
+    address: "전북특별자치도 전주시 완산구",
+    roadAddress: "전북특별자치도 전주시 완산구 경기전길 61"
+  },
+  "port-light-culture-hall": {
+    title: "포트 라이트 문화회관",
+    summary:
+      "단차가 있는 로비와 등불 같은 상부 매스를 통해 항구 풍경을 끌어들이는 동네 문화회관입니다.",
+    highlight:
+      "과장된 스펙터클 대신 매스와 반사광만으로 야간의 표지를 만드는 방식이 핵심입니다.",
+    address: "부산광역시 영도구",
+    roadAddress: "부산광역시 영도구 해양로195번길 84"
+  },
+  "forest-terrace-housing": {
+    title: "포레스트 테라스 하우징",
+    summary:
+      "공유 겨울정원, 학습 테라스, 다공성 1층 커먼즈를 포함한 중층 주거 프로토타입입니다.",
+    highlight:
+      "핵심은 단순한 밀도가 아니라, 실제로 머무를 수 있는 반복된 공유 경계의 질에 있습니다.",
+    address: "대전광역시 유성구",
+    roadAddress: "대전광역시 유성구 엑스포로123번길 21"
+  },
+  "junction-market-commons": {
+    title: "정션 마켓 커먼즈",
+    summary:
+      "옛 물류 창고를 먹거리 점포, 아카이브실, 공공 좌석 테라스를 가진 시장 커먼즈로 다시 연 프로젝트입니다.",
+    highlight:
+      "상업, 기억, 기후 피난처를 분리하지 않고 하나의 시스템으로 다루는 점이 이 프로젝트의 중심입니다.",
+    address: "대구광역시 중구",
+    roadAddress: "대구광역시 중구 경상감영길 58"
+  },
+  "basalt-civic-hall": {
+    title: "현무암 공공회관",
+    summary:
+      "바람을 막아주는 집합 마당 주위에 현무암 톤의 방들을 군집시킨 해안 공공회관입니다.",
+    highlight:
+      "하나의 기념비적 정면 대신 반복되는 보호된 가장자리를 통해 정체성을 형성합니다.",
+    address: "제주특별자치도 제주시 애월읍",
+    roadAddress: "제주특별자치도 제주시 애월읍 애월해안로 113"
+  },
+  "seowon-study-archive": {
+    title: "서원 스터디 아카이브",
+    summary:
+      "전시실, 독서 틈새, 조용한 외부 로지아가 교차하는 소형 아카이브 건물입니다.",
+    highlight:
+      "빛, 경사, 침묵을 따라 천천히 이동한 뒤 컬렉션에 닿도록 의도적으로 느린 시퀀스를 구성합니다.",
+    address: "경상북도 안동시 풍천면",
+    roadAddress: "경상북도 안동시 풍천면 도산로 177"
+  }
+};
+
+const cityLabels: Record<string, string> = {
+  Seoul: "서울",
+  Jeonju: "전주",
+  Busan: "부산",
+  Daejeon: "대전",
+  Daegu: "대구",
+  Jeju: "제주",
+  Andong: "안동"
+};
+
+const districtLabels: Record<string, string> = {
+  Mapo: "마포",
+  Seongsu: "성수",
+  Wansan: "완산",
+  Yeongdo: "영도",
+  Yuseong: "유성",
+  Jung: "중구",
+  Aewol: "애월",
+  Pungcheon: "풍천"
+};
+
+const typeLabels: Record<string, string> = {
+  Library: "도서관",
+  "Mixed Use": "복합시설",
+  "Research Center": "연구시설",
+  "Culture Hall": "문화회관",
+  Housing: "주거",
+  Market: "시장",
+  "Civic Hall": "공공회관",
+  Archive: "아카이브"
+};
+
+const statusLabels: Record<string, string> = {
+  Built: "준공",
+  "Adaptive reuse": "재생 리노베이션",
+  "Under construction": "공사 중"
+};
+
+const materialLabels: Record<string, string> = {
+  Brick: "벽돌",
+  "Exposed concrete": "노출콘크리트",
+  Oak: "오크",
+  Steel: "철골",
+  Polycarbonate: "폴리카보네이트",
+  Birch: "자작합판",
+  Timber: "목재",
+  "Clay tile": "점토기와",
+  "Lime plaster": "석회미장",
+  Concrete: "콘크리트",
+  "Anodized aluminum": "아노다이징 알루미늄",
+  Pine: "소나무",
+  "Precast concrete": "프리캐스트 콘크리트",
+  "Galvanized steel": "아연도금 강재",
+  Glass: "유리",
+  "Steel truss": "철골 트러스",
+  Terrazzo: "테라조",
+  Canvas: "캔버스",
+  "Basalt aggregate concrete": "현무암 골재 콘크리트",
+  "Bronze mesh": "브론즈 메쉬",
+  "Washed stone": "세척석"
+};
+
+const structureLabels: Record<string, string> = {
+  "Reinforced concrete": "철근콘크리트",
+  "Steel frame": "철골조",
+  "Timber hybrid": "목구조 하이브리드",
+  "Precast concrete": "프리캐스트 콘크리트",
+  "Concrete and timber hybrid": "콘크리트·목구조 하이브리드",
+  "Timber and masonry": "목구조와 조적",
+  "Steel and timber hybrid": "철골·목구조 하이브리드",
+  "Concrete frame": "콘크리트 골조"
+};
+
+const useLabels: Record<string, string> = {
+  "Cultural facility": "문화시설",
+  "Neighborhood living facility": "근린생활시설",
+  "Educational and research facility": "교육연구시설",
+  "Multi-family housing": "공동주택",
+  "Public office and assembly facility": "공공업무 및 집회시설"
+};
+
+const accessLabels: Record<Building["publicAccess"], string> = {
+  Public: "공개",
+  Limited: "부분 공개",
+  Private: "비공개"
+};
+
+const heritageLabels: Record<Building["heritageClass"], string> = {
+  None: "해당 없음",
+  "Registered cultural property": "등록문화재",
+  "Future heritage": "미래유산",
+  "Modern heritage candidate": "근현대유산 후보"
+};
+
+const sourceSystemLabels: Record<ArchitectureSourceSystem, string> = {
+  "building-hub": "건축HUB",
+  "building-register": "건축물대장",
+  "gis-building": "공간정보",
+  "tour-api": "관광정보",
+  "heritage-detail": "유산해설"
+};
+
+const sourceSystemLabelsEn: Record<ArchitectureSourceSystem, string> = {
+  "building-hub": "Building Hub",
+  "building-register": "Building Register",
+  "gis-building": "GIS Building",
+  "tour-api": "Tour API",
+  "heritage-detail": "Heritage Detail"
+};
+
 const cityNotes: Record<string, string> = {
   Seoul: "Density, adaptive reuse, and street-facing public programs.",
   Jeonju: "Hanok continuities, courtyard logic, and material tactility.",
@@ -523,6 +753,16 @@ const cityNotes: Record<string, string> = {
   Daegu: "Market urbanism, interior publicness, and large-span reuse.",
   Jeju: "Wind, basalt, and dispersed public rooms.",
   Andong: "Quiet cultural landscapes and archive-like sequences."
+};
+
+const cityNotesKo: Record<string, string> = {
+  Seoul: "고밀도 도시, 적응형 재생, 그리고 거리와 맞닿는 공공 프로그램의 층위가 두드러집니다.",
+  Jeonju: "한옥의 연속성, 중정의 논리, 재료의 촉감이 도시 읽기의 기준이 됩니다.",
+  Busan: "수변의 노출, 시민적 빛, 경사진 도시 경계가 건축의 성격을 만듭니다.",
+  Daejeon: "연구 인프라와 압축된 공동 주거가 도시의 건축 언어를 형성합니다.",
+  Daegu: "시장 도시성, 실내 공공성, 대공간 재생의 흐름을 한눈에 볼 수 있습니다.",
+  Jeju: "바람, 현무암, 분산된 공공실의 조합이 공간 경험을 결정합니다.",
+  Andong: "조용한 문화 경관과 아카이브 같은 동선이 도시의 분위기를 규정합니다."
 };
 
 const typeNotes: Record<string, string> = {
@@ -536,6 +776,17 @@ const typeNotes: Record<string, string> = {
   Archive: "Buildings for memory, quiet circulation, and editorial curation."
 };
 
+const typeNotesKo: Record<string, string> = {
+  Library: "동네의 공공실 역할까지 겸하는 읽기 공간입니다.",
+  "Mixed Use": "일, 모임, 문화가 한 건물 안에서 겹쳐 작동하는 유형입니다.",
+  "Research Center": "기후 대응과 집중된 연구 활동이 형태를 규정하는 시설입니다.",
+  "Culture Hall": "강한 공간 정체성을 가진 공공 집합 공간입니다.",
+  Housing: "공용공간을 필수 요소로 다루는 주거 유형입니다.",
+  Market: "상업 건물을 시민적 기반시설로 다시 읽는 유형입니다.",
+  "Civic Hall": "집회, 의식, 지역 거버넌스를 위한 공동의 방입니다.",
+  Archive: "기억, 느린 동선, 편집적 큐레이션을 담는 건축 유형입니다."
+};
+
 function unique<T>(values: T[]) {
   return Array.from(new Set(values));
 }
@@ -543,6 +794,151 @@ function unique<T>(values: T[]) {
 export const architectNameMap = Object.fromEntries(
   architects.map((architect) => [architect.slug, architect.name])
 ) as Record<string, string>;
+
+function getLabel(
+  value: string,
+  language: Language,
+  labels: Record<string, string>
+) {
+  if (language === "en") {
+    return value;
+  }
+
+  return labels[value] ?? value;
+}
+
+export function getArchitectFocus(architect: Architect, language: Language) {
+  if (language === "en") {
+    return architect.focus;
+  }
+
+  return architectKoCopy[architect.slug]?.focus ?? architect.focus;
+}
+
+export function getArchitectSummary(architect: Architect, language: Language) {
+  if (language === "en") {
+    return architect.summary;
+  }
+
+  return architectKoCopy[architect.slug]?.summary ?? architect.summary;
+}
+
+export function getBuildingTitle(building: Building, language: Language) {
+  if (language === "en") {
+    return building.title;
+  }
+
+  return buildingKoCopy[building.slug]?.title ?? building.title;
+}
+
+export function getBuildingSummary(building: Building, language: Language) {
+  if (language === "en") {
+    return building.summary;
+  }
+
+  return buildingKoCopy[building.slug]?.summary ?? building.summary;
+}
+
+export function getBuildingHighlight(building: Building, language: Language) {
+  if (language === "en") {
+    return building.highlight;
+  }
+
+  return buildingKoCopy[building.slug]?.highlight ?? building.highlight;
+}
+
+export function getCityLabel(city: string, language: Language) {
+  return getLabel(city, language, cityLabels);
+}
+
+export function getDistrictLabel(district: string, language: Language) {
+  return getLabel(district, language, districtLabels);
+}
+
+export function getTypeLabel(type: string, language: Language) {
+  return getLabel(type, language, typeLabels);
+}
+
+export function getStatusLabel(status: string, language: Language) {
+  return getLabel(status, language, statusLabels);
+}
+
+export function getMaterialLabel(material: string, language: Language) {
+  return getLabel(material, language, materialLabels);
+}
+
+export function getStructureLabel(structure: string, language: Language) {
+  return getLabel(structure, language, structureLabels);
+}
+
+export function getPrimaryUseLabel(use: string, language: Language) {
+  return getLabel(use, language, useLabels);
+}
+
+export function getPublicAccessLabel(
+  access: Building["publicAccess"],
+  language: Language
+) {
+  if (language === "en") {
+    return access;
+  }
+
+  return accessLabels[access];
+}
+
+export function getHeritageLabel(
+  heritage: Building["heritageClass"],
+  language: Language
+) {
+  if (language === "en") {
+    return heritage;
+  }
+
+  return heritageLabels[heritage];
+}
+
+export function getSourceSystemLabel(
+  system: ArchitectureSourceSystem,
+  language: Language
+) {
+  if (language === "en") {
+    return sourceSystemLabelsEn[system];
+  }
+
+  return sourceSystemLabels[system];
+}
+
+export function getBuildingAddress(building: Building, language: Language) {
+  if (language === "en") {
+    return building.address;
+  }
+
+  return buildingKoCopy[building.slug]?.address ?? building.address;
+}
+
+export function getBuildingRoadAddress(building: Building, language: Language) {
+  if (language === "en") {
+    return building.roadAddress;
+  }
+
+  return buildingKoCopy[building.slug]?.roadAddress ?? building.roadAddress;
+}
+
+export function getCityNote(city: string, language: Language) {
+  if (language === "en") {
+    return cityNotes[city] ?? "Emerging regional archive cluster.";
+  }
+
+  return cityNotesKo[city] ?? "새로운 지역 아카이브 클러스터로 확장할 수 있는 도시입니다.";
+}
+
+export function getTypeNote(type: string, language: Language) {
+  if (language === "en") {
+    return typeNotes[type] ?? "A category for future archive expansion.";
+  }
+
+  return typeNotesKo[type] ?? "향후 아카이브 확장을 위한 유형입니다.";
+}
 
 export const siteStats = {
   buildings: buildings.length,

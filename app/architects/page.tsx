@@ -1,15 +1,30 @@
+"use client";
+
+import { useLanguage } from "@/components/language-provider";
 import { PageShell } from "@/components/page-shell";
-import { architects, getBuildingsForArchitect } from "@/lib/site-data";
+import {
+  architects,
+  getArchitectFocus,
+  getArchitectSummary,
+  getBuildingTitle,
+  getBuildingsForArchitect,
+  getCityLabel
+} from "@/lib/site-data";
 
 export default function ArchitectsPage() {
+  const { language } = useLanguage();
+
   return (
     <PageShell active="architects">
       <section className="page-head">
-        <p className="eyebrow">Authorship route / 건축가</p>
-        <h1 className="page-title">architects</h1>
+        <p className="eyebrow">
+          {language === "ko" ? "건축가" : "Authorship route"}
+        </p>
+        <h1 className="page-title">{language === "ko" ? "건축가" : "architects"}</h1>
         <p className="page-intro">
-          건축가는 이름 목록이 아니라 반복되는 태도와 작업 궤적으로 읽히도록
-          정리합니다.
+          {language === "ko"
+            ? "건축가는 이름 목록이 아니라 반복되는 태도와 작업 궤적으로 읽히도록 정리합니다."
+            : "Architects are organized as recurring attitudes and trajectories rather than as a flat list of names."}
         </p>
       </section>
 
@@ -24,15 +39,27 @@ export default function ArchitectsPage() {
               </div>
               <div className="directory-row__title">
                 <h2>{architect.name}</h2>
-                <p>{architect.city} / founded {architect.founded}</p>
+                <p>
+                  {language === "ko"
+                    ? `${getCityLabel(architect.city, language)} / ${architect.founded} 설립`
+                    : `${architect.city} / founded ${architect.founded}`}
+                </p>
               </div>
               <div className="directory-row__summary">
-                <p>{architect.focus}</p>
-                <p>{architect.summary}</p>
+                <p>{getArchitectFocus(architect, language)}</p>
+                <p>{getArchitectSummary(architect, language)}</p>
               </div>
               <div className="directory-row__meta">
-                <span>{relatedBuildings.length} linked entries</span>
-                <span>{relatedBuildings.map((building) => building.title).join(", ")}</span>
+                <span>
+                  {language === "ko"
+                    ? `${relatedBuildings.length}개 연결 항목`
+                    : `${relatedBuildings.length} linked entries`}
+                </span>
+                <span>
+                  {relatedBuildings
+                    .map((building) => getBuildingTitle(building, language))
+                    .join(", ")}
+                </span>
               </div>
             </article>
           );

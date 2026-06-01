@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "focus": "young-architect-award",
+  "notes": [
+    "First seed set for notable recent Korean architects.",
+    "Architects are grouped by scope so Korean and international browsing can diverge later."
+  ],
+  "files": [
+    "../normalized/architects/young-architect-award-2025.json"
+  ]
+}

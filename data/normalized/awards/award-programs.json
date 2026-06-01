@@ -1,0 +1,110 @@
+[
+  {
+    "id": "award-program-korean-architecture-culture-award",
+    "slug": "korean-architecture-culture-award",
+    "name_ko": "한국건축문화대상",
+    "name_en_working": "Korean Architecture Culture Award",
+    "scope": "korea",
+    "collection_unit": "annual",
+    "priority": "high"
+  },
+  {
+    "id": "award-program-korean-architecture-exhibition",
+    "slug": "korean-architecture-exhibition",
+    "name_ko": "한국건축전",
+    "name_en_working": "Korean Architecture Exhibition",
+    "scope": "korea",
+    "collection_unit": "annual",
+    "priority": "high"
+  },
+  {
+    "id": "award-program-young-architect-award",
+    "slug": "young-architect-award",
+    "name_ko": "대한민국신진건축사대상",
+    "name_en_working": "Korea Emerging Architects Award",
+    "scope": "korea",
+    "collection_unit": "annual",
+    "priority": "high"
+  },
+  {
+    "id": "award-program-public-architecture-award",
+    "slug": "public-architecture-award",
+    "name_ko": "대한민국공공건축상",
+    "name_en_working": "Republic of Korea Public Architecture Award",
+    "scope": "korea",
+    "collection_unit": "annual",
+    "priority": "high"
+  },
+  {
+    "id": "award-program-hanok-contest",
+    "slug": "hanok-contest",
+    "name_ko": "대한민국 한옥공모전",
+    "name_en_working": "Korean Hanok Contest",
+    "scope": "korea",
+    "collection_unit": "annual",
+    "priority": "medium"
+  },
+  {
+    "id": "award-program-green-building-award",
+    "slug": "green-building-award",
+    "name_ko": "대한민국 녹색건축대전",
+    "name_en_working": "Korea Green Building Awards",
+    "scope": "korea",
+    "collection_unit": "annual",
+    "priority": "medium"
+  },
+  {
+    "id": "award-program-kia-award",
+    "slug": "kia-award",
+    "name_ko": "한국건축가협회상",
+    "name_en_working": "Korean Institute of Architects Award",
+    "scope": "korea",
+    "collection_unit": "annual",
+    "priority": "high"
+  },
+  {
+    "id": "award-program-kim-swoo-geun-prize",
+    "slug": "kim-swoo-geun-prize",
+    "name_ko": "김수근건축상",
+    "name_en_working": "Kim Swoo Geun Architecture Prize",
+    "scope": "korea",
+    "collection_unit": "annual",
+    "priority": "high"
+  },
+  {
+    "id": "award-program-seoul-architecture-award",
+    "slug": "seoul-architecture-award",
+    "name_ko": "서울특별시건축상",
+    "name_en_working": "Seoul Architecture Award",
+    "scope": "regional-korea",
+    "collection_unit": "annual",
+    "priority": "medium"
+  },
+  {
+    "id": "award-program-busan-down-architecture-award",
+    "slug": "busan-down-architecture-award",
+    "name_ko": "부산다운건축상",
+    "name_en_working": "Busan Down Architecture Award",
+    "scope": "regional-korea",
+    "collection_unit": "annual",
+    "priority": "medium"
+  },
+  {
+    "id": "award-program-gyeonggi-architecture-culture-award",
+    "slug": "gyeonggi-architecture-culture-award",
+    "name_ko": "경기도 건축문화상",
+    "name_en_working": "Gyeonggi Architecture Culture Award",
+    "scope": "regional-korea",
+    "collection_unit": "annual",
+    "priority": "medium"
+  },
+  {
+    "id": "award-program-ulsan-architecture-award",
+    "slug": "ulsan-architecture-award",
+    "name_ko": "울산광역시 건축상",
+    "name_en_working": "Ulsan Metropolitan City Architecture Award",
+    "scope": "regional-korea",
+    "collection_unit": "annual",
+    "priority": "medium"
+  }
+]

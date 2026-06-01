@@ -1,3 +1,5 @@
+"use client";
+
 import type { ReactNode } from "react";
 
 import { SidebarNav, type NavKey } from "@/components/sidebar-nav";

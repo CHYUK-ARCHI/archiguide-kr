@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 
+import { useLanguage } from "@/components/language-provider";
 import { siteStats } from "@/lib/site-data";
 
 export type NavKey =
@@ -75,6 +78,8 @@ const navItems: NavItem[] = [
 ];
 
 export function SidebarNav({ active }: SidebarNavProps) {
+  const { language, setLanguage } = useLanguage();
+
   return (
     <>
       <aside className="sidebar">
@@ -82,12 +87,15 @@ export function SidebarNav({ active }: SidebarNavProps) {
           <Link href="/" className="sidebar__brand">
             <span className="sidebar__brand-main">ARCHIGUIDE.KR</span>
             <span className="sidebar__brand-sub">
-              Korean architecture guide
+              {language === "ko"
+                ? "한국 건축 아카이브 가이드"
+                : "Korean architecture guide"}
             </span>
           </Link>
           <p className="sidebar__intro">
-            한국 건축을 건물, 건축가, 유형, 도시, 지도, 검색으로 읽는 파일럿
-            아카이브입니다.
+            {language === "ko"
+              ? "한국 건축을 건물, 건축가, 유형, 도시, 지도, 검색으로 읽는 파일럿 아카이브입니다."
+              : "A pilot archive for reading Korean architecture through buildings, architects, types, cities, maps, and search."}
           </p>
         </div>
 
@@ -104,7 +112,7 @@ export function SidebarNav({ active }: SidebarNavProps) {
                 }`}
               >
                 <span className="sidebar__menu-label">
-                  {item.label} / {item.labelEn}
+                  {language === "ko" ? item.label : item.labelEn}
                 </span>
                 {typeof item.count === "number" ? (
                   <span className="sidebar__menu-count">
@@ -117,15 +125,37 @@ export function SidebarNav({ active }: SidebarNavProps) {
         </nav>
 
         <div className="sidebar__foot">
+          <div className="language-switch" aria-label="Language switch">
+            <button
+              type="button"
+              className={`language-switch__button${
+                language === "ko" ? " language-switch__button--active" : ""
+              }`}
+              onClick={() => setLanguage("ko")}
+            >
+              한국어
+            </button>
+            <button
+              type="button"
+              className={`language-switch__button${
+                language === "en" ? " language-switch__button--active" : ""
+              }`}
+              onClick={() => setLanguage("en")}
+            >
+              EN
+            </button>
+          </div>
           <Link
             href="/about"
             className={`sidebar__info-link${
               active === "about" ? " sidebar__info-link--active" : ""
             }`}
           >
-            INFO / METHOD
+            {language === "ko" ? "방법" : "INFO / METHOD"}
           </Link>
-          <p className="sidebar__footnote">pilot dataset / 2026</p>
+          <p className="sidebar__footnote">
+            {language === "ko" ? "파일럿 데이터셋 / 2026" : "pilot dataset / 2026"}
+          </p>
         </div>
       </aside>
 
@@ -145,11 +175,31 @@ export function SidebarNav({ active }: SidebarNavProps) {
                   isActive ? " mobile-header__link--active" : ""
                 }`}
               >
-                {item.labelEn}
+                {language === "ko" ? item.label : item.labelEn}
               </Link>
             );
           })}
         </nav>
+        <div className="language-switch language-switch--mobile" aria-label="Language switch">
+          <button
+            type="button"
+            className={`language-switch__button${
+              language === "ko" ? " language-switch__button--active" : ""
+            }`}
+            onClick={() => setLanguage("ko")}
+          >
+            한국어
+          </button>
+          <button
+            type="button"
+            className={`language-switch__button${
+              language === "en" ? " language-switch__button--active" : ""
+            }`}
+            onClick={() => setLanguage("en")}
+          >
+            EN
+          </button>
+        </div>
       </header>
     </>
   );

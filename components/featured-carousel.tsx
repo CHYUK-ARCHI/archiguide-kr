@@ -43,67 +43,42 @@ export function FeaturedCarousel({
           label={`${active.city} / ${active.year}`}
           palette={active.palette}
         />
-        <div className="feature-carousel__caption">
+      </div>
+
+      <div className="feature-carousel__footer">
+        <Link className="feature-carousel__caption" href={`/buildings#${active.slug}`}>
+          {active.title},{" "}
+          {active.architectSlugs
+            .map((slug) => architectNameMap[slug])
+            .join(", ")}
+          , {active.year}, {active.city} &gt;
+        </Link>
+
+        <div className="feature-carousel__controls" aria-label="Featured projects">
+          <button
+            type="button"
+            className="feature-carousel__button"
+            onClick={() =>
+              setCurrentIndex((previous) =>
+                previous === 0 ? buildings.length - 1 : previous - 1
+              )
+            }
+          >
+            previous
+          </button>
           <span className="feature-carousel__index">
             {String(currentIndex + 1).padStart(2, "0")} /{" "}
             {String(buildings.length).padStart(2, "0")}
           </span>
-          <span>{active.city} / {active.year}</span>
-        </div>
-      </div>
-
-      <div className="feature-carousel__content">
-        <div className="feature-carousel__eyebrow">Featured building</div>
-        <h2 className="feature-carousel__title">{active.title}</h2>
-        <p className="feature-carousel__meta">
-          {[active.city, active.district, active.type, active.status].join(" / ")}
-        </p>
-        <p className="feature-carousel__summary">{active.summary}</p>
-        <p className="feature-carousel__highlight">{active.highlight}</p>
-        <p className="feature-carousel__architects">
-          By {active.architectSlugs.map((slug) => architectNameMap[slug]).join(", ")}
-        </p>
-
-        <div className="feature-carousel__actions">
-          <Link className="button button--solid" href={`/buildings#${active.slug}`}>
-            Open entry
-          </Link>
-          <div className="feature-carousel__controls" aria-label="Featured projects">
-            <button
-              type="button"
-              className="button button--ghost"
-              onClick={() =>
-                setCurrentIndex((previous) =>
-                  previous === 0 ? buildings.length - 1 : previous - 1
-                )
-              }
-            >
-              Previous
-            </button>
-            <button
-              type="button"
-              className="button button--ghost"
-              onClick={() =>
-                setCurrentIndex((previous) => (previous + 1) % buildings.length)
-              }
-            >
-              Next
-            </button>
-          </div>
-        </div>
-
-        <div className="feature-carousel__dots">
-          {buildings.map((building, index) => (
-            <button
-              key={building.slug}
-              type="button"
-              className={`feature-carousel__dot${
-                index === currentIndex ? " feature-carousel__dot--active" : ""
-              }`}
-              onClick={() => setCurrentIndex(index)}
-              aria-label={`Go to ${building.title}`}
-            />
-          ))}
+          <button
+            type="button"
+            className="feature-carousel__button"
+            onClick={() =>
+              setCurrentIndex((previous) => (previous + 1) % buildings.length)
+            }
+          >
+            next
+          </button>
         </div>
       </div>
     </div>

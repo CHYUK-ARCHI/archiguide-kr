@@ -43,9 +43,13 @@ export function MapExplorer({
             <p className="eyebrow">Google Maps layer</p>
             <h2>Browse entries geographically</h2>
           </div>
+          <p className="section-heading__copy">
+            Filter by city or type, then select one entry to keep the list and
+            map aligned.
+          </p>
         </div>
 
-        <div className="catalog-controls">
+        <div className="catalog-controls catalog-controls--split">
           <label className="field">
             <span className="field__label">City</span>
             <select
@@ -82,8 +86,7 @@ export function MapExplorer({
         <div className="catalog-toolbar">
           <p className="catalog-toolbar__count">{filtered.length} map-ready entries</p>
           <p className="catalog-toolbar__hint">
-            This page is designed for the Google Maps JavaScript API with
-            browser-restricted keys.
+            Filtered entries stay visible as a reading list beside the map.
           </p>
         </div>
 

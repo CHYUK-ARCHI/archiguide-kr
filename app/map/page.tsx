@@ -9,8 +9,8 @@ export default function MapPage() {
         <p className="eyebrow">Geographic route</p>
         <h1 className="page-title">map</h1>
         <p className="page-intro">
-          The map adds a geographic reading layer to the archive so projects can be
-          entered by district, proximity, and regional cluster as well as by name.
+          The map adds a geographic reading layer so the archive can be entered
+          by district, city, and regional cluster as well as by name.
         </p>
       </section>
 

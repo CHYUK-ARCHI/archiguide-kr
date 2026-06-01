@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { siteStats } from "@/lib/site-data";
+
 export type NavKey =
   | "home"
   | "buildings"
@@ -14,27 +16,82 @@ type SidebarNavProps = {
   active: NavKey;
 };
 
-const navItems = [
-  { key: "buildings", href: "/buildings", label: "Buildings" },
-  { key: "architects", href: "/architects", label: "Architects" },
-  { key: "types", href: "/types", label: "Types" },
-  { key: "cities", href: "/cities", label: "Cities" },
-  { key: "map", href: "/map", label: "Map" },
-  { key: "search", href: "/search", label: "Search" },
-  { key: "about", href: "/about", label: "Method" }
-] as const;
+type NavItem = {
+  key: Exclude<NavKey, "home">;
+  href: string;
+  label: string;
+  labelEn: string;
+  count?: number;
+};
+
+const navItems: NavItem[] = [
+  {
+    key: "architects",
+    href: "/architects",
+    label: "건축가",
+    labelEn: "Architects",
+    count: siteStats.architects
+  },
+  {
+    key: "buildings",
+    href: "/buildings",
+    label: "건물",
+    labelEn: "Buildings",
+    count: siteStats.buildings
+  },
+  {
+    key: "types",
+    href: "/types",
+    label: "유형",
+    labelEn: "Types",
+    count: siteStats.types
+  },
+  {
+    key: "cities",
+    href: "/cities",
+    label: "도시",
+    labelEn: "Cities",
+    count: siteStats.cities
+  },
+  {
+    key: "map",
+    href: "/map",
+    label: "지도",
+    labelEn: "Map",
+    count: siteStats.buildings
+  },
+  {
+    key: "search",
+    href: "/search",
+    label: "고급검색",
+    labelEn: "Search"
+  },
+  {
+    key: "about",
+    href: "/about",
+    label: "방법",
+    labelEn: "Method"
+  }
+];
 
 export function SidebarNav({ active }: SidebarNavProps) {
   return (
-    <header className="site-header">
-      <div className="site-header__top">
-        <p className="site-header__eyebrow">Korean architecture archive</p>
-        <Link href="/" className="site-header__brand">
-          <span className="site-header__wordmark">ARCHIGUIDE KR</span>
-          <span className="site-header__sub">BUILDINGS, CITIES, TYPES, MAP</span>
-        </Link>
+    <>
+      <aside className="sidebar">
+        <div className="sidebar__head">
+          <Link href="/" className="sidebar__brand">
+            <span className="sidebar__brand-main">ARCHIGUIDE.KR</span>
+            <span className="sidebar__brand-sub">
+              Korean architecture guide
+            </span>
+          </Link>
+          <p className="sidebar__intro">
+            한국 건축을 건물, 건축가, 유형, 도시, 지도, 검색으로 읽는 파일럿
+            아카이브입니다.
+          </p>
+        </div>
 
-        <nav className="site-header__links" aria-label="Primary">
+        <nav className="sidebar__menu" aria-label="Primary">
           {navItems.map((item) => {
             const isActive = item.key === active;
 
@@ -42,42 +99,58 @@ export function SidebarNav({ active }: SidebarNavProps) {
               <Link
                 key={item.key}
                 href={item.href}
-                className={`site-header__link${
-                  isActive ? " site-header__link--active" : ""
+                className={`sidebar__menu-item${
+                  isActive ? " sidebar__menu-item--active" : ""
                 }`}
               >
-                {item.label}
+                <span className="sidebar__menu-label">
+                  {item.label} / {item.labelEn}
+                </span>
+                {typeof item.count === "number" ? (
+                  <span className="sidebar__menu-count">
+                    ({String(item.count).padStart(2, "0")})
+                  </span>
+                ) : null}
               </Link>
             );
           })}
         </nav>
-      </div>
 
-      <nav className="site-header__rail" aria-label="Secondary">
-        <Link
-          href="/"
-          className={`site-header__rail-link${
-            active === "home" ? " site-header__rail-link--active" : ""
-          }`}
-        >
-          Home
+        <div className="sidebar__foot">
+          <Link
+            href="/about"
+            className={`sidebar__info-link${
+              active === "about" ? " sidebar__info-link--active" : ""
+            }`}
+          >
+            INFO / METHOD
+          </Link>
+          <p className="sidebar__footnote">pilot dataset / 2026</p>
+        </div>
+      </aside>
+
+      <header className="mobile-header">
+        <Link href="/" className="mobile-header__brand">
+          ARCHIGUIDE.KR
         </Link>
-        {navItems.map((item) => {
-          const isActive = item.key === active;
+        <nav className="mobile-header__rail" aria-label="Primary">
+          {navItems.map((item) => {
+            const isActive = item.key === active;
 
-          return (
-            <Link
-              key={item.key}
-              href={item.href}
-              className={`site-header__rail-link${
-                isActive ? " site-header__rail-link--active" : ""
-              }`}
-            >
-              {item.label}
-            </Link>
-          );
-        })}
-      </nav>
-    </header>
+            return (
+              <Link
+                key={item.key}
+                href={item.href}
+                className={`mobile-header__link${
+                  isActive ? " mobile-header__link--active" : ""
+                }`}
+              >
+                {item.labelEn}
+              </Link>
+            );
+          })}
+        </nav>
+      </header>
+    </>
   );
 }

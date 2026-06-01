@@ -22,9 +22,8 @@ export default function SearchPage() {
         <p className="eyebrow">Schema route</p>
         <h1 className="page-title">search</h1>
         <p className="page-intro">
-          The extended search stays tied to fields that public building, GIS,
-          heritage, and tourism datasets already expose, so the guide can scale
-          without changing the interface logic.
+          Extended search remains tied to fields that Korean public building,
+          GIS, heritage, and tourism datasets already expose.
         </p>
       </section>
 

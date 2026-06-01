@@ -1,4 +1,3 @@
-import { ArchitectureArt } from "@/components/architecture-art";
 import { PageShell } from "@/components/page-shell";
 import { architects, getBuildingsForArchitect } from "@/lib/site-data";
 
@@ -6,47 +5,35 @@ export default function ArchitectsPage() {
   return (
     <PageShell active="architects">
       <section className="page-head">
-        <p className="eyebrow">Authorship route</p>
+        <p className="eyebrow">Authorship route / 건축가</p>
         <h1 className="page-title">architects</h1>
         <p className="page-intro">
-          Practices are listed as recurring voices in the archive, not only as
-          names. This directory makes it easier to see which attitudes repeat
-          across place, program, and material.
+          건축가는 이름 목록이 아니라 반복되는 태도와 작업 궤적으로 읽히도록
+          정리합니다.
         </p>
       </section>
 
-      <section className="card-grid">
+      <section className="directory-list">
         {architects.map((architect) => {
           const relatedBuildings = getBuildingsForArchitect(architect.slug);
 
           return (
-            <article key={architect.slug} className="catalog-card">
-              <ArchitectureArt
-                title={architect.name}
-                label={`${architect.city} / founded ${architect.founded}`}
-                palette={architect.palette}
-                mode="compact"
-              />
-              <div className="catalog-card__head">
-                <p className="catalog-card__meta">{architect.city}</p>
-                <h2 className="catalog-card__title">{architect.name}</h2>
+            <article key={architect.slug} className="directory-row">
+              <div className="directory-row__count">
+                {String(relatedBuildings.length).padStart(2, "0")}
               </div>
-              <p className="stack-card__focus">{architect.focus}</p>
-              <p className="catalog-card__summary">{architect.summary}</p>
-              <dl className="detail-list">
-                <div>
-                  <dt>Founded</dt>
-                  <dd>{architect.founded}</dd>
-                </div>
-                <div>
-                  <dt>Linked entries</dt>
-                  <dd>{relatedBuildings.length}</dd>
-                </div>
-                <div>
-                  <dt>Sample projects</dt>
-                  <dd>{relatedBuildings.map((building) => building.title).join(", ")}</dd>
-                </div>
-              </dl>
+              <div className="directory-row__title">
+                <h2>{architect.name}</h2>
+                <p>{architect.city} / founded {architect.founded}</p>
+              </div>
+              <div className="directory-row__summary">
+                <p>{architect.focus}</p>
+                <p>{architect.summary}</p>
+              </div>
+              <div className="directory-row__meta">
+                <span>{relatedBuildings.length} linked entries</span>
+                <span>{relatedBuildings.map((building) => building.title).join(", ")}</span>
+              </div>
             </article>
           );
         })}

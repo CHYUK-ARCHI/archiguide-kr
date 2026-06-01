@@ -1,8 +1,7 @@
 "use client";
 
-import { useDeferredValue, useMemo, useState } from "react";
+import { useDeferredValue, useEffect, useMemo, useState } from "react";
 
-import { ArchitectureArt } from "@/components/architecture-art";
 import { GoogleMapPanel } from "@/components/google-map-panel";
 import type { Building } from "@/lib/site-data";
 
@@ -142,6 +141,17 @@ export function AdvancedSearch({
   const selected =
     filtered.find((building) => building.slug === selectedSlug) ?? filtered[0];
 
+  useEffect(() => {
+    if (filtered.length === 0) {
+      setSelectedSlug(undefined);
+      return;
+    }
+
+    if (!filtered.some((building) => building.slug === selectedSlug)) {
+      setSelectedSlug(filtered[0].slug);
+    }
+  }, [filtered, selectedSlug]);
+
   return (
     <div className="search-layout">
       <section className="catalog-panel">
@@ -151,9 +161,8 @@ export function AdvancedSearch({
             <h2>Filter with schema-ready facets</h2>
           </div>
           <p className="section-heading__copy">
-            These filters are aligned to fields that official Korean building and
-            tourism datasets already expose: usage, structure, location, approval
-            timeline, coordinates, and source system.
+            Filters stay aligned to public Korean building, GIS, heritage, and
+            tourism fields so the archive can expand without changing its logic.
           </p>
         </div>
 
@@ -357,62 +366,80 @@ export function AdvancedSearch({
         </div>
       </section>
 
+      <section className="catalog-panel">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">Filtered archive</p>
+            <h2>Read the result set as a list</h2>
+          </div>
+          <p className="section-heading__copy">
+            Select one entry to keep the archive and map focused on the same
+            project.
+          </p>
+        </div>
+
+        {filtered.length === 0 ? (
+          <p className="archive-empty">
+            No entries match the current filter set. Adjust the range or clear a
+            few facets to widen the archive again.
+          </p>
+        ) : (
+          <div className="archive-list archive-list--catalog">
+            {filtered.map((building, index) => (
+              <button
+                key={building.slug}
+                type="button"
+                className={`archive-row archive-row--catalog archive-row--button${
+                  building.slug === selected?.slug ? " archive-row--active" : ""
+                }`}
+                onClick={() => setSelectedSlug(building.slug)}
+              >
+                <span className="archive-row__number">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+
+                <span className="archive-row__title">
+                  <span className="archive-row__kicker">
+                    {[building.city, building.district, building.heritageClass].join(
+                      " / "
+                    )}
+                  </span>
+                  <span className="archive-row__name">{building.title}</span>
+                  <span className="archive-row__minor">
+                    {building.architectSlugs
+                      .map((slug) => architectNameMap[slug])
+                      .join(", ")}
+                  </span>
+                </span>
+
+                <span className="archive-row__desc">
+                  <span className="archive-row__copy">{building.summary}</span>
+                  <span className="archive-row__highlight">
+                    {building.highlight}
+                  </span>
+                </span>
+
+                <span className="archive-row__meta">
+                  <span>{building.year}</span>
+                  <span>{building.primaryUseLabel}</span>
+                  <span>{building.structureLabel}</span>
+                  <span>
+                    {building.sourceRefs.map((source) => source.system).join(", ")}
+                  </span>
+                </span>
+              </button>
+            ))}
+          </div>
+        )}
+      </section>
+
       <GoogleMapPanel
         buildings={filtered}
         selectedSlug={selected?.slug}
         onSelect={setSelectedSlug}
         title="Filtered architecture map"
-        description="Map markers update with the current advanced search result set."
+        description="The selected list entry remains synced with the visible marker set."
       />
-
-      <section className="catalog-grid">
-        {filtered.map((building) => (
-          <button
-            key={building.slug}
-            type="button"
-            className={`catalog-card catalog-card--button${
-              building.slug === selected?.slug ? " catalog-card--selected" : ""
-            }`}
-            onClick={() => setSelectedSlug(building.slug)}
-          >
-            <ArchitectureArt
-              title={building.title}
-              label={`${building.city} / ${building.year}`}
-              palette={building.palette}
-              mode="compact"
-            />
-            <div className="catalog-card__head">
-              <p className="catalog-card__meta">
-                {[building.city, building.district, building.heritageClass].join(
-                  " / "
-                )}
-              </p>
-              <h2 className="catalog-card__title">{building.title}</h2>
-            </div>
-            <p className="catalog-card__summary">{building.summary}</p>
-            <dl className="detail-list">
-              <div>
-                <dt>Use</dt>
-                <dd>{building.primaryUseLabel}</dd>
-              </div>
-              <div>
-                <dt>Structure</dt>
-                <dd>{building.structureLabel}</dd>
-              </div>
-              <div>
-                <dt>Access</dt>
-                <dd>{building.publicAccess}</dd>
-              </div>
-              <div>
-                <dt>Source systems</dt>
-                <dd>
-                  {building.sourceRefs.map((source) => source.system).join(", ")}
-                </dd>
-              </div>
-            </dl>
-          </button>
-        ))}
-      </section>
     </div>
   );
 }

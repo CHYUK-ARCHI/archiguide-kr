@@ -17,8 +17,8 @@ export default function MapPage() {
         <h1 className="page-title">{language === "ko" ? "지도" : "map"}</h1>
         <p className="page-intro">
           {language === "ko"
-            ? "지도는 아카이브에 지리적 읽기 층을 더해, 이름뿐 아니라 지역과 도시, 권역 단위로도 진입할 수 있게 합니다."
-            : "The map adds a geographic reading layer so the archive can be entered by district, city, and regional cluster as well as by name."}
+            ? "지도는 아카이브의 보조 진입이지만, 이제 마커와 목록 모두 같은 건물 상세 페이지로 이어집니다. 주소와 좌표는 빌드 전 수집 단계에서 정규화되는 구조를 전제로 합니다."
+            : "The map remains a secondary archive entrance, but markers and list rows now lead into the same building detail page. Addresses and coordinates are assumed to be normalized before deploy."}
         </p>
       </section>
 

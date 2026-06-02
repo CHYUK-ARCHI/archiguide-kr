@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useDeferredValue, useEffect, useMemo, useState } from "react";
 
 import { useLanguage } from "@/components/language-provider";
@@ -8,6 +9,7 @@ import {
   architects,
   getArchitectFocus,
   getArchitectSummary,
+  getBuildingSummary,
   getBuildingTitle,
   getBuildingsForArchitect,
   getCityLabel,
@@ -49,9 +51,7 @@ function getGroupKey(sortName: string) {
   return /[A-Z]/.test(initial) ? initial : "0-9";
 }
 
-function getProminenceScore(
-  prominence: "featured" | "core" | "reference"
-) {
+function getProminenceScore(prominence: "featured" | "core" | "reference") {
   if (prominence === "featured") {
     return 0;
   }
@@ -80,10 +80,14 @@ export default function ArchitectsPage() {
 
           const haystack = [
             architect.name,
+            architect.nameKo,
             architect.sortName,
             architect.city,
+            architect.cityKo,
             architect.focus,
-            architect.summary
+            architect.focusKo,
+            architect.summary,
+            architect.summaryKo
           ]
             .join(" ")
             .toLowerCase();
@@ -149,7 +153,7 @@ export default function ArchitectsPage() {
         </h1>
         <p className="page-intro">
           {language === "ko"
-            ? "건축가 이름을 먼저 찾고, 오른쪽에서 선택된 건축가와 연결 프로젝트를 읽는 방식으로 정리했습니다."
+            ? "이름을 먼저 찾고, 오른쪽에서 선택된 건축가의 설명과 연결 프로젝트를 읽는 구조입니다."
             : "Find an architect by name first, then read the selected architect and linked projects on the right."}
         </p>
         <p className="page-footnote">
@@ -242,7 +246,7 @@ export default function ArchitectsPage() {
                           }`}
                           onClick={() => setSelectedSlug(architect.slug)}
                         >
-                          {architect.name}
+                          {language === "ko" ? architect.nameKo : architect.name}
                         </button>
                       </li>
                     ))}
@@ -267,7 +271,9 @@ export default function ArchitectsPage() {
                       : "International architect"}
                 </p>
                 <h2 className="architect-browser__title">
-                  {selectedArchitect.name}
+                  {language === "ko"
+                    ? selectedArchitect.nameKo
+                    : selectedArchitect.name}
                 </h2>
                 <p className="architect-browser__meta">
                   {[
@@ -286,8 +292,8 @@ export default function ArchitectsPage() {
                           ? "핵심 레퍼런스"
                           : "core reference"
                         : language === "ko"
-                          ? "아카이브 시드"
-                          : "archive seed"
+                          ? "보조 레퍼런스"
+                          : "archive reference"
                   ]
                     .filter(Boolean)
                     .join(" / ")}
@@ -332,7 +338,9 @@ export default function ArchitectsPage() {
                         </div>
                         <div className="architect-browser__project-body">
                           <h3 className="architect-browser__project-title">
-                            {getBuildingTitle(project, language)}
+                            <Link href={`/buildings/${project.slug}`}>
+                              {getBuildingTitle(project, language)}
+                            </Link>
                           </h3>
                           <p className="architect-browser__project-meta">
                             {[
@@ -342,7 +350,7 @@ export default function ArchitectsPage() {
                             ].join(" / ")}
                           </p>
                           <p className="architect-browser__project-summary">
-                            {project.summary}
+                            {getBuildingSummary(project, language)}
                           </p>
                         </div>
                       </article>

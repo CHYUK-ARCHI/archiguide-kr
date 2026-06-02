@@ -21,9 +21,7 @@ export default function HomePage() {
   return (
     <PageShell active="home">
       <section className="home-welcome">
-        <p className="eyebrow">
-          {language === "ko" ? "환영합니다" : "Welcome"}
-        </p>
+        <p className="eyebrow">{language === "ko" ? "환영합니다" : "Welcome"}</p>
         <h1 className="home-welcome__title">
           {language === "ko"
             ? "ARCHIGUIDE.KR에 오신 것을 환영합니다"
@@ -31,8 +29,8 @@ export default function HomePage() {
         </h1>
         <p className="home-welcome__intro">
           {language === "ko"
-            ? "한국 건축의 주요 흐름을 건물, 건축가, 유형, 도시, 지도, 검색으로 탐색하는 파일럿 가이드입니다. 이 홈페이지는 전시보다 아카이브 구조가 먼저 보이도록 단순하게 구성합니다."
-            : "A pilot guide for exploring Korean architecture through buildings, architects, types, cities, maps, and search. The homepage stays deliberately simple so the archive structure appears before presentation."}
+            ? "최근 한국 건축을 건물, 건축가, 도시, 지도, 검색의 축으로 빠르게 읽기 위한 가벼운 아카이브입니다. 이번 버전은 지도와 건물 상세 페이지가 같은 데이터 파이프라인 위에서 움직이도록 정리되어 있습니다."
+            : "A light archive for reading recent Korean architecture through buildings, architects, cities, map, and search. This version aligns the map and the building detail page on the same record pipeline."}
         </p>
       </section>
 
@@ -90,7 +88,7 @@ export default function HomePage() {
                       building.sourceRefs.some((entry) => entry.system === source)
                     ).length
                   }{" "}
-                  {language === "ko" ? "연결된 항목" : "linked entries"}
+                  {language === "ko" ? "linked entries" : "linked entries"}
                 </span>
               </li>
             ))}

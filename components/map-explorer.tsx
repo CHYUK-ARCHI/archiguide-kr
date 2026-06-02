@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 
 import { GoogleMapPanel } from "@/components/google-map-panel";
@@ -32,14 +33,12 @@ export function MapExplorer({
   );
 
   const filtered = useMemo(() => {
-    const next = buildings.filter((building) => {
+    return buildings.filter((building) => {
       const matchesCity = city === "All" || building.city === city;
       const matchesType = type === "All" || building.type === type;
 
       return matchesCity && matchesType;
     });
-
-    return next;
   }, [buildings, city, type]);
 
   const selected = filtered.find((building) => building.slug === selectedSlug);
@@ -50,17 +49,17 @@ export function MapExplorer({
         <div className="section-heading">
           <div>
             <p className="eyebrow">
-              {language === "ko" ? "구글 지도 레이어" : "Google Maps layer"}
+              {language === "ko" ? "Google Maps 레이어" : "Google Maps layer"}
             </p>
             <h2>
               {language === "ko"
-                ? "지리적으로 항목 읽기"
-                : "Browse entries geographically"}
+                ? "건물을 지도에서 읽기"
+                : "Browse buildings geographically"}
             </h2>
           </div>
           <p className="section-heading__copy">
             {language === "ko"
-              ? "도시나 유형으로 거른 뒤 하나의 항목을 선택하면 목록과 지도가 같은 프로젝트를 가리킵니다."
+              ? "도시와 유형으로 먼저 좁히고, 한 항목을 선택하면 지도와 목록이 같은 프로젝트에 맞춰집니다."
               : "Filter by city or type, then select one entry to keep the list and map aligned."}
           </p>
         </div>
@@ -106,40 +105,47 @@ export function MapExplorer({
         <div className="catalog-toolbar">
           <p className="catalog-toolbar__count">
             {language === "ko"
-              ? `${filtered.length}개 지도 연동 항목`
+              ? `${filtered.length}개 지도 항목`
               : `${filtered.length} map-ready entries`}
           </p>
           <p className="catalog-toolbar__hint">
             {language === "ko"
-              ? "필터링된 항목은 지도 옆에서 읽기 목록으로 계속 보입니다."
-              : "Filtered entries stay visible as a reading list beside the map."}
+              ? "목록 선택과 지도 마커가 같은 건물 상세로 이어집니다."
+              : "List selection and markers now lead into the same building detail route."}
           </p>
         </div>
 
         <div className="map-list">
           {filtered.map((building) => (
-            <button
+            <div
               key={building.slug}
-              type="button"
               className={`map-list__item${
                 building.slug === selected?.slug ? " map-list__item--active" : ""
               }`}
-              onClick={() => setSelectedSlug(building.slug)}
             >
-              <span className="map-list__title">
-                {getBuildingTitle(building, language)}
-              </span>
-              <span className="map-list__meta">
-                {[
-                  getCityLabel(building.city, language),
-                  getDistrictLabel(building.district, language),
-                  getTypeLabel(building.type, language)
-                ].join(" / ")}
-              </span>
-              <span className="map-list__address">
-                {getBuildingRoadAddress(building, language)}
-              </span>
-            </button>
+              <button
+                type="button"
+                className="map-list__button"
+                onClick={() => setSelectedSlug(building.slug)}
+              >
+                <span className="map-list__title">
+                  {getBuildingTitle(building, language)}
+                </span>
+                <span className="map-list__meta">
+                  {[
+                    getCityLabel(building.city, language),
+                    getDistrictLabel(building.district, language),
+                    getTypeLabel(building.type, language)
+                  ].join(" / ")}
+                </span>
+                <span className="map-list__address">
+                  {getBuildingRoadAddress(building, language)}
+                </span>
+              </button>
+              <Link href={`/buildings/${building.slug}`} className="map-list__detail-link">
+                {language === "ko" ? "건물 정보" : "Building page"}
+              </Link>
+            </div>
           ))}
         </div>
       </div>
@@ -149,12 +155,12 @@ export function MapExplorer({
         selectedSlug={selected?.slug}
         onSelect={setSelectedSlug}
         title={
-          language === "ko" ? "한국 건축 마커 지도" : "Architecture markers in Korea"
+          language === "ko" ? "한국 건축 마커 레이어" : "Architecture markers in Korea"
         }
         description={
           language === "ko"
-            ? "각 마커는 WGS84 좌표를 사용하므로 같은 스키마에 공공데이터를 직접 연결할 수 있습니다."
-            : "Each marker is built from WGS84-ready coordinates so the same schema can later ingest public datasets directly."
+            ? "정규화된 좌표만 지도에 올리고, 상세 페이지는 같은 데이터 레코드에서 바로 읽습니다."
+            : "Only normalized coordinates are rendered as markers, and the detail route reads from the same record."
         }
       />
     </section>

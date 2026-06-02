@@ -63,7 +63,7 @@ const navItems: NavItem[] = [
   {
     key: "search",
     href: "/search",
-    label: { ko: "고급검색", en: "Advanced Search" }
+    label: { ko: "고급 검색", en: "Advanced Search" }
   }
 ];
 
@@ -79,11 +79,7 @@ export function SidebarNav({ active }: SidebarNavProps) {
 
         <Link href="/" className="site-header__brand">
           <span className="site-header__wordmark">archiguide</span>
-          <span className="site-header__sub">
-            {language === "ko"
-              ? "korean architecture archive"
-              : "korean architecture archive"}
-          </span>
+          <span className="site-header__sub">korean architecture archive</span>
         </Link>
 
         <div className="site-header__meta" aria-label="Meta controls">
@@ -144,8 +140,8 @@ export function SidebarNav({ active }: SidebarNavProps) {
 
         <p className="site-header__footnote">
           {language === "ko"
-            ? "파일럿 데이터셋 / 2026"
-            : "pilot dataset / 2026"}
+            ? "pilot dataset / 2026 / map + detail pipeline"
+            : "pilot dataset / 2026 / map + detail pipeline"}
         </p>
       </div>
 

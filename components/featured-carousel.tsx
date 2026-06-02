@@ -48,7 +48,7 @@ export function FeaturedCarousel({
       </div>
 
       <div className="feature-carousel__footer">
-        <Link className="feature-carousel__caption" href={`/buildings#${active.slug}`}>
+        <Link className="feature-carousel__caption" href={`/buildings/${active.slug}`}>
           {getBuildingTitle(active, language)},{" "}
           {active.architectSlugs
             .map((slug) => architectNameMap[slug])

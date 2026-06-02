@@ -1,9 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 
+import { BuildingMedia } from "@/components/building-media";
 import { useLanguage } from "@/components/language-provider";
 import {
+  getArchitectNamesForBuilding,
   getBuildingRoadAddress,
   getBuildingTitle,
   getCityLabel,
@@ -98,7 +101,7 @@ export function GoogleMapPanel({
   const mapId = process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID || "DEMO_MAP_ID";
 
   const selectedBuilding = useMemo(
-    () => buildings.find((building) => building.slug === selectedSlug),
+    () => buildings.find((building) => building.slug === selectedSlug) ?? null,
     [buildings, selectedSlug]
   );
 
@@ -109,7 +112,6 @@ export function GoogleMapPanel({
     }
 
     const resolvedApiKey = apiKey;
-
     let cancelled = false;
 
     async function initialize() {
@@ -128,7 +130,7 @@ export function GoogleMapPanel({
         if (!mapRef.current) {
           mapRef.current = new Map(containerRef.current, {
             center: selectedBuilding?.coordinates ?? DEFAULT_CENTER,
-            zoom: selectedBuilding ? 11 : DEFAULT_ZOOM,
+            zoom: selectedBuilding?.coordinates ? 11 : DEFAULT_ZOOM,
             mapId,
             streetViewControl: false,
             mapTypeControl: false,
@@ -142,14 +144,18 @@ export function GoogleMapPanel({
         });
         markersRef.current = [];
 
-        if (buildings.length === 0) {
+        const geocodedBuildings = buildings.filter((building) => building.coordinates);
+
+        if (geocodedBuildings.length === 0) {
+          mapRef.current.setCenter(DEFAULT_CENTER);
+          mapRef.current.setZoom(DEFAULT_ZOOM);
           setStatus("ready");
           return;
         }
 
         const bounds = new google.maps.LatLngBounds();
 
-        buildings.forEach((building) => {
+        geocodedBuildings.forEach((building) => {
           const pin = new PinElement({
             background: building.slug === selectedSlug ? "#903f1e" : "#f8f5ee",
             borderColor: "#1d1d1b",
@@ -193,11 +199,11 @@ export function GoogleMapPanel({
           bounds.extend(building.coordinates);
         });
 
-        if (selectedBuilding) {
+        if (selectedBuilding?.coordinates) {
           mapRef.current.panTo(selectedBuilding.coordinates);
           mapRef.current.setZoom(Math.max(mapRef.current.getZoom() ?? 11, 11));
-        } else if (buildings.length === 1) {
-          mapRef.current.panTo(buildings[0].coordinates);
+        } else if (geocodedBuildings.length === 1) {
+          mapRef.current.panTo(geocodedBuildings[0].coordinates);
           mapRef.current.setZoom(12);
         } else {
           mapRef.current.fitBounds(bounds, 72);
@@ -223,9 +229,7 @@ export function GoogleMapPanel({
     <section className="map-panel">
       <div className="map-panel__head">
         <div>
-          <p className="eyebrow">
-            {language === "ko" ? "지도 탐색" : "Map explorer"}
-          </p>
+          <p className="eyebrow">{language === "ko" ? "지도 탐색" : "Map explorer"}</p>
           <h2>{title}</h2>
         </div>
         <p className="map-panel__copy">{description}</p>
@@ -235,23 +239,21 @@ export function GoogleMapPanel({
         <div className="map-fallback">
           <strong>
             {language === "ko"
-              ? "Google Maps API 키가 설정되지 않았습니다."
-              : "Google Maps API key is not configured."}
+              ? "Google Maps API 키가 아직 설정되지 않았습니다."
+              : "Google Maps API key is not configured yet."}
           </strong>
           <p>
             {language === "ko" ? (
               <>
                 <code>NEXT_PUBLIC_GOOGLE_MAPS_API_KEY</code>와 선택적으로{" "}
-                <code>NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID</code>를 추가하면
-                상호작용 지도를 활성화할 수 있습니다. 필터링된 항목과 좌표는
-                이미 라이브 렌더링 준비가 되어 있습니다.
+                <code>NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID</code>를 넣으면 인터랙티브
+                지도가 바로 활성화됩니다.
               </>
             ) : (
               <>
                 Add <code>NEXT_PUBLIC_GOOGLE_MAPS_API_KEY</code> and optionally{" "}
-                <code>NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID</code> to enable the
-                interactive map. The filtered entries and coordinates are already
-                ready for live rendering.
+                <code>NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID</code> to enable the live
+                map.
               </>
             )}
           </p>
@@ -260,9 +262,7 @@ export function GoogleMapPanel({
 
       {status === "error" ? (
         <div className="map-fallback">
-          <strong>
-            {language === "ko" ? "지도를 불러오지 못했습니다." : "Map failed to load."}
-          </strong>
+          <strong>{language === "ko" ? "지도를 불러오지 못했습니다." : "Map failed to load."}</strong>
           <p>{errorMessage}</p>
         </div>
       ) : null}
@@ -272,8 +272,8 @@ export function GoogleMapPanel({
       <div className="map-panel__legend">
         <span>
           {language === "ko"
-            ? `${buildings.length}개 마커 표시`
-            : `${buildings.length} visible markers`}
+            ? `${buildings.filter((building) => building.coordinates).length}개 마커 표시`
+            : `${buildings.filter((building) => building.coordinates).length} visible markers`}
         </span>
         <span>
           {selectedBuilding
@@ -285,6 +285,41 @@ export function GoogleMapPanel({
               : "Select a marker or list entry."}
         </span>
       </div>
+
+      {selectedBuilding ? (
+        <article className="map-selection-card">
+          <div className="map-selection-card__media">
+            <BuildingMedia building={selectedBuilding} variant="preview" />
+          </div>
+          <div className="map-selection-card__body">
+            <p className="eyebrow">
+              {language === "ko" ? "선택한 프로젝트" : "Selected project"}
+            </p>
+            <h3 className="map-selection-card__title">
+              {getBuildingTitle(selectedBuilding, language)}
+            </h3>
+            <p className="map-selection-card__meta">
+              {getArchitectNamesForBuilding(selectedBuilding, language).join(", ")}
+            </p>
+            <p className="map-selection-card__meta">
+              {[
+                getCityLabel(selectedBuilding.city, language),
+                getDistrictLabel(selectedBuilding.district, language),
+                getTypeLabel(selectedBuilding.type, language)
+              ].join(" / ")}
+            </p>
+            <p className="map-selection-card__address">
+              {getBuildingRoadAddress(selectedBuilding, language)}
+            </p>
+            <Link
+              href={`/buildings/${selectedBuilding.slug}`}
+              className="map-selection-card__link"
+            >
+              {language === "ko" ? "건물 정보 보기" : "Open building page"}
+            </Link>
+          </div>
+        </article>
+      ) : null}
     </section>
   );
 }

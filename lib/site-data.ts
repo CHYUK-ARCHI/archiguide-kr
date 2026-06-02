@@ -1,69 +1,151 @@
 import type { Language } from "@/lib/i18n";
 
-export type Architect = {
-  slug: string;
-  name: string;
-  sortName: string;
-  scope: "korean" | "international";
-  prominence: "featured" | "core" | "reference";
-  city: string;
-  founded?: number;
-  focus: string;
-  summary: string;
-  palette: [string, string, string];
-};
+import rawArchitects from "@/data/normalized/architects/archive-architects.json";
+import rawAwards from "@/data/normalized/awards/archive-awards.json";
+import rawBuildings from "@/data/normalized/buildings/archive-buildings.json";
+
+type ArchitectScope = "korean" | "international";
+type ArchitectProminence = "featured" | "core" | "reference";
+type PublicAccess = "Public" | "Limited" | "Private";
+type HeritageClass =
+  | "None"
+  | "Registered cultural property"
+  | "Future heritage"
+  | "Modern heritage candidate";
+type GeocodeStatus = "verified" | "manual-review" | "pending";
 
 export type ArchitectureSourceSystem =
   | "building-hub"
   | "building-register"
   | "gis-building"
   | "tour-api"
-  | "heritage-detail";
+  | "heritage-detail"
+  | "young-architect-award"
+  | "official-office";
 
 export type DataSourceRef = {
   system: ArchitectureSourceSystem;
   dataset: string;
   recordKey: string;
   note: string;
+  url?: string | null;
 };
 
-export type KoreanArchitectureRecord = {
+export type BuildingImage = {
+  id: string;
+  src: string | null;
+  alt: string;
+  altKo: string;
+  originalUrl?: string | null;
+  credit?: string | null;
+  licenseNote?: string | null;
+  sourceUrl?: string | null;
+  localPath?: string | null;
+  status: "approved" | "placeholder" | "pending-review";
+};
+
+export type BuildingAward = {
+  awardId: string;
+  displayMode: "detail-only";
+  note: string;
+  noteKo: string;
+};
+
+export type Architect = {
+  slug: string;
+  name: string;
+  nameKo: string;
+  sortName: string;
+  scope: ArchitectScope;
+  prominence: ArchitectProminence;
+  city: string;
+  cityKo: string;
+  founded?: number;
+  focus: string;
+  focusKo: string;
+  summary: string;
+  summaryKo: string;
+  palette: [string, string, string];
+  officeNames: string[];
+};
+
+export type Award = {
+  id: string;
+  slug: string;
+  name: string;
+  nameKo: string;
+  organizer: string;
+  awardYear: number;
+  category: string;
+  categoryKo: string;
+  result: string;
+  resultKo: string;
+  sourceUrl: string;
+};
+
+export type Building = {
+  id: string;
   slug: string;
   title: string;
+  titleKo: string;
   city: string;
+  cityKo: string;
   district: string;
+  districtKo: string;
   year: number;
+  completionYear: number | null;
   type: string;
+  typeKo: string;
   status: string;
+  statusKo: string;
   architectSlugs: string[];
+  officeNames: string[];
   summary: string;
+  summaryKo: string;
   highlight: string;
+  highlightKo: string;
+  sourceExcerpt: string;
+  sourceExcerptKo: string;
   materials: string[];
   palette: [string, string, string];
   coordinates: {
     lat: number;
     lng: number;
-  };
+  } | null;
   address: string;
+  addressKo: string;
   roadAddress: string;
+  roadAddressKo: string;
+  rawAddress: string;
+  rawAddressKo: string;
   areaSqm: number;
   landAreaSqm: number;
   floorsAboveGround: number;
   floorsBelowGround: number;
   structureLabel: string;
+  structureLabelKo: string;
   roofLabel: string;
+  roofLabelKo: string;
   primaryUseCode: string;
   primaryUseLabel: string;
+  primaryUseLabelKo: string;
   permitDate: string;
   completionDate: string;
-  publicAccess: "Public" | "Limited" | "Private";
-  heritageClass: "None" | "Registered cultural property" | "Future heritage" | "Modern heritage candidate";
-  imagesAvailable: boolean;
+  publicAccess: PublicAccess;
+  publicAccessKo: string;
+  heritageClass: HeritageClass;
+  heritageClassKo: string;
   tags: string[];
+  placeId?: string | null;
+  geocodeStatus: GeocodeStatus;
+  geocodeConfidence?: number | null;
+  sourceUrl: string;
+  images: BuildingImage[];
+  heroImage: BuildingImage | null;
   sourceRefs: DataSourceRef[];
+  awards: BuildingAward[];
+  imagesAvailable: boolean;
 };
-
-export type Building = KoreanArchitectureRecord;
 
 export type Collection = {
   slug: string;
@@ -73,1198 +155,408 @@ export type Collection = {
   entries: number;
 };
 
-export const architects: Architect[] = [
-  {
-    slug: "alvaro-siza",
-    name: "Alvaro Siza",
-    sortName: "Alvaro Siza",
-    scope: "international",
-    prominence: "featured",
-    city: "Porto",
-    founded: 1958,
-    focus: "Quiet civic form and exact urban placement",
-    summary: "A useful reference for architects who study how restraint, proportion, and context can carry a project.",
-    palette: ["#d9d6ce", "#7f7b74", "#f3f1eb"]
-  },
-  {
-    slug: "big",
-    name: "BIG",
-    sortName: "BIG",
-    scope: "international",
-    prominence: "featured",
-    city: "Copenhagen",
-    founded: 2005,
-    focus: "Diagrammatic form and public spectacle",
-    summary: "A high-visibility office often referenced for strong concepts, civic branding, and accessible massing logic.",
-    palette: ["#d8d2c5", "#202020", "#f1eee7"]
-  },
-  {
-    slug: "cho-byoung-soo",
-    name: "Cho Byoung Soo",
-    sortName: "Cho Byoung Soo",
-    scope: "korean",
-    prominence: "featured",
-    city: "Seoul",
-    founded: 1991,
-    focus: "Material restraint and slow spatial sequences",
-    summary: "Often referenced for architecture that feels calm, tactile, and deeply edited rather than over-explained.",
-    palette: ["#8e7d6c", "#3a3631", "#ece5d8"]
-  },
-  {
-    slug: "cho-min-suk",
-    name: "Cho Min-suk",
-    sortName: "Cho Min-suk",
-    scope: "korean",
-    prominence: "featured",
-    city: "Seoul",
-    founded: 2003,
-    focus: "Public institutions and contemporary cultural form",
-    summary: "A strong contemporary Korean reference for architects interested in civic identity, narrative form, and exhibition logic.",
-    palette: ["#7c6a5a", "#1f1f1f", "#eee7dc"]
-  },
-  {
-    slug: "choi-wook",
-    name: "Choi Wook",
-    sortName: "Choi Wook",
-    scope: "korean",
-    prominence: "featured",
-    city: "Seoul",
-    founded: 1999,
-    focus: "Urban density, mixed programs, and sharp public profiles",
-    summary: "Useful when studying how Korean mixed-use and urban projects balance identity, speed, and visibility.",
-    palette: ["#9a6d54", "#26221e", "#f0e6da"]
-  },
-  {
-    slug: "david-chipperfield-architects",
-    name: "David Chipperfield Architects",
-    sortName: "David Chipperfield Architects",
-    scope: "international",
-    prominence: "featured",
-    city: "London",
-    founded: 1985,
-    focus: "Museum clarity and disciplined urban form",
-    summary: "A clean reference for architects interested in measured detail, institutional calm, and long-lived public architecture.",
-    palette: ["#cfc9bc", "#44403a", "#f4f1eb"]
-  },
-  {
-    slug: "herzog-de-meuron",
-    name: "Herzog & de Meuron",
-    sortName: "Herzog and de Meuron",
-    scope: "international",
-    prominence: "featured",
-    city: "Basel",
-    founded: 1978,
-    focus: "Envelope experimentation and cultural scale",
-    summary: "A recurring reference when facade logic, material transformation, and public landmark character matter.",
-    palette: ["#8b7968", "#2e2a26", "#eee7dc"]
-  },
-  {
-    slug: "iroje",
-    name: "IROJE",
-    sortName: "IROJE",
-    scope: "korean",
-    prominence: "featured",
-    city: "Seoul",
-    founded: 1989,
-    focus: "Korean architectural discourse and spatial authorship",
-    summary: "Important when reading late twentieth-century Korean architecture through essays, houses, and civic work.",
-    palette: ["#6d6256", "#2b2a28", "#ebe3d7"]
-  },
-  {
-    slug: "jun-itami",
-    name: "Jun Itami",
-    sortName: "Jun Itami",
-    scope: "korean",
-    prominence: "featured",
-    city: "Jeju",
-    focus: "Stone, wind, ritual, and landscape sequence",
-    summary: "A key reference for architecture that turns weather, terrain, and silence into the main design material.",
-    palette: ["#5f584f", "#252321", "#e9e1d3"]
-  },
-  {
-    slug: "kim-swoo-geun",
-    name: "Kim Swoo Geun",
-    sortName: "Kim Swoo Geun",
-    scope: "korean",
-    prominence: "featured",
-    city: "Seoul",
-    focus: "Modern Korean civic language and cultural infrastructure",
-    summary: "Essential to any Korean architecture archive because so much later work is still read against his spatial and institutional legacy.",
-    palette: ["#78695d", "#312c28", "#ece4d8"]
-  },
-  {
-    slug: "lacaton-vassal",
-    name: "Lacaton & Vassal",
-    sortName: "Lacaton and Vassal",
-    scope: "international",
-    prominence: "featured",
-    city: "Paris",
-    founded: 1987,
-    focus: "Reuse, generosity, and minimum demolition",
-    summary: "A strong benchmark for architects studying transformation, budget intelligence, and spatial generosity.",
-    palette: ["#d4cfc5", "#35312d", "#f3f0ea"]
-  },
-  {
-    slug: "min-hyun-sik",
-    name: "Min Hyun-sik",
-    sortName: "Min Hyun-sik",
-    scope: "korean",
-    prominence: "core",
-    city: "Seoul",
-    focus: "Layered domesticity and urban memory",
-    summary: "Useful for reading how Korean houses and cultural buildings can hold complexity without becoming loud.",
-    palette: ["#907866", "#332c26", "#ede4d8"]
-  },
-  {
-    slug: "moon-hoon",
-    name: "Moon Hoon",
-    sortName: "Moon Hoon",
-    scope: "korean",
-    prominence: "core",
-    city: "Seoul",
-    founded: 2001,
-    focus: "Expressive domestic form and experimental character",
-    summary: "A reference point for architects who want to understand a more playful and image-forward Korean design language.",
-    palette: ["#a36b58", "#30231f", "#efe5d8"]
-  },
-  {
-    slug: "mvrdv",
-    name: "MVRDV",
-    sortName: "MVRDV",
-    scope: "international",
-    prominence: "featured",
-    city: "Rotterdam",
-    founded: 1993,
-    focus: "Density, data-driven form, and bold mixed use",
-    summary: "Often referenced for readable concepts, stacked programs, and public-facing experimentation at city scale.",
-    palette: ["#d0cbc2", "#292725", "#f4f0e8"]
-  },
-  {
-    slug: "obba",
-    name: "OBBA",
-    sortName: "OBBA",
-    scope: "korean",
-    prominence: "core",
-    city: "Seoul",
-    founded: 2010,
-    focus: "Compact housing and crisp residential form",
-    summary: "A practical Korean reference when studying contemporary housing, repetition, and clear facade discipline.",
-    palette: ["#8b7562", "#2e2925", "#ede5d9"]
-  },
-  {
-    slug: "oma",
-    name: "OMA",
-    sortName: "OMA",
-    scope: "international",
-    prominence: "featured",
-    city: "Rotterdam",
-    founded: 1975,
-    focus: "Programmatic thinking and metropolitan scale",
-    summary: "An enduring reference for architects interested in narrative diagrams, institutional complexity, and urban argument.",
-    palette: ["#cbc6bc", "#232323", "#f2eee7"]
-  },
-  {
-    slug: "peter-zumthor",
-    name: "Peter Zumthor",
-    sortName: "Peter Zumthor",
-    scope: "international",
-    prominence: "featured",
-    city: "Haldenstein",
-    founded: 1979,
-    focus: "Atmosphere, tactility, and patient detail",
-    summary: "Useful whenever the archive needs a benchmark for mood, construction precision, and sensory depth.",
-    palette: ["#b9afa2", "#2d2926", "#f0e8dc"]
-  },
-  {
-    slug: "renzo-piano-building-workshop",
-    name: "Renzo Piano Building Workshop",
-    sortName: "Renzo Piano Building Workshop",
-    scope: "international",
-    prominence: "featured",
-    city: "Genoa",
-    founded: 1981,
-    focus: "Lightness, public institutions, and technical clarity",
-    summary: "A frequent reference for buildings that need civic dignity without visual heaviness.",
-    palette: ["#cec7bb", "#34312d", "#f3efe9"]
-  },
-  {
-    slug: "sanaa",
-    name: "SANAA",
-    sortName: "SANAA",
-    scope: "international",
-    prominence: "featured",
-    city: "Tokyo",
-    founded: 1995,
-    focus: "Thin boundaries, soft circulation, and visual lightness",
-    summary: "Important for architects studying how openness and ambiguity can still remain precise.",
-    palette: ["#dad5cc", "#2b2928", "#f5f2ec"]
-  },
-  {
-    slug: "seung-h-sang",
-    name: "Seung H-Sang",
-    sortName: "Seung H-Sang",
-    scope: "korean",
-    prominence: "featured",
-    city: "Seoul",
-    founded: 1989,
-    focus: "Void, restraint, and Korean civic language",
-    summary: "One of the clearest Korean references for architects interested in emptiness, discipline, and spatial ethics.",
-    palette: ["#7d6b5b", "#2f2a26", "#ede4d7"]
-  },
-  {
-    slug: "soa",
-    name: "SoA",
-    sortName: "SoA",
-    scope: "korean",
-    prominence: "core",
-    city: "Seoul",
-    founded: 2003,
-    focus: "Everyday urbanism and carefully edited small programs",
-    summary: "A good reference for younger Korean practices working between subtle detail and strong urban reading.",
-    palette: ["#8c7766", "#302a26", "#eee5d9"]
-  },
-  {
-    slug: "sou-fujimoto",
-    name: "Sou Fujimoto",
-    sortName: "Sou Fujimoto",
-    scope: "international",
-    prominence: "featured",
-    city: "Tokyo",
-    founded: 2000,
-    focus: "Ambiguous boundaries and nest-like structure",
-    summary: "Useful for reading how light structures and open systems can still produce memorable identity.",
-    palette: ["#d3cec5", "#2d2c2a", "#f4f1eb"]
-  },
-  {
-    slug: "steven-holl-architects",
-    name: "Steven Holl Architects",
-    sortName: "Steven Holl Architects",
-    scope: "international",
-    prominence: "core",
-    city: "New York",
-    founded: 1977,
-    focus: "Light, section, and conceptual spatial episodes",
-    summary: "A useful reference for architects who think through section, light, and experiential sequence.",
-    palette: ["#c8c1b6", "#36322f", "#f1ede6"]
-  },
-  {
-    slug: "studio-layer",
-    name: "Studio Layer",
-    sortName: "Studio Layer",
-    scope: "korean",
-    prominence: "reference",
-    city: "Seoul",
-    founded: 2014,
-    focus: "Civic interiors and adaptive reuse",
-    summary: "Works across public interiors, archive spaces, and buildings that need a second cultural life.",
-    palette: ["#a74d2f", "#2f3f40", "#ece1cf"]
-  },
-  {
-    slug: "atelier-gonggan",
-    name: "Atelier Gonggan",
-    sortName: "Atelier Gonggan",
-    scope: "korean",
-    prominence: "reference",
-    city: "Jeonju",
-    founded: 2011,
-    focus: "Hanok hybrids and climate-aware retrofits",
-    summary: "Pairs traditional spatial sequences with contemporary environmental performance.",
-    palette: ["#7f6a3d", "#324334", "#efe7d5"]
-  },
-  {
-    slug: "field-office-seoul",
-    name: "Field Office Seoul",
-    sortName: "Field Office Seoul",
-    scope: "korean",
-    prominence: "reference",
-    city: "Seoul",
-    founded: 2018,
-    focus: "Urban stitching and public circulation",
-    summary: "Designs projects where street, market, stair, and public room behave as one connected field.",
-    palette: ["#45618d", "#d38f3f", "#ebe4d7"]
-  },
-  {
-    slug: "coastal-common",
-    name: "Coastal Common",
-    sortName: "Coastal Common",
-    scope: "korean",
-    prominence: "reference",
-    city: "Busan",
-    founded: 2016,
-    focus: "Waterfront culture and regional commons",
-    summary: "Builds around coasts, former port infrastructure, and civic waterfront programs.",
-    palette: ["#1f5362", "#d0a05f", "#e7e0d0"]
-  },
-  {
-    slug: "north-wall-lab",
-    name: "North Wall Lab",
-    sortName: "North Wall Lab",
-    scope: "korean",
-    prominence: "reference",
-    city: "Daejeon",
-    founded: 2020,
-    focus: "Research buildings and compact learning environments",
-    summary: "Explores dense campus buildings, research labs, and small-scale cultural institutions.",
-    palette: ["#583f52", "#c7a971", "#f1e8d8"]
-  },
-  {
-    slug: "tadao-ando",
-    name: "Tadao Ando",
-    sortName: "Tadao Ando",
-    scope: "international",
-    prominence: "featured",
-    city: "Osaka",
-    founded: 1969,
-    focus: "Concrete, light, and ritual procession",
-    summary: "A foundational reference when architects want to study how a small set of means can produce strong atmosphere.",
-    palette: ["#c7c1b7", "#262626", "#f1ede7"]
-  },
-  {
-    slug: "unsangdong-architects",
-    name: "Unsangdong Architects",
-    sortName: "Unsangdong Architects",
-    scope: "korean",
-    prominence: "core",
-    city: "Seoul",
-    founded: 2001,
-    focus: "Public identity, complex envelopes, and Korean urban scale",
-    summary: "A strong local reference for projects that negotiate density, image, and public program at once.",
-    palette: ["#8d7664", "#2f2924", "#eee4d8"]
-  },
-  {
-    slug: "zaha-hadid-architects",
-    name: "Zaha Hadid Architects",
-    sortName: "Zaha Hadid Architects",
-    scope: "international",
-    prominence: "featured",
-    city: "London",
-    founded: 1980,
-    focus: "Fluid geometry and landmark-driven public form",
-    summary: "Still a strong reference when studying the relationship between iconic form, engineering ambition, and global visibility.",
-    palette: ["#d3cdc2", "#1f1f1f", "#f4f1eb"]
-  }
-];
-
-export const buildings: Building[] = [
-  {
-    slug: "floating-courtyard-library",
-    title: "Floating Courtyard Library",
-    city: "Seoul",
-    district: "Mapo",
-    year: 2021,
-    type: "Library",
-    status: "Built",
-    architectSlugs: ["studio-layer", "field-office-seoul"],
-    summary: "A compact public library organized around a raised courtyard and a porous ground floor facing the street market.",
-    highlight: "The project tests how a civic building can behave like an urban shortcut during the day and a reading room at night.",
-    materials: ["Brick", "Exposed concrete", "Oak"],
-    palette: ["#b65f31", "#17262d", "#f0e1c5"],
-    coordinates: { lat: 37.5563, lng: 126.9107 },
-    address: "Mapo-gu, Seoul",
-    roadAddress: "28 Seongmisan-ro, Mapo-gu, Seoul",
-    areaSqm: 3980,
-    landAreaSqm: 1260,
-    floorsAboveGround: 5,
-    floorsBelowGround: 1,
-    structureLabel: "Reinforced concrete",
-    roofLabel: "Flat roof",
-    primaryUseCode: "14000",
-    primaryUseLabel: "Cultural facility",
-    permitDate: "2018-09-12",
-    completionDate: "2021-03-18",
-    publicAccess: "Public",
-    heritageClass: "None",
-    imagesAvailable: true,
-    tags: ["library", "courtyard", "market-edge", "civic"],
-    sourceRefs: [
-      {
-        system: "building-hub",
-        dataset: "MOLIT Building Hub",
-        recordKey: "AGKR-BLD-0001",
-        note: "Primary building register and use metadata"
-      },
-      {
-        system: "gis-building",
-        dataset: "MOLIT GIS building integrated info",
-        recordKey: "GIS-AGKR-0001",
-        note: "Geometry and parcel-linked coordinates"
-      },
-      {
-        system: "tour-api",
-        dataset: "KTO Korean Tourism Information Service",
-        recordKey: "VISITKOREA-ARCH-0001",
-        note: "Public-facing editorial and media layer"
-      }
-    ]
-  },
-  {
-    slug: "seongsu-river-workshop",
-    title: "Seongsu River Workshop",
-    city: "Seoul",
-    district: "Seongsu",
-    year: 2023,
-    type: "Mixed Use",
-    status: "Adaptive reuse",
-    architectSlugs: ["field-office-seoul"],
-    summary: "An industrial shell converted into a public workshop, cafe, lecture hall, and fabrication floor.",
-    highlight: "Instead of erasing the factory rhythm, the retrofit keeps the long-span frame visible and programs it as infrastructure.",
-    materials: ["Steel", "Polycarbonate", "Birch"],
-    palette: ["#274d69", "#d97742", "#efe7d8"],
-    coordinates: { lat: 37.5444, lng: 127.0557 },
-    address: "Seongsu-dong 2-ga, Seongdong-gu, Seoul",
-    roadAddress: "42 Achasan-ro 9-gil, Seongdong-gu, Seoul",
-    areaSqm: 5120,
-    landAreaSqm: 1890,
-    floorsAboveGround: 4,
-    floorsBelowGround: 0,
-    structureLabel: "Steel frame",
-    roofLabel: "Sawtooth roof",
-    primaryUseCode: "13000",
-    primaryUseLabel: "Neighborhood living facility",
-    permitDate: "2020-04-02",
-    completionDate: "2023-11-14",
-    publicAccess: "Limited",
-    heritageClass: "Future heritage",
-    imagesAvailable: true,
-    tags: ["adaptive-reuse", "workshop", "industrial", "lecture"],
-    sourceRefs: [
-      {
-        system: "building-hub",
-        dataset: "MOLIT Building Hub",
-        recordKey: "AGKR-BLD-0002",
-        note: "Permit, use, and floor data"
-      },
-      {
-        system: "gis-building",
-        dataset: "MOLIT GIS building integrated info",
-        recordKey: "GIS-AGKR-0002",
-        note: "Building footprint and mapping anchor"
-      }
-    ]
-  },
-  {
-    slug: "hanok-climate-lab",
-    title: "Hanok Climate Lab",
-    city: "Jeonju",
-    district: "Wansan",
-    year: 2020,
-    type: "Research Center",
-    status: "Built",
-    architectSlugs: ["atelier-gonggan", "north-wall-lab"],
-    summary: "A research center that reframes hanok courtyards as environmental devices rather than heritage replicas.",
-    highlight: "The plan uses layered thresholds, deep eaves, and a thermal buffer hall to turn climate into spatial experience.",
-    materials: ["Timber", "Clay tile", "Lime plaster"],
-    palette: ["#7e6439", "#2f4431", "#efe6d0"],
-    coordinates: { lat: 35.8145, lng: 127.1505 },
-    address: "Wansan-gu, Jeonju-si, Jeollabuk-do",
-    roadAddress: "61 Gyeonggijeon-gil, Wansan-gu, Jeonju-si",
-    areaSqm: 2860,
-    landAreaSqm: 1540,
-    floorsAboveGround: 3,
-    floorsBelowGround: 0,
-    structureLabel: "Timber hybrid",
-    roofLabel: "Tiled pitched roof",
-    primaryUseCode: "10000",
-    primaryUseLabel: "Educational and research facility",
-    permitDate: "2017-06-28",
-    completionDate: "2020-10-07",
-    publicAccess: "Limited",
-    heritageClass: "Modern heritage candidate",
-    imagesAvailable: true,
-    tags: ["hanok", "climate", "research", "courtyard"],
-    sourceRefs: [
-      {
-        system: "building-hub",
-        dataset: "MOLIT Building Hub",
-        recordKey: "AGKR-BLD-0003",
-        note: "Use, structure, area, and completion metadata"
-      },
-      {
-        system: "heritage-detail",
-        dataset: "Cultural heritage narrative layer",
-        recordKey: "HER-AGKR-0003",
-        note: "Interpretive narrative for traditional architecture context"
-      }
-    ]
-  },
-  {
-    slug: "port-light-culture-hall",
-    title: "Port Light Culture Hall",
-    city: "Busan",
-    district: "Yeongdo",
-    year: 2019,
-    type: "Culture Hall",
-    status: "Built",
-    architectSlugs: ["coastal-common"],
-    summary: "A neighborhood culture hall that frames the harbor through stepped foyers and a lantern-like upper volume.",
-    highlight: "The building becomes a nighttime marker without turning into spectacle, relying on massing and reflected light instead.",
-    materials: ["Concrete", "Anodized aluminum", "Pine"],
-    palette: ["#255260", "#d7a15b", "#f1e5d0"],
-    coordinates: { lat: 35.0916, lng: 129.0781 },
-    address: "Yeongdo-gu, Busan",
-    roadAddress: "84 Haeyang-ro 195beon-gil, Yeongdo-gu, Busan",
-    areaSqm: 4710,
-    landAreaSqm: 2100,
-    floorsAboveGround: 4,
-    floorsBelowGround: 1,
-    structureLabel: "Reinforced concrete",
-    roofLabel: "Flat roof",
-    primaryUseCode: "14000",
-    primaryUseLabel: "Cultural facility",
-    permitDate: "2016-11-09",
-    completionDate: "2019-08-30",
-    publicAccess: "Public",
-    heritageClass: "None",
-    imagesAvailable: true,
-    tags: ["harbor", "culture-hall", "waterfront", "public"],
-    sourceRefs: [
-      {
-        system: "building-hub",
-        dataset: "MOLIT Building Hub",
-        recordKey: "AGKR-BLD-0004",
-        note: "Official building ledger attributes"
-      },
-      {
-        system: "tour-api",
-        dataset: "KTO Korean Tourism Information Service",
-        recordKey: "VISITKOREA-ARCH-0004",
-        note: "Visit-oriented editorial content and image references"
-      }
-    ]
-  },
-  {
-    slug: "forest-terrace-housing",
-    title: "Forest Terrace Housing",
-    city: "Daejeon",
-    district: "Yuseong",
-    year: 2022,
-    type: "Housing",
-    status: "Built",
-    architectSlugs: ["north-wall-lab"],
-    summary: "A mid-rise housing prototype with shared winter gardens, study terraces, and a porous first-floor commons.",
-    highlight: "The key idea is not density alone but the quality of repeated shared edges where residents can actually linger.",
-    materials: ["Precast concrete", "Galvanized steel", "Glass"],
-    palette: ["#5a4656", "#c2a66f", "#eee2d3"],
-    coordinates: { lat: 36.3621, lng: 127.3566 },
-    address: "Yuseong-gu, Daejeon",
-    roadAddress: "21 Expo-ro 123beon-gil, Yuseong-gu, Daejeon",
-    areaSqm: 9240,
-    landAreaSqm: 3320,
-    floorsAboveGround: 11,
-    floorsBelowGround: 1,
-    structureLabel: "Precast concrete",
-    roofLabel: "Flat roof",
-    primaryUseCode: "02000",
-    primaryUseLabel: "Multi-family housing",
-    permitDate: "2019-12-17",
-    completionDate: "2022-06-24",
-    publicAccess: "Private",
-    heritageClass: "None",
-    imagesAvailable: false,
-    tags: ["housing", "shared-space", "research-city", "terrace"],
-    sourceRefs: [
-      {
-        system: "building-hub",
-        dataset: "MOLIT Building Hub",
-        recordKey: "AGKR-BLD-0005",
-        note: "Area, floor, and approval information"
-      },
-      {
-        system: "building-register",
-        dataset: "Building register title section",
-        recordKey: "REG-AGKR-0005",
-        note: "Supplementary structure and usage labels"
-      }
-    ]
-  },
-  {
-    slug: "junction-market-commons",
-    title: "Junction Market Commons",
-    city: "Daegu",
-    district: "Jung",
-    year: 2018,
-    type: "Market",
-    status: "Adaptive reuse",
-    architectSlugs: ["field-office-seoul", "studio-layer"],
-    summary: "A former logistics shed reopened as a market commons with food stalls, archive rooms, and public seating terraces.",
-    highlight: "It treats commerce, memory, and climate shelter as one system instead of separating them into different zones.",
-    materials: ["Steel truss", "Terrazzo", "Canvas"],
-    palette: ["#8f4934", "#21434c", "#f0dcc4"],
-    coordinates: { lat: 35.8694, lng: 128.5932 },
-    address: "Jung-gu, Daegu",
-    roadAddress: "58 Gyeongsang-gamyeong-gil, Jung-gu, Daegu",
-    areaSqm: 4380,
-    landAreaSqm: 1780,
-    floorsAboveGround: 3,
-    floorsBelowGround: 0,
-    structureLabel: "Steel frame",
-    roofLabel: "Monitor roof",
-    primaryUseCode: "13000",
-    primaryUseLabel: "Neighborhood living facility",
-    permitDate: "2015-05-20",
-    completionDate: "2018-09-11",
-    publicAccess: "Public",
-    heritageClass: "Future heritage",
-    imagesAvailable: true,
-    tags: ["market", "adaptive-reuse", "commons", "archive"],
-    sourceRefs: [
-      {
-        system: "building-hub",
-        dataset: "MOLIT Building Hub",
-        recordKey: "AGKR-BLD-0006",
-        note: "Building master metadata"
-      },
-      {
-        system: "gis-building",
-        dataset: "MOLIT GIS building integrated info",
-        recordKey: "GIS-AGKR-0006",
-        note: "Footprint geometry and parcel context"
-      },
-      {
-        system: "tour-api",
-        dataset: "KTO Korean Tourism Information Service",
-        recordKey: "VISITKOREA-ARCH-0006",
-        note: "Image and place-discovery layer"
-      }
-    ]
-  },
-  {
-    slug: "basalt-civic-hall",
-    title: "Basalt Civic Hall",
-    city: "Jeju",
-    district: "Aewol",
-    year: 2024,
-    type: "Civic Hall",
-    status: "Under construction",
-    architectSlugs: ["coastal-common"],
-    summary: "A coastal civic hall composed as a cluster of basalt-toned rooms around a wind-protected gathering court.",
-    highlight: "The design avoids a single monumental facade and instead builds identity through repeated sheltered edges.",
-    materials: ["Basalt aggregate concrete", "Timber", "Bronze mesh"],
-    palette: ["#3d4749", "#ad7447", "#e9dcc5"],
-    coordinates: { lat: 33.4629, lng: 126.3335 },
-    address: "Aewol-eup, Jeju-si",
-    roadAddress: "113 Aewolhaean-ro, Aewol-eup, Jeju-si",
-    areaSqm: 3620,
-    landAreaSqm: 2460,
-    floorsAboveGround: 2,
-    floorsBelowGround: 0,
-    structureLabel: "Concrete and timber hybrid",
-    roofLabel: "Low-pitched roof",
-    primaryUseCode: "08000",
-    primaryUseLabel: "Public office and assembly facility",
-    permitDate: "2022-08-04",
-    completionDate: "2024-12-19",
-    publicAccess: "Limited",
-    heritageClass: "None",
-    imagesAvailable: false,
-    tags: ["civic", "coastal", "basalt", "assembly"],
-    sourceRefs: [
-      {
-        system: "building-hub",
-        dataset: "MOLIT Building Hub",
-        recordKey: "AGKR-BLD-0007",
-        note: "Construction progress and permit basis"
-      },
-      {
-        system: "tour-api",
-        dataset: "KTO Korean Tourism Information Service",
-        recordKey: "VISITKOREA-ARCH-0007",
-        note: "Future visitor-facing narrative layer"
-      }
-    ]
-  },
-  {
-    slug: "seowon-study-archive",
-    title: "Seowon Study Archive",
-    city: "Andong",
-    district: "Pungcheon",
-    year: 2017,
-    type: "Archive",
-    status: "Built",
-    architectSlugs: ["atelier-gonggan"],
-    summary: "A small archive that alternates between exhibition rooms, reading alcoves, and a quiet open-air loggia.",
-    highlight: "The sequence is slow on purpose, asking visitors to move through light, slope, and silence before reaching the collection.",
-    materials: ["Timber", "Brick", "Washed stone"],
-    palette: ["#85633d", "#2f3f2f", "#efe3ce"],
-    coordinates: { lat: 36.5662, lng: 128.5139 },
-    address: "Pungcheon-myeon, Andong-si, Gyeongsangbuk-do",
-    roadAddress: "177 Dosan-ro, Pungcheon-myeon, Andong-si",
-    areaSqm: 1740,
-    landAreaSqm: 1320,
-    floorsAboveGround: 2,
-    floorsBelowGround: 0,
-    structureLabel: "Timber and masonry",
-    roofLabel: "Tiled pitched roof",
-    primaryUseCode: "10000",
-    primaryUseLabel: "Educational and research facility",
-    permitDate: "2014-10-16",
-    completionDate: "2017-04-28",
-    publicAccess: "Limited",
-    heritageClass: "Registered cultural property",
-    imagesAvailable: true,
-    tags: ["archive", "study", "heritage", "slow-sequence"],
-    sourceRefs: [
-      {
-        system: "building-register",
-        dataset: "Building register title section",
-        recordKey: "REG-AGKR-0008",
-        note: "Building identity, floor, and structural metadata"
-      },
-      {
-        system: "heritage-detail",
-        dataset: "CHA palace and heritage narrative layer",
-        recordKey: "HER-AGKR-0008",
-        note: "Narrative text and image-style heritage interpretation"
-      }
-    ]
-  }
-];
-
-export const collections: Collection[] = [
-  {
-    slug: "urban-thresholds",
-    title: "Urban Thresholds",
-    focus: "Buildings that work as shortcuts, plazas, and rooms at once",
-    summary: "A first route through projects where circulation is not secondary but the main public idea.",
-    entries: 3
-  },
-  {
-    slug: "reused-shells",
-    title: "Reused Shells",
-    focus: "Industrial or civic frames given a second life",
-    summary: "A cluster of projects about keeping structural memory visible while changing use completely.",
-    entries: 2
-  },
-  {
-    slug: "climate-rooms",
-    title: "Climate Rooms",
-    focus: "Projects where shadow, ventilation, and buffering become design language",
-    summary: "A reading path across archives, libraries, and civic buildings tuned to local climate behavior.",
-    entries: 4
-  }
-];
-
-const architectKoCopy: Record<
-  string,
-  {
-    focus: string;
-    summary: string;
-  }
-> = {
-  "studio-layer": {
-    focus: "공공 실내와 적응형 재생",
-    summary:
-      "공공 실내, 아카이브 공간, 그리고 두 번째 문화적 생명을 필요로 하는 건물을 다룹니다."
-  },
-  "atelier-gonggan": {
-    focus: "한옥 하이브리드와 기후 대응 리트로핏",
-    summary:
-      "전통적 공간 시퀀스를 현대적 환경 성능과 결합하는 작업을 이어갑니다."
-  },
-  "field-office-seoul": {
-    focus: "도시 연결과 공공 동선",
-    summary:
-      "거리, 시장, 계단, 공공실이 하나의 연결된 장처럼 작동하는 프로젝트를 설계합니다."
-  },
-  "coastal-common": {
-    focus: "수변 문화와 지역 커먼즈",
-    summary:
-      "해안, 옛 항만 인프라, 공공 수변 프로그램을 중심으로 작업합니다."
-  },
-  "north-wall-lab": {
-    focus: "연구시설과 압축된 학습 환경",
-    summary:
-      "밀도 높은 캠퍼스 건물, 연구소, 소규모 문화시설을 탐구합니다."
-  }
+type RawArchitect = {
+  slug: string;
+  name_ko: string;
+  name_en: string;
+  sort_name: string;
+  scope: ArchitectScope;
+  prominence: ArchitectProminence;
+  city_ko: string;
+  city_en: string;
+  founded?: number;
+  focus_ko: string;
+  focus_en: string;
+  summary_ko: string;
+  summary_en: string;
+  palette: [string, string, string];
+  office_names: string[];
 };
 
-const buildingKoCopy: Record<
-  string,
-  {
-    title: string;
-    summary: string;
-    highlight: string;
-    address: string;
-    roadAddress: string;
-  }
-> = {
-  "floating-courtyard-library": {
-    title: "부유하는 중정 도서관",
-    summary:
-      "가로시장과 맞닿은 다공성 1층과 들어 올린 중정을 중심으로 구성한 소형 공공도서관입니다.",
-    highlight:
-      "이 프로젝트는 낮에는 도시의 지름길처럼, 밤에는 독서실처럼 작동하는 공공건물의 가능성을 실험합니다.",
-    address: "서울특별시 마포구",
-    roadAddress: "서울특별시 마포구 성미산로 28"
-  },
-  "seongsu-river-workshop": {
-    title: "성수 리버 워크숍",
-    summary:
-      "산업용 외피를 공공 워크숍, 카페, 강연장, 제작 공간으로 전환한 복합시설입니다.",
-    highlight:
-      "공장의 리듬을 지우지 않고 긴 스팬의 골조를 그대로 드러내며 새로운 기반시설로 재구성합니다.",
-    address: "서울특별시 성동구 성수동",
-    roadAddress: "서울특별시 성동구 아차산로9길 42"
-  },
-  "hanok-climate-lab": {
-    title: "한옥 기후 연구소",
-    summary:
-      "한옥의 중정을 유산 복제가 아니라 환경 장치로 다시 읽어내는 연구시설입니다.",
-    highlight:
-      "겹겹의 경계, 깊은 처마, 열완충 홀이 기후 자체를 공간 경험으로 바꾸는 평면을 만듭니다.",
-    address: "전북특별자치도 전주시 완산구",
-    roadAddress: "전북특별자치도 전주시 완산구 경기전길 61"
-  },
-  "port-light-culture-hall": {
-    title: "포트 라이트 문화회관",
-    summary:
-      "단차가 있는 로비와 등불 같은 상부 매스를 통해 항구 풍경을 끌어들이는 동네 문화회관입니다.",
-    highlight:
-      "과장된 스펙터클 대신 매스와 반사광만으로 야간의 표지를 만드는 방식이 핵심입니다.",
-    address: "부산광역시 영도구",
-    roadAddress: "부산광역시 영도구 해양로195번길 84"
-  },
-  "forest-terrace-housing": {
-    title: "포레스트 테라스 하우징",
-    summary:
-      "공유 겨울정원, 학습 테라스, 다공성 1층 커먼즈를 포함한 중층 주거 프로토타입입니다.",
-    highlight:
-      "핵심은 단순한 밀도가 아니라, 실제로 머무를 수 있는 반복된 공유 경계의 질에 있습니다.",
-    address: "대전광역시 유성구",
-    roadAddress: "대전광역시 유성구 엑스포로123번길 21"
-  },
-  "junction-market-commons": {
-    title: "정션 마켓 커먼즈",
-    summary:
-      "옛 물류 창고를 먹거리 점포, 아카이브실, 공공 좌석 테라스를 가진 시장 커먼즈로 다시 연 프로젝트입니다.",
-    highlight:
-      "상업, 기억, 기후 피난처를 분리하지 않고 하나의 시스템으로 다루는 점이 이 프로젝트의 중심입니다.",
-    address: "대구광역시 중구",
-    roadAddress: "대구광역시 중구 경상감영길 58"
-  },
-  "basalt-civic-hall": {
-    title: "현무암 공공회관",
-    summary:
-      "바람을 막아주는 집합 마당 주위에 현무암 톤의 방들을 군집시킨 해안 공공회관입니다.",
-    highlight:
-      "하나의 기념비적 정면 대신 반복되는 보호된 가장자리를 통해 정체성을 형성합니다.",
-    address: "제주특별자치도 제주시 애월읍",
-    roadAddress: "제주특별자치도 제주시 애월읍 애월해안로 113"
-  },
-  "seowon-study-archive": {
-    title: "서원 스터디 아카이브",
-    summary:
-      "전시실, 독서 틈새, 조용한 외부 로지아가 교차하는 소형 아카이브 건물입니다.",
-    highlight:
-      "빛, 경사, 침묵을 따라 천천히 이동한 뒤 컬렉션에 닿도록 의도적으로 느린 시퀀스를 구성합니다.",
-    address: "경상북도 안동시 풍천면",
-    roadAddress: "경상북도 안동시 풍천면 도산로 177"
-  }
+type RawAward = {
+  id: string;
+  slug: string;
+  name_ko: string;
+  name_en: string;
+  organizer: string;
+  award_year: number;
+  category_ko: string;
+  category_en: string;
+  result_ko: string;
+  result_en: string;
+  source_url: string;
 };
 
-const cityLabels: Record<string, string> = {
-  Seoul: "서울",
-  Jeonju: "전주",
-  Busan: "부산",
-  Daejeon: "대전",
-  Daegu: "대구",
-  Jeju: "제주",
-  Andong: "안동"
-};
-
-const districtLabels: Record<string, string> = {
-  Mapo: "마포",
-  Seongsu: "성수",
-  Wansan: "완산",
-  Yeongdo: "영도",
-  Yuseong: "유성",
-  Jung: "중구",
-  Aewol: "애월",
-  Pungcheon: "풍천"
-};
-
-const typeLabels: Record<string, string> = {
-  Library: "도서관",
-  "Mixed Use": "복합시설",
-  "Research Center": "연구시설",
-  "Culture Hall": "문화회관",
-  Housing: "주거",
-  Market: "시장",
-  "Civic Hall": "공공회관",
-  Archive: "아카이브"
-};
-
-const statusLabels: Record<string, string> = {
-  Built: "준공",
-  "Adaptive reuse": "재생 리노베이션",
-  "Under construction": "공사 중"
-};
+type RawBuilding = Omit<Building, "imagesAvailable">;
 
 const materialLabels: Record<string, string> = {
-  Brick: "벽돌",
-  "Exposed concrete": "노출콘크리트",
-  Oak: "오크",
-  Steel: "철골",
-  Polycarbonate: "폴리카보네이트",
-  Birch: "자작합판",
   Timber: "목재",
-  "Clay tile": "점토기와",
-  "Lime plaster": "석회미장",
   Concrete: "콘크리트",
-  "Anodized aluminum": "아노다이징 알루미늄",
-  Pine: "소나무",
-  "Precast concrete": "프리캐스트 콘크리트",
-  "Galvanized steel": "아연도금 강재",
   Glass: "유리",
-  "Steel truss": "철골 트러스",
-  Terrazzo: "테라조",
-  Canvas: "캔버스",
-  "Basalt aggregate concrete": "현무암 골재 콘크리트",
-  "Bronze mesh": "브론즈 메쉬",
-  "Washed stone": "세척석"
+  Aluminum: "알루미늄",
+  Oak: "오크",
+  Stone: "석재",
+  Polycarbonate: "폴리카보네이트",
+  "Galvanized steel": "아연도금 강판",
+  Brick: "벽돌",
+  Basalt: "현무암"
 };
 
-const structureLabels: Record<string, string> = {
-  "Reinforced concrete": "철근콘크리트",
-  "Steel frame": "철골조",
-  "Timber hybrid": "목구조 하이브리드",
-  "Precast concrete": "프리캐스트 콘크리트",
-  "Concrete and timber hybrid": "콘크리트·목구조 하이브리드",
-  "Timber and masonry": "목구조와 조적",
-  "Steel and timber hybrid": "철골·목구조 하이브리드",
-  "Concrete frame": "콘크리트 골조"
+const sourceSystemLabels: Record<ArchitectureSourceSystem, { ko: string; en: string }> = {
+  "building-hub": { ko: "건축 HUB", en: "Building Hub" },
+  "building-register": { ko: "건축물대장", en: "Building Register" },
+  "gis-building": { ko: "GIS 건물", en: "GIS Building" },
+  "tour-api": { ko: "관광 API", en: "Tour API" },
+  "heritage-detail": { ko: "유산 상세", en: "Heritage Detail" },
+  "young-architect-award": { ko: "젊은 건축가상", en: "Young Architect Award" },
+  "official-office": { ko: "공식 사무소", en: "Official Office" }
 };
 
-const useLabels: Record<string, string> = {
-  "Cultural facility": "문화시설",
-  "Neighborhood living facility": "근린생활시설",
-  "Educational and research facility": "교육연구시설",
-  "Multi-family housing": "공동주택",
-  "Public office and assembly facility": "공공업무 및 집회시설"
+const cityNotes: Record<string, { ko: string; en: string }> = {
+  Hongcheon: {
+    ko: "도시보다 풍경의 밀도가 먼저 읽히는 지역으로, 작은 건축의 태도를 보기 좋다.",
+    en: "A regional cluster where landscape is read before urban density, useful for studying the stance of smaller buildings."
+  },
+  Seoul: {
+    ko: "도시 밀도와 사적 생활, 공공 노출이 겹치는 조건에서 건축의 태도가 선명하게 드러난다.",
+    en: "A dense urban field where privacy, exposure, and public life overlap in ways that sharply reveal architectural attitudes."
+  },
+  Jeju: {
+    ko: "관광과 일상, 풍경과 생활 프로그램이 동시에 압력을 주는 조건을 읽기 좋다.",
+    en: "Useful for reading conditions where tourism, daily life, landscape, and local programs press on architecture at once."
+  },
+  Seogwipo: {
+    ko: "관광지의 가장자리와 생활의 리듬이 만나는 지점에서 지역 건축의 해법을 볼 수 있다.",
+    en: "Shows how regional architecture works at the meeting point between tourist edges and the rhythm of ordinary life."
+  },
+  Siheung: {
+    ko: "기반 시설과 시민 환경을 함께 다루는 건축적 장치를 읽기에 적합한 도시다.",
+    en: "A city well suited to reading architectural devices that bridge infrastructure and the civic environment."
+  }
 };
 
-const accessLabels: Record<Building["publicAccess"], string> = {
-  Public: "공개",
-  Limited: "부분 공개",
-  Private: "비공개"
+const typeNotes: Record<string, { ko: string; en: string }> = {
+  "Cafe / Detached House": {
+    ko: "생활과 접객이 한 구조 안에서 만나는 작은 복합 주거 유형이다.",
+    en: "A small hybrid type where dwelling and hospitality meet inside one compact framework."
+  },
+  "Art Lounge": {
+    ko: "짧은 체류와 느린 감상이 만나는 문화적 휴식 공간 유형이다.",
+    en: "A cultural pause-space where short stays and slow looking can overlap."
+  },
+  "Detached House / Neighborhood Facility": {
+    ko: "사적인 집과 동네를 향한 프로그램이 한 건물 안에서 교차하는 유형이다.",
+    en: "A type where the private house and neighborhood-facing program intersect in one building."
+  },
+  "Neighborhood Facility": {
+    ko: "지역의 작은 일상과 방문을 지탱하는 기초적인 공공 프로그램 유형이다.",
+    en: "A foundational public program type that supports small everyday use and local visits."
+  },
+  "Wastewater Treatment Facility": {
+    ko: "보이지 않던 기반 시설을 건축적으로 다시 읽게 만드는 프로그램 유형이다.",
+    en: "A program type that makes hidden infrastructure legible as architecture."
+  },
+  "Detached House": {
+    ko: "밀도 높은 도시 조건 속에서도 사적 삶의 구조를 세밀하게 조정하는 주거 유형이다.",
+    en: "A residential type that carefully adjusts private life even inside dense urban conditions."
+  }
 };
 
-const heritageLabels: Record<Building["heritageClass"], string> = {
-  None: "해당 없음",
-  "Registered cultural property": "등록문화재",
-  "Future heritage": "미래유산",
-  "Modern heritage candidate": "근현대유산 후보"
-};
+const awardLookup = new Map<string, Award>();
 
-const sourceSystemLabels: Record<ArchitectureSourceSystem, string> = {
-  "building-hub": "건축HUB",
-  "building-register": "건축물대장",
-  "gis-building": "공간정보",
-  "tour-api": "관광정보",
-  "heritage-detail": "유산해설"
-};
+export const architects: Architect[] = ((rawArchitects as unknown) as RawArchitect[]).map(
+  (architect) => ({
+    slug: architect.slug,
+    name: architect.name_en,
+    nameKo: architect.name_ko,
+    sortName: architect.sort_name,
+    scope: architect.scope,
+    prominence: architect.prominence,
+    city: architect.city_en,
+    cityKo: architect.city_ko,
+    founded: architect.founded,
+    focus: architect.focus_en,
+    focusKo: architect.focus_ko,
+    summary: architect.summary_en,
+    summaryKo: architect.summary_ko,
+    palette: architect.palette as [string, string, string],
+    officeNames: architect.office_names
+  })
+);
 
-const sourceSystemLabelsEn: Record<ArchitectureSourceSystem, string> = {
-  "building-hub": "Building Hub",
-  "building-register": "Building Register",
-  "gis-building": "GIS Building",
-  "tour-api": "Tour API",
-  "heritage-detail": "Heritage Detail"
-};
+export const awards: Award[] = (rawAwards as RawAward[]).map((award) => {
+  const nextAward: Award = {
+    id: award.id,
+    slug: award.slug,
+    name: award.name_en,
+    nameKo: award.name_ko,
+    organizer: award.organizer,
+    awardYear: award.award_year,
+    category: award.category_en,
+    categoryKo: award.category_ko,
+    result: award.result_en,
+    resultKo: award.result_ko,
+    sourceUrl: award.source_url
+  };
 
-const cityNotes: Record<string, string> = {
-  Seoul: "Density, adaptive reuse, and street-facing public programs.",
-  Jeonju: "Hanok continuities, courtyard logic, and material tactility.",
-  Busan: "Waterfront exposure, civic light, and sloped urban edges.",
-  Daejeon: "Research infrastructure and compact shared living.",
-  Daegu: "Market urbanism, interior publicness, and large-span reuse.",
-  Jeju: "Wind, basalt, and dispersed public rooms.",
-  Andong: "Quiet cultural landscapes and archive-like sequences."
-};
+  awardLookup.set(nextAward.id, nextAward);
+  return nextAward;
+});
 
-const cityNotesKo: Record<string, string> = {
-  Seoul: "고밀도 도시, 적응형 재생, 그리고 거리와 맞닿는 공공 프로그램의 층위가 두드러집니다.",
-  Jeonju: "한옥의 연속성, 중정의 논리, 재료의 촉감이 도시 읽기의 기준이 됩니다.",
-  Busan: "수변의 노출, 시민적 빛, 경사진 도시 경계가 건축의 성격을 만듭니다.",
-  Daejeon: "연구 인프라와 압축된 공동 주거가 도시의 건축 언어를 형성합니다.",
-  Daegu: "시장 도시성, 실내 공공성, 대공간 재생의 흐름을 한눈에 볼 수 있습니다.",
-  Jeju: "바람, 현무암, 분산된 공공실의 조합이 공간 경험을 결정합니다.",
-  Andong: "조용한 문화 경관과 아카이브 같은 동선이 도시의 분위기를 규정합니다."
-};
-
-const typeNotes: Record<string, string> = {
-  Library: "Reading spaces that double as neighborhood public rooms.",
-  "Mixed Use": "Projects where work, gathering, and culture overlap.",
-  "Research Center": "Institutional buildings shaped by climate and focused study.",
-  "Culture Hall": "Public gathering halls with a strong spatial identity.",
-  Housing: "Residential types that treat common space as essential.",
-  Market: "Commercial buildings recast as civic infrastructure.",
-  "Civic Hall": "Collective rooms for assembly, ritual, and local governance.",
-  Archive: "Buildings for memory, quiet circulation, and editorial curation."
-};
-
-const typeNotesKo: Record<string, string> = {
-  Library: "동네의 공공실 역할까지 겸하는 읽기 공간입니다.",
-  "Mixed Use": "일, 모임, 문화가 한 건물 안에서 겹쳐 작동하는 유형입니다.",
-  "Research Center": "기후 대응과 집중된 연구 활동이 형태를 규정하는 시설입니다.",
-  "Culture Hall": "강한 공간 정체성을 가진 공공 집합 공간입니다.",
-  Housing: "공용공간을 필수 요소로 다루는 주거 유형입니다.",
-  Market: "상업 건물을 시민적 기반시설로 다시 읽는 유형입니다.",
-  "Civic Hall": "집회, 의식, 지역 거버넌스를 위한 공동의 방입니다.",
-  Archive: "기억, 느린 동선, 편집적 큐레이션을 담는 건축 유형입니다."
-};
-
-function unique<T>(values: T[]) {
-  return Array.from(new Set(values));
-}
+export const buildings: Building[] = ((rawBuildings as unknown) as RawBuilding[]).map(
+  (building) => ({
+    ...building,
+    palette: building.palette as [string, string, string],
+    imagesAvailable: building.images.some((image) => image.status === "approved")
+  })
+);
 
 export const architectNameMap = Object.fromEntries(
   architects.map((architect) => [architect.slug, architect.name])
 ) as Record<string, string>;
 
-function getLabel(
-  value: string,
-  language: Language,
-  labels: Record<string, string>
-) {
-  if (language === "en") {
-    return value;
-  }
+export const architectNameMapKo = Object.fromEntries(
+  architects.map((architect) => [architect.slug, architect.nameKo])
+) as Record<string, string>;
 
-  return labels[value] ?? value;
+function unique<T>(values: T[]) {
+  return Array.from(new Set(values));
+}
+
+function firstMatchingBuildingBy<K extends keyof Building>(
+  key: K,
+  value: Building[K]
+) {
+  return buildings.find((building) => building[key] === value);
+}
+
+function labelByLanguage(ko: string, en: string, language: Language) {
+  return language === "ko" ? ko : en;
 }
 
 export function getArchitectFocus(architect: Architect, language: Language) {
-  if (language === "en") {
-    return architect.focus;
-  }
-
-  return architectKoCopy[architect.slug]?.focus ?? architect.focus;
+  return labelByLanguage(architect.focusKo, architect.focus, language);
 }
 
 export function getArchitectSummary(architect: Architect, language: Language) {
-  if (language === "en") {
-    return architect.summary;
+  return labelByLanguage(architect.summaryKo, architect.summary, language);
+}
+
+export function getArchitectName(slug: string, language: Language) {
+  const architect = architects.find((entry) => entry.slug === slug);
+
+  if (!architect) {
+    return slug;
   }
 
-  return architectKoCopy[architect.slug]?.summary ?? architect.summary;
+  return labelByLanguage(architect.nameKo, architect.name, language);
 }
 
 export function getBuildingTitle(building: Building, language: Language) {
-  if (language === "en") {
-    return building.title;
-  }
-
-  return buildingKoCopy[building.slug]?.title ?? building.title;
+  return labelByLanguage(building.titleKo, building.title, language);
 }
 
 export function getBuildingSummary(building: Building, language: Language) {
-  if (language === "en") {
-    return building.summary;
-  }
-
-  return buildingKoCopy[building.slug]?.summary ?? building.summary;
+  return labelByLanguage(building.summaryKo, building.summary, language);
 }
 
 export function getBuildingHighlight(building: Building, language: Language) {
-  if (language === "en") {
-    return building.highlight;
-  }
+  return labelByLanguage(building.highlightKo, building.highlight, language);
+}
 
-  return buildingKoCopy[building.slug]?.highlight ?? building.highlight;
+export function getBuildingExcerpt(building: Building, language: Language) {
+  return labelByLanguage(building.sourceExcerptKo, building.sourceExcerpt, language);
+}
+
+export function getBuildingAddress(building: Building, language: Language) {
+  return labelByLanguage(building.addressKo, building.address, language);
+}
+
+export function getBuildingRoadAddress(building: Building, language: Language) {
+  return labelByLanguage(building.roadAddressKo, building.roadAddress, language);
 }
 
 export function getCityLabel(city: string, language: Language) {
-  return getLabel(city, language, cityLabels);
+  const fromBuilding = firstMatchingBuildingBy("city", city);
+  const fromArchitect = architects.find((architect) => architect.city === city);
+
+  if (language === "en") {
+    return city;
+  }
+
+  return fromBuilding?.cityKo ?? fromArchitect?.cityKo ?? city;
 }
 
 export function getDistrictLabel(district: string, language: Language) {
-  return getLabel(district, language, districtLabels);
+  const fromBuilding = firstMatchingBuildingBy("district", district);
+
+  if (language === "en") {
+    return district;
+  }
+
+  return fromBuilding?.districtKo ?? district;
 }
 
 export function getTypeLabel(type: string, language: Language) {
-  return getLabel(type, language, typeLabels);
+  const fromBuilding = firstMatchingBuildingBy("type", type);
+
+  if (language === "en") {
+    return type;
+  }
+
+  return fromBuilding?.typeKo ?? type;
 }
 
 export function getStatusLabel(status: string, language: Language) {
-  return getLabel(status, language, statusLabels);
+  const fromBuilding = firstMatchingBuildingBy("status", status);
+
+  if (language === "en") {
+    return status;
+  }
+
+  return fromBuilding?.statusKo ?? status;
 }
 
 export function getMaterialLabel(material: string, language: Language) {
-  return getLabel(material, language, materialLabels);
+  if (language === "en") {
+    return material;
+  }
+
+  return materialLabels[material] ?? material;
 }
 
 export function getStructureLabel(structure: string, language: Language) {
-  return getLabel(structure, language, structureLabels);
+  const fromBuilding = buildings.find((building) => building.structureLabel === structure);
+
+  if (language === "en") {
+    return structure;
+  }
+
+  return fromBuilding?.structureLabelKo ?? structure;
 }
 
 export function getPrimaryUseLabel(use: string, language: Language) {
-  return getLabel(use, language, useLabels);
+  const fromBuilding = buildings.find((building) => building.primaryUseLabel === use);
+
+  if (language === "en") {
+    return use;
+  }
+
+  return fromBuilding?.primaryUseLabelKo ?? use;
 }
 
-export function getPublicAccessLabel(
-  access: Building["publicAccess"],
-  language: Language
-) {
+export function getPublicAccessLabel(access: PublicAccess, language: Language) {
+  const fromBuilding = buildings.find((building) => building.publicAccess === access);
+
   if (language === "en") {
     return access;
   }
 
-  return accessLabels[access];
+  return fromBuilding?.publicAccessKo ?? access;
 }
 
-export function getHeritageLabel(
-  heritage: Building["heritageClass"],
-  language: Language
-) {
+export function getHeritageLabel(heritage: HeritageClass, language: Language) {
+  const fromBuilding = buildings.find((building) => building.heritageClass === heritage);
+
   if (language === "en") {
     return heritage;
   }
 
-  return heritageLabels[heritage];
+  return fromBuilding?.heritageClassKo ?? heritage;
 }
 
 export function getSourceSystemLabel(
   system: ArchitectureSourceSystem,
   language: Language
 ) {
-  if (language === "en") {
-    return sourceSystemLabelsEn[system];
-  }
-
-  return sourceSystemLabels[system];
+  return sourceSystemLabels[system][language];
 }
 
-export function getBuildingAddress(building: Building, language: Language) {
-  if (language === "en") {
-    return building.address;
-  }
-
-  return buildingKoCopy[building.slug]?.address ?? building.address;
+export function getBuildingHeroImage(building: Building) {
+  return (
+    building.heroImage ??
+    building.images.find((image) => image.status === "approved") ??
+    null
+  );
 }
 
-export function getBuildingRoadAddress(building: Building, language: Language) {
-  if (language === "en") {
-    return building.roadAddress;
+export function getBuildingAwardRecords(building: Building) {
+  return building.awards
+    .map((entry) => {
+      const award = awardLookup.get(entry.awardId);
+
+      if (!award) {
+        return null;
+      }
+
+      return {
+        ...entry,
+        award
+      };
+    })
+    .filter(Boolean) as Array<BuildingAward & { award: Award }>;
+}
+
+export function getArchitectNamesForBuilding(
+  building: Building,
+  language: Language
+) {
+  return building.architectSlugs.map((slug) => getArchitectName(slug, language));
+}
+
+export function getBuildingsForArchitect(slug: string) {
+  return buildings.filter((building) => building.architectSlugs.includes(slug));
+}
+
+export function getRelatedBuildings(slug: string) {
+  const building = buildings.find((entry) => entry.slug === slug);
+
+  if (!building) {
+    return [];
   }
 
-  return buildingKoCopy[building.slug]?.roadAddress ?? building.roadAddress;
+  return buildings.filter((entry) => {
+    if (entry.slug === slug) {
+      return false;
+    }
+
+    const sharesArchitect = entry.architectSlugs.some((architectSlug) =>
+      building.architectSlugs.includes(architectSlug)
+    );
+    const sharesOffice = entry.officeNames.some((officeName) =>
+      building.officeNames.includes(officeName)
+    );
+
+    return sharesArchitect || sharesOffice;
+  });
+}
+
+export function findBuildingBySlug(slug: string) {
+  return buildings.find((building) => building.slug === slug) ?? null;
 }
 
 export function getCityNote(city: string, language: Language) {
-  if (language === "en") {
-    return cityNotes[city] ?? "Emerging regional archive cluster.";
+  const note = cityNotes[city];
+
+  if (!note) {
+    return language === "ko"
+      ? "앞으로 더 많은 지역 아카이브를 연결할 예정인 도시다."
+      : "A city that will connect to a wider regional archive as the dataset grows.";
   }
 
-  return cityNotesKo[city] ?? "새로운 지역 아카이브 클러스터로 확장할 수 있는 도시입니다.";
+  return note[language];
 }
 
 export function getTypeNote(type: string, language: Language) {
-  if (language === "en") {
-    return typeNotes[type] ?? "A category for future archive expansion.";
+  const note = typeNotes[type];
+
+  if (!note) {
+    return language === "ko"
+      ? "데이터가 확장되면 더 많은 읽기 경로를 묶을 수 있는 프로그램 유형이다."
+      : "A program type that can support broader reading routes as the dataset expands.";
   }
 
-  return typeNotesKo[type] ?? "향후 아카이브 확장을 위한 유형입니다.";
+  return note[language];
 }
 
 export const siteStats = {
@@ -1274,60 +566,110 @@ export const siteStats = {
   types: unique(buildings.map((building) => building.type)).length
 };
 
-export const districtOptions = unique(buildings.map((building) => building.district)).sort();
-export const cityOptions = unique(buildings.map((building) => building.city)).sort();
-export const typeOptions = unique(buildings.map((building) => building.type)).sort();
-export const materialOptions = unique(buildings.flatMap((building) => building.materials)).sort();
-export const statusOptions = unique(buildings.map((building) => building.status)).sort();
-export const accessOptions = unique(buildings.map((building) => building.publicAccess)).sort();
-export const heritageOptions = unique(buildings.map((building) => building.heritageClass)).sort();
+export const districtOptions = unique(
+  buildings.map((building) => building.district)
+).sort((left, right) => left.localeCompare(right, "en"));
+
+export const cityOptions = unique(buildings.map((building) => building.city)).sort(
+  (left, right) => left.localeCompare(right, "en")
+);
+
+export const typeOptions = unique(buildings.map((building) => building.type)).sort(
+  (left, right) => left.localeCompare(right, "en")
+);
+
+export const materialOptions = unique(
+  buildings.flatMap((building) => building.materials)
+).sort((left, right) => left.localeCompare(right, "en"));
+
+export const statusOptions = unique(
+  buildings.map((building) => building.status)
+).sort((left, right) => left.localeCompare(right, "en"));
+
+export const accessOptions = unique(
+  buildings.map((building) => building.publicAccess)
+).sort((left, right) => left.localeCompare(right, "en"));
+
+export const heritageOptions = unique(
+  buildings.map((building) => building.heritageClass)
+).sort((left, right) => left.localeCompare(right, "en"));
+
 export const sourceSystemOptions = unique(
   buildings.flatMap((building) => building.sourceRefs.map((source) => source.system))
-).sort();
-export const structureOptions = unique(buildings.map((building) => building.structureLabel)).sort();
+).sort((left, right) => left.localeCompare(right, "en"));
+
+export const structureOptions = unique(
+  buildings.map((building) => building.structureLabel)
+).sort((left, right) => left.localeCompare(right, "en"));
+
 export const yearRange = {
   min: Math.min(...buildings.map((building) => building.year)),
   max: Math.max(...buildings.map((building) => building.year))
 };
 
-export const citySummaries = unique(buildings.map((building) => building.city)).map((city) => {
-  const group = buildings.filter((building) => building.city === city);
+export const citySummaries = unique(buildings.map((building) => building.city)).map(
+  (city) => {
+    const group = buildings.filter((building) => building.city === city);
 
-  return {
-    city,
-    note: cityNotes[city] ?? "Emerging regional archive cluster.",
-    buildingCount: group.length,
-    types: unique(group.map((building) => building.type)),
-    lead: group[0]
-  };
-});
+    return {
+      city,
+      note: cityNotes[city]?.en ?? "Emerging regional archive cluster.",
+      buildingCount: group.length,
+      types: unique(group.map((building) => building.type)),
+      lead: group[0]
+    };
+  }
+);
 
-export const typeSummaries = unique(buildings.map((building) => building.type)).map((type) => {
-  const group = buildings.filter((building) => building.type === type);
+export const typeSummaries = unique(buildings.map((building) => building.type)).map(
+  (type) => {
+    const group = buildings.filter((building) => building.type === type);
 
-  return {
-    type,
-    note: typeNotes[type] ?? "A category for future archive expansion.",
-    buildingCount: group.length,
-    cities: unique(group.map((building) => building.city)),
-    lead: group[0]
-  };
-});
+    return {
+      type,
+      note: typeNotes[type]?.en ?? "A category for future archive expansion.",
+      buildingCount: group.length,
+      cities: unique(group.map((building) => building.city)),
+      lead: group[0]
+    };
+  }
+);
 
-export const focusPrinciples = [
-  "Keep a database-first navigation model instead of a marketing-only landing page.",
-  "Use the homepage as an editorial doorway, not as the only destination.",
-  "Expose counts, categories, and browsing modes immediately on desktop.",
-  "Translate the archival tone into a responsive, mobile-safe, contemporary interface."
+export const collections: Collection[] = [
+  {
+    slug: "young-architect-award-2025",
+    title: "Young Architect Award 2025",
+    focus: "Recent Korean architects and representative projects",
+    summary:
+      "A first seed set built around recent Korean architects whose work is already being watched and referenced.",
+    entries: buildings.length
+  }
 ];
 
-export function getBuildingsForArchitect(slug: string) {
-  return buildings.filter((building) => building.architectSlugs.includes(slug));
-}
+export const focusPrinciples = [
+  "Keep the archive building-first while allowing architects and maps to remain strong entry points.",
+  "Treat awards as metadata inside the project page, not as the front-facing information architecture.",
+  "Use geocoded coordinates, source links, and excerpt fields so the map and detail page can grow from the same record.",
+  "Prefer reviewable ingestion steps over opaque scraping."
+];
 
 export function getBuildingBounds() {
-  const latitudes = buildings.map((building) => building.coordinates.lat);
-  const longitudes = buildings.map((building) => building.coordinates.lng);
+  const geocoded = buildings.filter(
+    (building): building is Building & { coordinates: { lat: number; lng: number } } =>
+      Boolean(building.coordinates)
+  );
+
+  if (geocoded.length === 0) {
+    return {
+      north: 38,
+      south: 33,
+      east: 129.5,
+      west: 126
+    };
+  }
+
+  const latitudes = geocoded.map((building) => building.coordinates.lat);
+  const longitudes = geocoded.map((building) => building.coordinates.lng);
 
   return {
     north: Math.max(...latitudes),

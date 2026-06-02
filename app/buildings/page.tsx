@@ -24,12 +24,12 @@ export default function BuildingsPage() {
         <h1 className="page-title">{language === "ko" ? "건물" : "buildings"}</h1>
         <p className="page-intro">
           {language === "ko"
-            ? "프로젝트는 가이드를 읽는 가장 직접적인 입구입니다. 이 목록은 도시와 유형 필터를 유지하면서도 아카이브를 한눈에 읽히도록 정리합니다."
-            : "Projects remain the clearest doorway into the guide. This list keeps the archive readable at a glance while still allowing city and type filtering from the top."}
+            ? "프로젝트는 여전히 가이드를 읽는 가장 직접적인 입구입니다. 이제 각 행은 지도와 같은 데이터 레코드, 그리고 별도의 상세 페이지로 이어집니다."
+            : "Projects remain the clearest doorway into the guide. Each row now connects to the same record used by the map and the dedicated detail page."}
         </p>
         <p className="page-footnote">
           {language === "ko"
-            ? `${siteStats.cities}개 도시와 ${siteStats.types}개 유형에 걸쳐 ${siteStats.buildings}개 항목을 담고 있습니다.`
+            ? `${siteStats.cities}개 도시, ${siteStats.types}개 유형, 총 ${siteStats.buildings}개 항목`
             : `${siteStats.buildings} entries across ${siteStats.cities} cities and ${siteStats.types} types.`}
         </p>
       </section>

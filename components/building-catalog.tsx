@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useDeferredValue, useState } from "react";
 
 import { useLanguage } from "@/components/language-provider";
@@ -126,8 +127,8 @@ export function BuildingCatalog({
         </p>
         <p className="catalog-toolbar__hint">
           {language === "ko"
-            ? "건물은 카드 묶음보다 편집된 아카이브 목록으로 정리됩니다."
-            : "Buildings are listed as an editorial archive rather than a card wall."}
+            ? "목록은 카드 벽보다 읽기 쉬운 아카이브 행 구조로 유지합니다."
+            : "Entries stay in an editorial archive row rather than a heavy card wall."}
         </p>
       </div>
 
@@ -150,7 +151,9 @@ export function BuildingCatalog({
                 ].join(" / ")}
               </p>
               <h2 className="archive-row__name">
-                {getBuildingTitle(building, language)}
+                <Link href={`/buildings/${building.slug}`}>
+                  {getBuildingTitle(building, language)}
+                </Link>
               </h2>
               <p className="archive-row__minor">
                 {building.architectSlugs
@@ -175,6 +178,11 @@ export function BuildingCatalog({
                   .slice(0, 2)
                   .map((material) => getMaterialLabel(material, language))
                   .join(", ")}
+              </span>
+              <span>
+                <Link href={`/buildings/${building.slug}`}>
+                  {language === "ko" ? "상세 보기" : "Open detail"}
+                </Link>
               </span>
             </div>
           </article>

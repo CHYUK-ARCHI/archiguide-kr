@@ -1250,12 +1250,326 @@ code {
   padding-top: 1rem;
 }
 
+.home-welcome,
+.home-highlight,
+.home-meta-grid,
+.home-info,
+.feature-carousel,
+.building-detail,
+.building-detail__body,
+.building-detail__section,
+.map-selection-card {
+  border-top: 1px solid var(--rule);
+}
+
+.home-welcome,
+.home-highlight {
+  padding: 1.25rem 0 1.5rem;
+}
+
+.home-welcome__title {
+  margin: 0;
+  font-size: clamp(2.6rem, 8vw, 5rem);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+.home-welcome__intro {
+  max-width: 48rem;
+  margin: 0.75rem 0 0;
+  color: var(--ink-soft);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.home-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem;
+  padding-top: 1.25rem;
+}
+
+.home-info {
+  padding-top: 1rem;
+}
+
+.home-info__list,
+.home-source-list {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.home-info__list li,
+.home-source-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.feature-carousel {
+  display: grid;
+  gap: 1rem;
+}
+
+.feature-carousel__media {
+  min-height: 30rem;
+}
+
+.feature-carousel__footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+.feature-carousel__caption {
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.feature-carousel__controls {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.feature-carousel__button,
+.map-list__detail-link,
+.map-selection-card__link,
+.building-detail__topline-link {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.feature-carousel__button {
+  border: 1px solid var(--rule);
+  background: transparent;
+  padding: 0.65rem 0.85rem;
+  cursor: pointer;
+}
+
+.feature-carousel__index {
+  color: var(--ink-muted);
+  font-size: 12px;
+}
+
+.catalog-controls--split {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.map-list__item {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1rem 0;
+  border: 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.map-list__button {
+  display: grid;
+  gap: 0.3rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.map-list__detail-link {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: 0.2rem;
+}
+
+.map-selection-card {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.7fr) minmax(0, 1fr);
+  gap: 1rem;
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+}
+
+.map-selection-card__body {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.map-selection-card__title {
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 2.3rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.map-selection-card__meta,
+.map-selection-card__address,
+.building-detail__subtitle,
+.building-detail__source-note,
+.building-detail__facts {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.map-selection-card__link {
+  margin-top: 0.35rem;
+}
+
+.building-media {
+  width: 100%;
+}
+
+.building-media .architecture-art {
+  height: 100%;
+}
+
+.building-media--hero .architecture-art {
+  min-height: 32rem;
+}
+
+.building-media--preview .architecture-art,
+.building-media--card .architecture-art {
+  min-height: 12rem;
+}
+
+.building-media__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--rule);
+  object-fit: cover;
+}
+
+.building-media__caption {
+  margin-top: 0.5rem;
+  color: var(--ink-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.building-detail {
+  display: grid;
+  gap: 1.25rem;
+  padding-top: 1rem;
+}
+
+.building-detail__topline {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.building-detail__topline-separator {
+  color: var(--ink-faint);
+  font-size: 10px;
+}
+
+.building-detail__header {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.building-detail__eyebrow {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.building-detail__title {
+  margin: 0;
+  font-size: clamp(3rem, 9vw, 6.5rem);
+  font-weight: 500;
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+}
+
+.building-detail__subtitle--ko {
+  color: var(--ink-muted);
+}
+
+.building-detail__body {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.7fr) minmax(0, 1.3fr);
+  gap: 2rem;
+  padding-top: 1.25rem;
+}
+
+.building-detail__content {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.building-detail__lead {
+  margin: 0;
+  color: var(--ink);
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+.building-detail__section {
+  padding-top: 1rem;
+}
+
+.building-detail__section h2 {
+  margin: 0 0 0.7rem;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.building-detail__section p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.building-detail__section p + p {
+  margin-top: 0.75rem;
+}
+
+.building-detail__facts {
+  padding-left: 1rem;
+}
+
+.building-detail__related {
+  display: grid;
+  border-top: 1px solid var(--rule);
+}
+
+.building-detail__related-link {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
 @media (max-width: 1080px) {
   .manifesto-grid,
   .two-column,
   .explorer-grid,
   .catalog-grid,
-  .architect-browser {
+  .architect-browser,
+  .building-detail__body,
+  .home-meta-grid,
+  .map-selection-card {
     grid-template-columns: 1fr;
   }
 
@@ -1272,7 +1586,8 @@ code {
   .archive-row--feature,
   .directory-row,
   .catalog-controls,
-  .search-grid {
+  .search-grid,
+  .catalog-controls--split {
     grid-template-columns: 1fr;
   }
 
@@ -1389,7 +1704,8 @@ code {
   .cta-band,
   .site-footer,
   .architect-index__search-row,
-  .architect-list__top {
+  .architect-list__top,
+  .feature-carousel__footer {
     display: grid;
     grid-template-columns: 1fr;
     align-items: flex-start;

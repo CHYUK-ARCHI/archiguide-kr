@@ -1,0 +1,35 @@
+[
+  {
+    "id": "office-frame-works",
+    "slug": "frame-works",
+    "name_ko": "프레임 웍스",
+    "name_en": "Frame Works",
+    "country_code": "KR",
+    "city_ko": "광주",
+    "city_en": "Gwangju",
+    "founded_year": 2019,
+    "website": null
+  },
+  {
+    "id": "office-a-root",
+    "slug": "a-root-architects",
+    "name_ko": "에이루트 건축사사무소",
+    "name_en": "A-Root Architects",
+    "country_code": "KR",
+    "city_ko": "제주",
+    "city_en": "Jeju",
+    "founded_year": 2020,
+    "website": null
+  },
+  {
+    "id": "office-acolab",
+    "slug": "acolab",
+    "name_ko": "에이코랩",
+    "name_en": "ACOLAB",
+    "country_code": "KR",
+    "city_ko": "서울",
+    "city_en": "Seoul",
+    "founded_year": 2018,
+    "website": null
+  }
+]

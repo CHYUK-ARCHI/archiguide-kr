@@ -1,0 +1,172 @@
+[
+  {
+    "id": "architect-kim-sunhyeong",
+    "slug": "sunhyeong-kim",
+    "name_ko": "김선형",
+    "name_en": "Sunhyeong Kim",
+    "sort_name": "Kim Sunhyeong",
+    "country_code": "KR",
+    "scope": "korean",
+    "prominence": "featured",
+    "city_ko": "광주",
+    "city_en": "Gwangju",
+    "founded": 2019,
+    "focus_ko": "작은 규모의 공공성과 생활 밀도를 정교하게 다루는 건축",
+    "focus_en": "Architecture that refines everyday publicness and compact civic density.",
+    "summary_ko": "Frame Works를 이끌며 주거와 문화 프로그램이 만나는 작은 건축을 꾸준히 축적하고 있다.",
+    "summary_en": "Leads Frame Works and builds a growing body of compact projects where housing and cultural programs overlap.",
+    "palette": ["#d7cec2", "#2d2a27", "#f4efe8"],
+    "office_names": ["Frame Works"],
+    "source_refs": [
+      {
+        "type": "article",
+        "label": "BRIQUE 2025 Young Architect Award article",
+        "url": "https://magazine.brique.co/brq-news/2025-korean-young-architect-award/"
+      }
+    ]
+  },
+  {
+    "id": "architect-lee-changgyu",
+    "slug": "changgyu-lee",
+    "name_ko": "이창규",
+    "name_en": "Changgyu Lee",
+    "sort_name": "Lee Changgyu",
+    "country_code": "KR",
+    "scope": "korean",
+    "prominence": "featured",
+    "city_ko": "제주",
+    "city_en": "Jeju",
+    "founded": 2020,
+    "focus_ko": "주거와 지역 시설을 한 구조 안에서 느슨하게 묶는 제주형 실험",
+    "focus_en": "Jeju-based experiments that loosely bind housing and local amenities into one spatial system.",
+    "summary_ko": "A-Root Architects의 공동 대표로, 제주와 수도권 사이에서 생활 시설과 주거의 경계를 다시 읽고 있다.",
+    "summary_en": "Co-leads A-Root Architects and rethinks the boundary between living infrastructure and housing across Jeju and the capital region.",
+    "palette": ["#d8d1c4", "#39342e", "#f1ebe1"],
+    "office_names": ["A-Root Architects"],
+    "source_refs": [
+      {
+        "type": "article",
+        "label": "BRIQUE 2025 Young Architect Award article",
+        "url": "https://magazine.brique.co/brq-news/2025-korean-young-architect-award/"
+      }
+    ]
+  },
+  {
+    "id": "architect-kang-jeongyun",
+    "slug": "jeongyun-kang",
+    "name_ko": "강정윤",
+    "name_en": "Jeongyun Kang",
+    "sort_name": "Kang Jeongyun",
+    "country_code": "KR",
+    "scope": "korean",
+    "prominence": "featured",
+    "city_ko": "제주",
+    "city_en": "Jeju",
+    "founded": 2020,
+    "focus_ko": "생활의 속도와 풍경을 동시에 다루는 지역 밀착형 건축",
+    "focus_en": "Regionally grounded architecture that holds everyday tempo and landscape together.",
+    "summary_ko": "A-Root Architects의 공동 대표로, 제주의 일상 풍경과 프로그램 밀도를 함께 다룬다.",
+    "summary_en": "Co-leads A-Root Architects and works at the intersection of Jeju's everyday landscape and program density.",
+    "palette": ["#e0d8cb", "#3e3932", "#f7f2ea"],
+    "office_names": ["A-Root Architects"],
+    "source_refs": [
+      {
+        "type": "article",
+        "label": "BRIQUE 2025 Young Architect Award article",
+        "url": "https://magazine.brique.co/brq-news/2025-korean-young-architect-award/"
+      }
+    ]
+  },
+  {
+    "id": "architect-jeong-isak",
+    "slug": "isak-jeong",
+    "name_ko": "정이삭",
+    "name_en": "Isak Jeong",
+    "sort_name": "Jeong Isak",
+    "country_code": "KR",
+    "scope": "korean",
+    "prominence": "featured",
+    "city_ko": "서울",
+    "city_en": "Seoul",
+    "founded": 2018,
+    "focus_ko": "생활 기반 시설과 주거를 세심한 구조와 재료 감각으로 다루는 작업",
+    "focus_en": "Work that treats living infrastructure and houses through careful structural and material decisions.",
+    "summary_ko": "ACOLAB을 중심으로 기반 시설과 주거를 건축적 사건으로 다시 읽는 프로젝트를 만들고 있다.",
+    "summary_en": "Builds projects through ACOLAB that reinterpret infrastructure and domestic space as architectural events.",
+    "palette": ["#d0cbc2", "#2e2c29", "#efe9e1"],
+    "office_names": ["ACOLAB"],
+    "source_refs": [
+      {
+        "type": "article",
+        "label": "BRIQUE 2025 Young Architect Award article",
+        "url": "https://magazine.brique.co/brq-news/2025-korean-young-architect-award/"
+      }
+    ]
+  },
+  {
+    "id": "architect-hong-jinpyo",
+    "slug": "jinpyo-hong",
+    "name_ko": "홍진표",
+    "name_en": "Jinpyo Hong",
+    "sort_name": "Hong Jinpyo",
+    "country_code": "KR",
+    "scope": "korean",
+    "prominence": "core",
+    "city_ko": "서울",
+    "city_en": "Seoul",
+    "founded": 2018,
+    "focus_ko": "기술적 프로그램을 일상의 공간 언어로 번역하는 건축",
+    "focus_en": "Architecture that translates technical programs into an everyday spatial language.",
+    "summary_ko": "ACOLAB에서 기반 시설과 소규모 건축 사이의 간격을 줄이는 프로젝트를 함께 진행한다.",
+    "summary_en": "Works with ACOLAB on projects that narrow the gap between technical infrastructure and small architecture.",
+    "palette": ["#cbc5bc", "#35322d", "#f3eee5"],
+    "office_names": ["ACOLAB"],
+    "source_refs": [
+      {
+        "type": "article",
+        "label": "BRIQUE 2025 Young Architect Award article",
+        "url": "https://magazine.brique.co/brq-news/2025-korean-young-architect-award/"
+      }
+    ]
+  },
+  {
+    "id": "architect-mvrdv",
+    "slug": "mvrdv",
+    "name_ko": "MVRDV",
+    "name_en": "MVRDV",
+    "sort_name": "MVRDV",
+    "country_code": "NL",
+    "scope": "international",
+    "prominence": "reference",
+    "city_ko": "로테르담",
+    "city_en": "Rotterdam",
+    "founded": 1993,
+    "focus_ko": "밀도, 데이터 기반 형상, 도시적 읽기",
+    "focus_en": "Density, data-driven form, and strong urban readability.",
+    "summary_ko": "아카이브의 해외 참조 축에서 개념과 밀도를 선명하게 읽게 해주는 대표적 사무소다.",
+    "summary_en": "A strong international reference for concept clarity, density, and publicly legible form.",
+    "palette": ["#d6d1c8", "#262523", "#f2ede6"],
+    "office_names": ["MVRDV"],
+    "source_refs": []
+  },
+  {
+    "id": "architect-sanaa",
+    "slug": "sanaa",
+    "name_ko": "SANAA",
+    "name_en": "SANAA",
+    "sort_name": "SANAA",
+    "country_code": "JP",
+    "scope": "international",
+    "prominence": "reference",
+    "city_ko": "도쿄",
+    "city_en": "Tokyo",
+    "founded": 1995,
+    "focus_ko": "가벼운 경계, 얇은 구조, 열려 있는 동선",
+    "focus_en": "Light boundaries, thin structures, and open circulation.",
+    "summary_ko": "가벼운 평면과 투명한 경계를 참조할 때 여전히 강력한 국제적 기준점이 된다.",
+    "summary_en": "Remains a strong international benchmark when studying thin plans, open circulation, and soft boundaries.",
+    "palette": ["#ddd9d1", "#2d2b28", "#f6f2eb"],
+    "office_names": ["SANAA"],
+    "source_refs": []
+  }
+]

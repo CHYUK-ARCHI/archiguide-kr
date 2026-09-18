@@ -25,9 +25,6 @@ export default function HomePage() {
 
   return (
     <PageShell active="home">
-      {/* ── 단청 띠 ── */}
-      <hr className="dancheong-bar" aria-hidden="true" />
-
       {/* ── HERO ── */}
       <section className="home-hero-band">
         <div className="home-hero-band__left">

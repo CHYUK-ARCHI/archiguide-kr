@@ -1283,10 +1283,11 @@ code {
 
 .home-welcome__title {
   margin: 0;
-  font-size: var(--type-hero);
-  font-weight: 500;
-  line-height: 0.95;
-  letter-spacing: -0.04em;
+  font-size: clamp(1.5rem, 2.6vw, 2.15rem);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  max-width: 42ch;
 }
 
 .home-welcome__intro {

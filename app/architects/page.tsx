@@ -163,6 +163,21 @@ export default function ArchitectsPage() {
         </p>
       </section>
 
+      <div className="architect-subarchive">
+        <span className="eyebrow">
+          {language === "ko" ? "하위 아카이브" : "Sub-archive"}
+        </span>
+        <Link
+          href="/architects/young-architect-award"
+          className="architect-subarchive__link"
+        >
+          {language === "ko"
+            ? "젊은건축가상 · 2008–2026"
+            : "Young Architect Award · 2008–2026"}
+          <span aria-hidden="true"> →</span>
+        </Link>
+      </div>
+
       <section className="architect-browser">
         <aside className="architect-browser__sidebar">
           <form

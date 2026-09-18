@@ -182,17 +182,14 @@ function AwardMap({ buildings, activeYear }: { buildings: AwardBuilding[]; activ
       const filtered = activeYear ? buildings.filter((b) => b.awardYear === activeYear) : buildings;
 
       filtered.forEach((b) => {
-        const pin = new g.maps.marker.PinElement({
-          scale: 0.8,
-          background: activeYear ? "#b23a28" : "#6f6864",
-          borderColor: "#fbf9f4",
-          glyphColor: "#fbf9f4",
-        });
+        // 오버레이 시 이동·확대 없이 색만 전환되는 CSS 마커
+        const dot = document.createElement("div");
+        dot.className = activeYear ? "award-pin award-pin--active" : "award-pin";
         const marker = new g.maps.marker.AdvancedMarkerElement({
           map: mapRef.current,
           position: b.coordinates,
           title: b.titleKo,
-          content: pin.element,
+          content: dot,
         });
         markersRef.current.push(marker);
       });

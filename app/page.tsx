@@ -23,12 +23,6 @@ export default function HomePage() {
   const { language } = useLanguage();
   const ko = language === "ko";
 
-  const stats = [
-    { num: siteStats.buildings, ko: "건물", en: "Buildings" },
-    { num: siteStats.architects, ko: "건축가", en: "Architects" },
-    { num: siteStats.cities, ko: "도시", en: "Cities" }
-  ];
-
   return (
     <PageShell active="home">
       {/* ── 단청 띠 ── */}
@@ -70,16 +64,11 @@ export default function HomePage() {
               : "An archive that reads Korean modern and contemporary architecture across five axes — buildings, architects, cities, types, and map — from single works through to their urban context."}
           </p>
 
-          <div className="home-stat-row">
-            {stats.map((s) => (
-              <div key={s.en} className="home-stat">
-                <span className="home-stat__num">
-                  {String(s.num).padStart(2, "0")}
-                </span>
-                <span className="home-stat__label">{ko ? s.ko : s.en}</span>
-              </div>
-            ))}
-          </div>
+          <p className="home-hero-band__note">
+            {ko
+              ? "파일럿 데이터셋 · 2026\n지도 + 상세 페이지 연동"
+              : "Pilot dataset · 2026\nMap + detail pipeline"}
+          </p>
         </div>
 
         <div className="home-hero-band__rail" aria-hidden="true">

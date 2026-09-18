@@ -24,8 +24,8 @@ export default function HomePage() {
         <p className="eyebrow">{language === "ko" ? "환영합니다" : "Welcome"}</p>
         <h1 className="home-welcome__title">
           {language === "ko"
-            ? "ARCHIGUIDE.KR에 오신 것을 환영합니다"
-            : "WELCOME TO ARCHIGUIDE.KR"}
+            ? "Archiguide.kr에 오신 것을 환영합니다"
+            : "Welcome to Archiguide.kr"}
         </h1>
         <p className="home-welcome__intro">
           {language === "ko"

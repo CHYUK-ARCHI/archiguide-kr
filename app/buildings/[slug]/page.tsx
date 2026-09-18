@@ -60,18 +60,18 @@ export default function BuildingDetailPage({
       <article className="building-detail">
         <nav className="building-detail__topline" aria-label="Entry navigation">
           <Link href="/map" className="building-detail__topline-link">
-            kaart
+            Map · 지도
           </Link>
           <span className="building-detail__topline-separator">-</span>
           <Link href="/buildings" className="building-detail__topline-link">
-            afbeeldingen
+            Catalog · 카탈로그
           </Link>
           <span className="building-detail__topline-separator">-</span>
           <Link
             href={`/buildings/${nextBuilding.slug}`}
             className="building-detail__topline-link"
           >
-            volgende project
+            Next · 다음
           </Link>
         </nav>
 

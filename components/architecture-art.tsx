@@ -1,15 +1,12 @@
-import type { CSSProperties } from "react";
-
 type ArchitectureArtProps = {
   title: string;
-  palette: [string, string, string];
+  palette?: [string, string, string]; // reserved for future use — currently unused; art renders with design tokens
   label?: string;
   mode?: "wide" | "compact";
 };
 
 export function ArchitectureArt({
   title,
-  palette,
   label,
   mode = "wide"
 }: ArchitectureArtProps) {
@@ -17,13 +14,6 @@ export function ArchitectureArt({
     <div
       className={`architecture-art architecture-art--${mode}`}
       aria-label={title}
-      style={
-        {
-          "--art-a": palette[0],
-          "--art-b": palette[1],
-          "--art-c": palette[2]
-        } as CSSProperties
-      }
     >
       <div className="architecture-art__plane architecture-art__plane--sky" />
       <div className="architecture-art__plane architecture-art__plane--wall" />

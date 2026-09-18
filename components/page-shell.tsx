@@ -17,7 +17,7 @@ export function PageShell({ active, children }: PageShellProps) {
         {children}
         <footer className="site-footer">
           <span>ARCHIGUIDE.KR</span>
-          <span>source: main / pages: gh-pages</span>
+          <span>Korean Architecture Archive</span>
         </footer>
       </main>
     </div>

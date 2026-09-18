@@ -184,9 +184,9 @@ function AwardMap({ buildings, activeYear }: { buildings: AwardBuilding[]; activ
       filtered.forEach((b) => {
         const pin = new g.maps.marker.PinElement({
           scale: 0.8,
-          background: activeYear ? "#050505" : "#666",
-          borderColor: "#fff",
-          glyphColor: "#fff",
+          background: activeYear ? "#b23a28" : "#6f6864",
+          borderColor: "#fbf9f4",
+          glyphColor: "#fbf9f4",
         });
         const marker = new g.maps.marker.AdvancedMarkerElement({
           map: mapRef.current,

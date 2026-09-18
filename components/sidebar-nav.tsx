@@ -75,6 +75,7 @@ const navItems: NavItem[] = [
 
 export function SidebarNav({ active }: SidebarNavProps) {
   const { language, setLanguage } = useLanguage();
+  const alt = language === "ko" ? "en" : "ko";
 
   return (
     <header className="site-header">
@@ -85,8 +86,12 @@ export function SidebarNav({ active }: SidebarNavProps) {
 
         <Link href="/" className="site-header__brand">
           <span className="site-header__wordmark">archiguide</span>
-          <span className="site-header__sub">korean architecture archive</span>
+          <span className="site-header__sub">
+            {language === "ko" ? "한국 건축 아카이브" : "korean architecture archive"}
+          </span>
         </Link>
+
+        <hr className="dancheong-bar dancheong-bar--sidebar" aria-hidden="true" />
 
         <div className="site-header__meta" aria-label="Meta controls">
           <Link
@@ -131,8 +136,13 @@ export function SidebarNav({ active }: SidebarNavProps) {
                   isActive ? " site-header__stack-link--active" : ""
                 }`}
               >
-                <span className="site-header__stack-label">
-                  {item.label[language]}
+                <span className="site-header__stack-text">
+                  <span className="site-header__stack-label">
+                    {item.label[language]}
+                  </span>
+                  <span className="site-header__stack-alt">
+                    {item.label[alt]}
+                  </span>
                 </span>
                 {typeof item.count === "number" ? (
                   <span className="site-header__stack-count">
@@ -146,7 +156,7 @@ export function SidebarNav({ active }: SidebarNavProps) {
 
         <p className="site-header__footnote">
           {language === "ko"
-            ? "pilot dataset / 2026 / map + detail pipeline"
+            ? "파일럿 데이터셋 / 2026 / 지도 + 상세 파이프라인"
             : "pilot dataset / 2026 / map + detail pipeline"}
         </p>
       </div>

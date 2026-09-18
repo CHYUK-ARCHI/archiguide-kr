@@ -200,7 +200,7 @@ function AwardMap({ buildings, activeYear }: { buildings: AwardBuilding[]; activ
   }, [buildings, activeYear]);
 
   return (
-    <div ref={containerRef} style={{ width: "100%", height: "420px", background: "var(--placeholder)" }}>
+    <div ref={containerRef} className="lattice-fill" style={{ width: "100%", height: "420px" }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", color: "var(--ink-muted)", fontSize: "12px", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase" }}>
         MAP LOADING
       </div>

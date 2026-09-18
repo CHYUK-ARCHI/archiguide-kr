@@ -1,9 +1,35 @@
+/* ─── 폰트 자체 호스팅 ──────────────────────────────────── */
 @font-face {
   font-family: "Pretendard";
-  src: url("/fonts/PretendardVariable.ttf") format("truetype");
+  src:
+    url("/fonts/PretendardVariable.woff2") format("woff2"),
+    url("/fonts/PretendardVariable.ttf") format("truetype");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
+}
+
+/* 본명조 · 라틴 + 숫자 */
+@font-face {
+  font-family: "Noto Serif KR";
+  src: url("/fonts/NotoSerifKR-500-latin.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+    U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* 본명조 · 한글 (KS X 1001 2,350자 서브셋 · 323KB) */
+@font-face {
+  font-family: "Noto Serif KR";
+  src: url("/fonts/NotoSerifKR-500-kr-subset.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+1100-11FF, U+3001-3002, U+300C-300F, U+3130-318F,
+    U+AC00-D7A3;
 }
 
 :root {
@@ -28,22 +54,15 @@
   --placeholder: rgba(20, 17, 15, 0.07);
 
   /* ─── 석간주 · seokganju — POINT COLOR ───────────────── */
-  --accent: #b23a28;
+  --accent: #9a2f20;
+  --accent-deep: #7a2417;
   --accent-bright: #c9482f;
-  --accent-deep: #8a2a1c;
   --accent-on-dark: #e0674a;
-  --accent-soft: rgba(178, 58, 40, 0.1);
-  --accent-line: rgba(178, 58, 40, 0.4);
+  --accent-soft: rgba(154, 47, 32, 0.09);
+  --accent-line: rgba(154, 47, 32, 0.42);
   --accent-on: #fbf9f4;
 
-  /* ─── 단청 오방 · dancheong secondary ────────────────── */
-  --dan-jinchung: #2c4463;
-  --dan-noerok: #5c7f72;
-  --dan-hwang: #c2962f;
-  --dan-jangdan: #c8552e;
-  --dan-seokganju: #b23a28;
-
-  /* ─── 타입 · type ────────────────────────────────────── */
+  /* ─── 타입 · type ───────────────────────────────────── */
   --font-sans: "Pretendard", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-serif-ko: "Noto Serif KR", "Apple SD Gothic Neo", "Pretendard",
     Georgia, serif;
@@ -231,14 +250,13 @@ code {
   color: var(--ink);
   border: 1px solid rgba(251, 249, 244, 0);
   transition:
-    transform 250ms var(--ease),
-    background 250ms var(--ease);
+    background 180ms var(--ease),
+    color 180ms var(--ease);
 }
 
 .site-header__stack-link:hover,
 .site-header__stack-link--active {
   background: var(--paper);
-  transform: translateX(4px);
 }
 
 .site-header__stack-label,
@@ -2134,9 +2152,6 @@ code {
 
 .home-recent-row:hover {
   background: var(--tint-hover);
-  margin: 0 -0.5rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
 }
 
 .home-recent-row__num {
@@ -2252,11 +2267,10 @@ code {
 
 /* ============================================================
    KOREAN IDENTITY LAYER
-   포인트 색상: 석간주(石間硃) #b23a28
-   보조: 단청 오방색 · 한지 바탕 · 먹 프레임 · 세로쓰기 · 우물살
+   포인트 색상: 석간주(石間硃) #9a2f20
+   상호작용 원칙: 위치 이동 없음 — 색 전환만
    ============================================================ */
 
-/* ── 선택 영역 / 스크롤바 ─────────────────────────────────── */
 ::selection {
   background: var(--accent);
   color: var(--accent-on);
@@ -2268,35 +2282,6 @@ code {
 
 ::-webkit-scrollbar-track {
   background: var(--paper-warm);
-}
-
-/* ── 단청 띠 · dancheong stripe ───────────────────────────── */
-.dancheong-bar {
-  display: block;
-  width: 100%;
-  max-width: 176px;
-  height: 3px;
-  margin: 0;
-  border: 0;
-  flex-shrink: 0;
-  background: linear-gradient(
-    to right,
-    var(--dan-jinchung) 0 20%,
-    var(--dan-noerok) 20% 40%,
-    var(--dan-hwang) 40% 60%,
-    var(--dan-jangdan) 60% 80%,
-    var(--dan-seokganju) 80% 100%
-  );
-}
-
-.dancheong-bar--full {
-  max-width: 100%;
-}
-
-.dancheong-bar--sidebar {
-  max-width: 100%;
-  height: 2px;
-  margin: 0.15rem 0 0.35rem;
 }
 
 /* ── 세로쓰기 · vertical label ────────────────────────────── */
@@ -2323,27 +2308,19 @@ code {
 .lattice-fill {
   background-color: var(--paper-warm);
   background-image:
-    repeating-linear-gradient(
-      0deg,
-      var(--rule) 0 1px,
-      transparent 1px 34px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      var(--rule) 0 1px,
-      transparent 1px 34px
-    );
+    repeating-linear-gradient(0deg, var(--rule) 0 1px, transparent 1px 34px),
+    repeating-linear-gradient(90deg, var(--rule) 0 1px, transparent 1px 34px);
   background-position: center center;
 }
 
-/* ── 국문 명조 디스플레이 ─────────────────────────────────── */
+/* ── 국문 명조 디스플레이 (단일 굵기 500) ─────────────────── */
 .ko-display {
   font-family: var(--font-serif-ko);
   font-weight: 500;
 }
 
 /* ============================================================
-   SIDEBAR — 석간주 브랜드 · 국한문 병기 · 활성 바
+   SIDEBAR — 색 반전 방식 (이동 없음)
    ============================================================ */
 
 .site-header__mark {
@@ -2365,16 +2342,16 @@ code {
 
 .site-header__stack-link {
   align-items: center;
-  border-left: 3px solid transparent;
-  padding-left: 0.85rem;
-}
-
-.site-header__stack-link:hover {
-  border-left-color: var(--accent-line);
 }
 
 .site-header__stack-link--active {
-  border-left-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-on);
+}
+
+.site-header__stack-link:hover {
+  background: var(--accent-deep);
+  color: var(--accent-on);
 }
 
 .site-header__stack-text {
@@ -2393,8 +2370,11 @@ code {
   white-space: nowrap;
 }
 
-.site-header__stack-link--active .site-header__stack-count {
-  color: var(--accent);
+.site-header__stack-link--active .site-header__stack-alt,
+.site-header__stack-link--active .site-header__stack-count,
+.site-header__stack-link:hover .site-header__stack-alt,
+.site-header__stack-link:hover .site-header__stack-count {
+  color: rgba(251, 249, 244, 0.7);
 }
 
 .site-header__rail-link--active {
@@ -2402,14 +2382,14 @@ code {
 }
 
 /* ============================================================
-   HOMEPAGE — 한국적 히어로 구성
+   HOMEPAGE
    ============================================================ */
 
 .home-hero-band {
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr) auto;
   align-items: stretch;
-  padding: 2.25rem 0 3rem;
-  border-top: 1px solid var(--rule);
+  padding: 2.5rem 0 3rem;
+  border-top: 0;
 }
 
 .home-hero-band__left {
@@ -2481,16 +2461,13 @@ code {
   border-left: 1px solid var(--rule);
 }
 
-/* 카테고리 스트립 — 국한문 병기 */
+/* 카테고리 스트립 — 오버레이 시 색 반전 */
 .home-cat-item {
   gap: 0.45rem;
   padding: 1.35rem 0.85rem 1.35rem 0;
-  border-top: 3px solid transparent;
-}
-
-.home-cat-item:hover {
-  background: var(--accent-soft);
-  border-top-color: var(--accent);
+  transition:
+    background 150ms var(--ease),
+    color 150ms var(--ease);
 }
 
 .home-cat-item__label {
@@ -2507,16 +2484,8 @@ code {
 
 .home-cat-item__count {
   font-family: var(--font-serif-ko);
-  font-weight: 600;
+  font-weight: 500;
   color: var(--accent);
-}
-
-.home-cat-item:hover .home-cat-item__label {
-  color: var(--accent);
-}
-
-.home-cat-item:hover .home-cat-item__count {
-  color: var(--accent-deep);
 }
 
 /* 카운트가 없는 항목 — 숫자와 같은 광학 높이로 정렬 */
@@ -2528,24 +2497,44 @@ code {
   color: var(--accent-line);
 }
 
-.home-cat-item:hover .home-cat-item__arrow {
-  color: var(--accent);
+/* 오버레이 — 패딩·여백 고정, 배경과 글자색만 전환 */
+.home-cat-item:hover {
+  background: var(--accent);
 }
 
-/* 최근 건물 목록 */
+.home-cat-item:hover .home-cat-item__label,
+.home-cat-item:hover .home-cat-item__count,
+.home-cat-item:hover .home-cat-item__arrow {
+  color: var(--accent-on);
+}
+
+.home-cat-item:hover .home-cat-item__alt {
+  color: rgba(251, 249, 244, 0.7);
+}
+
+/* 최근 건물 목록 — 여백 이동 없이 배경/글자색만 */
 .home-section-head__link:hover {
   color: var(--accent);
 }
 
+.home-recent-row {
+  transition:
+    background 150ms var(--ease),
+    color 150ms var(--ease);
+}
+
 .home-recent-row__num {
   font-family: var(--font-serif-ko);
-  font-weight: 600;
+  font-weight: 500;
   font-size: 13px;
   letter-spacing: 0.02em;
 }
 
 .home-recent-row:hover {
   background: var(--accent-soft);
+  margin: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .home-recent-row:hover .home-recent-row__title,
@@ -2561,7 +2550,7 @@ code {
 
 .home-award-band__title {
   font-family: var(--font-serif-ko);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .home-award-band__cta {
@@ -2576,12 +2565,16 @@ code {
 }
 
 /* ============================================================
-   AWARD PAGE — 석간주 적용
+   AWARD PAGE
    ============================================================ */
 
 .award-map-year-badge {
   border-color: var(--accent);
   color: var(--accent);
+}
+
+.award-year-btn {
+  transition: color 150ms var(--ease);
 }
 
 .award-year-btn:hover {
@@ -2598,12 +2591,12 @@ code {
 
 .award-year-label {
   font-family: var(--font-serif-ko);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .award-card__names {
   font-family: var(--font-serif-ko);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.015em;
 }
 
@@ -2621,8 +2614,28 @@ code {
   color: var(--accent-line);
 }
 
+/* 지도 마커 — 오버레이 시 색만 전환 */
+.award-pin {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #6f6864;
+  border: 2px solid var(--paper);
+  box-shadow: 0 1px 4px rgba(20, 17, 15, 0.4);
+  cursor: pointer;
+  transition: background 150ms var(--ease);
+}
+
+.award-pin--active {
+  background: var(--accent);
+}
+
+.award-pin:hover {
+  background: var(--accent-bright);
+}
+
 /* ============================================================
-   공통 링크 · 카드 호버 — 석간주
+   공통 링크 · 카드 오버레이 — 색 전환
    ============================================================ */
 
 .catalog-card:hover .catalog-card__title,
@@ -2630,15 +2643,6 @@ code {
 .browse-card:hover h3,
 .architect-list__item:hover .architect-list__name {
   color: var(--accent);
-}
-
-.page-title::after {
-  content: "";
-  display: block;
-  width: 2.75rem;
-  height: 3px;
-  margin-top: 1.1rem;
-  background: var(--accent);
 }
 
 /* ============================================================
@@ -2672,18 +2676,14 @@ code {
     font-size: 1.55rem;
   }
 
-  .dancheong-bar--sidebar {
-    margin: 0.1rem 0 0.2rem;
-  }
-
   .page-main {
-    padding-top: 7.75rem;
+    padding-top: 7.25rem;
   }
 
   .home-hero-band {
     grid-template-columns: 1fr;
     gap: 1.75rem;
-    padding: 1.75rem 0 2.25rem;
+    padding: 1.5rem 0 2.25rem;
   }
 
   .home-hero-band__right {

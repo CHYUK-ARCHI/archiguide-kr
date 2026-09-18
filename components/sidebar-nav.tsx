@@ -13,6 +13,7 @@ export type NavKey =
   | "types"
   | "map"
   | "search"
+  | "award"
   | "about";
 
 type SidebarNavProps = {
@@ -64,6 +65,11 @@ const navItems: NavItem[] = [
     key: "search",
     href: "/search",
     label: { ko: "고급 검색", en: "Advanced Search" }
+  },
+  {
+    key: "award",
+    href: "/young-architect-award",
+    label: { ko: "젊은건축가상", en: "Young Architect Award" }
   }
 ];
 

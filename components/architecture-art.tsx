@@ -1,6 +1,6 @@
 type ArchitectureArtProps = {
   title: string;
-  palette?: [string, string, string]; // reserved for future use — currently unused; art renders with design tokens
+  palette?: [string, string, string]; // reserved for future use — currently unused
   label?: string;
   mode?: "wide" | "compact";
 };
@@ -15,11 +15,9 @@ export function ArchitectureArt({
       className={`architecture-art architecture-art--${mode}`}
       aria-label={title}
     >
-      <div className="architecture-art__plane architecture-art__plane--sky" />
-      <div className="architecture-art__plane architecture-art__plane--wall" />
-      <div className="architecture-art__plane architecture-art__plane--tower" />
-      <div className="architecture-art__plane architecture-art__plane--court" />
-      <span className="architecture-art__label">{label ?? "IMAGE SLOT"}</span>
+      <span className="architecture-art__label">
+        {label ?? "이미지 준비 중"}
+      </span>
     </div>
   );
 }

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 
+import { FeaturedCarousel } from "@/components/featured-carousel";
 import { useLanguage } from "@/components/language-provider";
 import { PageShell } from "@/components/page-shell";
 import { architectNameMap, buildings, siteStats } from "@/lib/site-data";
@@ -15,7 +16,6 @@ const CATEGORIES = [
   { href: "/architects", ko: "건축가", en: "Architects", count: siteStats.architects },
   { href: "/types", ko: "유형", en: "Types", count: siteStats.types },
   { href: "/cities", ko: "도시", en: "Cities", count: siteStats.cities },
-  { href: "/young-architect-award", ko: "젊은건축가상", en: "Award", count: null },
   { href: "/map", ko: "지도", en: "Map", count: null }
 ];
 
@@ -25,55 +25,25 @@ export default function HomePage() {
 
   return (
     <PageShell active="home">
-      {/* ── HERO ── */}
-      <section className="home-hero-band">
-        <div className="home-hero-band__left">
-          <p className="home-hero-band__kicker eyebrow">
-            {ko ? "한국 건축 아카이브" : "Korean Architecture Archive"}
-          </p>
-
-          <h1 className="home-hero-band__title">
-            {ko ? (
-              <>
-                {"건물과 건축가,\n도시와 유형을\n"}
-                <em>{ko ? "하나의 지도" : "one map"}</em>
-                {" 위에"}
-              </>
-            ) : (
-              <>
-                {"Buildings, architects,\ncities and types\non "}
-                <em>one map</em>
-              </>
-            )}
-          </h1>
-
-          <p className="home-hero-band__latin">
-            {ko
-              ? "Buildings · Architects\nCities · Types · Map"
-              : "건물 · 건축가\n도시 · 유형 · 지도"}
-          </p>
-        </div>
-
-        <div className="home-hero-band__right">
-          <p className="home-hero-band__desc">
-            {ko
-              ? "한국 근현대 건축을 건물·건축가·도시·유형·지도의 다섯 축으로 교차 열람하는 아카이브입니다. 개별 작품에서 도시 맥락까지 하나의 흐름으로 읽습니다."
-              : "An archive that reads Korean modern and contemporary architecture across five axes — buildings, architects, cities, types, and map — from single works through to their urban context."}
-          </p>
-
-          <p className="home-hero-band__note">
-            {ko
-              ? "파일럿 데이터셋 · 2026\n지도 + 상세 페이지 연동"
-              : "Pilot dataset · 2026\nMap + detail pipeline"}
-          </p>
-        </div>
-
-        <div className="home-hero-band__rail" aria-hidden="true">
-          <p className={`vertical-label${ko ? "" : " vertical-label--latin"}`}>
-            {ko ? "한국 건축 아카이브" : "ARCHIGUIDE · 2026"}
-          </p>
-        </div>
+      {/* ── 웰컴 ── */}
+      <section className="home-welcome">
+        <p className="eyebrow">
+          {ko ? "한국 건축 아카이브" : "Korean Architecture Archive"}
+        </p>
+        <h1 className="home-welcome__title">
+          {ko
+            ? "건물과 건축가를 하나의 기록으로 읽습니다"
+            : "Reading buildings and architects as one record"}
+        </h1>
+        <p className="home-welcome__intro">
+          {ko
+            ? "한국 근현대 건축을 건물·건축가·도시·유형·지도의 다섯 축으로 교차 열람하는 아카이브입니다."
+            : "An archive for reading Korean modern and contemporary architecture across five axes — buildings, architects, cities, types, and map."}
+        </p>
       </section>
+
+      {/* ── 대표 건물 자동 전환 ── */}
+      <FeaturedCarousel buildings={buildings} architectNameMap={architectNameMap} />
 
       {/* ── 카테고리 스트립 ── */}
       <nav className="home-cat-strip" aria-label={ko ? "분류" : "Categories"}>
@@ -131,11 +101,11 @@ export default function HomePage() {
         </ul>
       </section>
 
-      {/* ── 젊은건축가상 ── */}
+      {/* ── 젊은건축가상 (건축가 하위 컬렉션) ── */}
       <section className="home-award-band">
         <div className="home-award-band__body">
           <p className="eyebrow home-award-band__kicker">
-            {ko ? "특별 컬렉션" : "Special Collection"}
+            {ko ? "건축가 하위 컬렉션" : "Sub-collection · Architects"}
           </p>
           <h2 className="home-award-band__title">
             {ko ? "젊은건축가상" : "Young Architect Award"}
@@ -146,7 +116,10 @@ export default function HomePage() {
               : "Archive of Young Architect Award laureates, 2008–2026. Browse 70+ emerging architects and their representative works by year and on the map."}
           </p>
         </div>
-        <Link href="/young-architect-award" className="home-award-band__cta eyebrow">
+        <Link
+          href="/architects/young-architect-award"
+          className="home-award-band__cta eyebrow"
+        >
           {ko ? "아카이브 열기 →" : "Open archive →"}
         </Link>
       </section>

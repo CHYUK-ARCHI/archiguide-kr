@@ -91,8 +91,6 @@ export function SidebarNav({ active }: SidebarNavProps) {
           </span>
         </Link>
 
-        <hr className="dancheong-bar dancheong-bar--sidebar" aria-hidden="true" />
-
         <div className="site-header__meta" aria-label="Meta controls">
           <Link
             href="/about"

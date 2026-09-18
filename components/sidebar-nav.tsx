@@ -12,16 +12,14 @@ export type NavKey =
   | "cities"
   | "types"
   | "map"
-  | "search"
-  | "award"
-  | "about";
+  | "search";
 
 type SidebarNavProps = {
   active: NavKey;
 };
 
 type NavItem = {
-  key: Exclude<NavKey, "home" | "about">;
+  key: Exclude<NavKey, "home">;
   href: string;
   label: {
     ko: string;
@@ -65,11 +63,6 @@ const navItems: NavItem[] = [
     key: "search",
     href: "/search",
     label: { ko: "고급 검색", en: "Advanced Search" }
-  },
-  {
-    key: "award",
-    href: "/young-architect-award",
-    label: { ko: "젊은건축가상", en: "Young Architect Award" }
   }
 ];
 
@@ -92,15 +85,6 @@ export function SidebarNav({ active }: SidebarNavProps) {
         </Link>
 
         <div className="site-header__meta" aria-label="Meta controls">
-          <Link
-            href="/about"
-            className={`site-header__meta-link${
-              active === "about" ? " site-header__meta-link--active" : ""
-            }`}
-          >
-            INFO
-          </Link>
-          <span className="site-header__meta-separator">/</span>
           <button
             type="button"
             className={`site-header__meta-button${
@@ -183,14 +167,6 @@ export function SidebarNav({ active }: SidebarNavProps) {
             </Link>
           );
         })}
-        <Link
-          href="/about"
-          className={`site-header__rail-link${
-            active === "about" ? " site-header__rail-link--active" : ""
-          }`}
-        >
-          INFO
-        </Link>
       </nav>
     </header>
   );

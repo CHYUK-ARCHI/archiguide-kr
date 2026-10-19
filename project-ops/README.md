@@ -8,6 +8,7 @@ It exists so the project's working rules can travel with GitHub and be available
 
 - `skills/`: project-local skill definitions
 - `agents/`: role definitions for focused collaboration
+- `agent-routing.md`: which subagent and model to use for each kind of task (runtime definitions in `.claude/agents/`)
 
 ## Usage
 

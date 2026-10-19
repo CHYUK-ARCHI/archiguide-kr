@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
-import { GoogleMapPanel } from "@/components/google-map-panel";
+import { OsmMapPanel } from "@/components/osm-map-panel";
 import { useLanguage } from "@/components/language-provider";
 import {
   getBuildingRoadAddress,
@@ -49,7 +49,7 @@ export function MapExplorer({
         <div className="section-heading">
           <div>
             <p className="eyebrow">
-              {language === "ko" ? "Google Maps 레이어" : "Google Maps layer"}
+              {language === "ko" ? "OpenStreetMap 레이어" : "OpenStreetMap layer"}
             </p>
             <h2>
               {language === "ko"
@@ -150,7 +150,7 @@ export function MapExplorer({
         </div>
       </div>
 
-      <GoogleMapPanel
+      <OsmMapPanel
         buildings={filtered}
         selectedSlug={selected?.slug}
         onSelect={setSelectedSlug}

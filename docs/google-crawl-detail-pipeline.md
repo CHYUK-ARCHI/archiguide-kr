@@ -4,10 +4,7 @@ Updated on `2026-06-02`
 
 ## Runtime APIs
 
-- `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY`
-- optional `NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID`
-
-These power the browser-side map only.
+None. The browser-side map uses OpenStreetMap (see `docs/map-structure-openstreetmap.md`) and needs no key.
 
 ## Ingest API
 

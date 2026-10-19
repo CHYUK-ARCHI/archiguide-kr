@@ -2,7 +2,7 @@
 
 import { useDeferredValue, useEffect, useMemo, useState } from "react";
 
-import { GoogleMapPanel } from "@/components/google-map-panel";
+import { OsmMapPanel } from "@/components/osm-map-panel";
 import { useLanguage } from "@/components/language-provider";
 import {
   getBuildingAddress,
@@ -547,7 +547,7 @@ export function AdvancedSearch({
         )}
       </section>
 
-      <GoogleMapPanel
+      <OsmMapPanel
         buildings={filtered}
         selectedSlug={selected?.slug}
         onSelect={setSelectedSlug}

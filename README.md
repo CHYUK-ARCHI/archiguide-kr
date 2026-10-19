@@ -7,7 +7,7 @@
 - A Next.js 14 + TypeScript scaffold
 - A left-rail navigation model inspired by the Dutch reference
 - A featured-project carousel for editorial entry points
-- A Google Maps-ready geography view
+- An OpenStreetMap-based geography view (Leaflet, no API key)
 - An advanced search screen aligned to public-data facets
 - Dedicated routes for buildings, architects, cities, types, map, search, and methodology
 - Seed data that validates the information architecture without pretending to be a finished archive
@@ -20,7 +20,7 @@
 - `/architects` architect directory
 - `/cities` city-based browsing
 - `/types` building-type browsing
-- `/map` Google Maps-based geography view
+- `/map` OpenStreetMap-based geography view
 - `/search` advanced faceted search
 - `/about` product intent and reference translation
 
@@ -33,10 +33,8 @@ npm run dev
 
 ## Environment
 
-Create a local environment file from `.env.example` and set:
-
-- `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY`
-- `NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID` (optional, defaults to `DEMO_MAP_ID`)
+The map uses OpenStreetMap tiles and needs no API key.
+`GOOGLE_GEOCODING_API_KEY` is only needed when running `npm run ingest:geocode`.
 
 ## Deployment
 
@@ -48,10 +46,7 @@ The repository is configured for GitHub Pages deployment through GitHub Actions.
   `main`
 - Published Pages branch:
   `gh-pages`
-- To enable the live Google map on the deployed site, add a repository secret:
-  `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY`
-- Optionally add a repository variable:
-  `NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID`
+- The map needs no secrets; see [docs/map-structure-openstreetmap.md](./docs/map-structure-openstreetmap.md).
 
 ## Notes
 

@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { useLanguage } from "@/components/language-provider";
 import { PageShell } from "@/components/page-shell";
+import { OSM_ATTRIBUTION, OSM_TILE_URL, loadLeaflet } from "@/lib/leaflet-loader";
 
 // ---------- 데이터 타입 ----------
 interface AwardBuilding {
@@ -135,73 +136,68 @@ AWARD_DATA.forEach((e) => {
   BY_YEAR[e.year].push(e);
 });
 
-// ---------- 지도 컴포넌트 ----------
-type MapInstance = Window & { google?: any; __awardMapPromise?: Promise<any> };
-
+// ---------- 지도 컴포넌트 (OpenStreetMap / Leaflet) ----------
 function AwardMap({ buildings, activeYear }: { buildings: AwardBuilding[]; activeYear: number | null }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<any>(null);
-  const markersRef = useRef<any[]>([]);
+  const layerRef = useRef<any>(null);
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
-    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
-    const mapId = process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID || "DEMO_MAP_ID";
-    if (!apiKey || !containerRef.current) return;
+    let cancelled = false;
 
-    const win = window as MapInstance;
-
-    const load = () => {
-      if (win.google?.maps) return Promise.resolve(win.google);
-      if (win.__awardMapPromise) return win.__awardMapPromise;
-      win.__awardMapPromise = new Promise((resolve, reject) => {
-        const s = document.createElement("script");
-        const p = new URLSearchParams({ key: apiKey, v: "weekly", libraries: "maps,marker", loading: "async", language: "ko", region: "KR" });
-        s.src = `https://maps.googleapis.com/maps/api/js?${p}`;
-        s.async = true;
-        s.onload = () => resolve(win.google);
-        s.onerror = reject;
-        document.head.appendChild(s);
-      });
-      return win.__awardMapPromise;
-    };
-
-    load().then((g) => {
-      if (!containerRef.current) return;
+    loadLeaflet().then((L) => {
+      if (cancelled || !containerRef.current) return;
       if (!mapRef.current) {
-        mapRef.current = new g.maps.Map(containerRef.current, {
-          center: { lat: 36.5, lng: 127.7 },
-          zoom: 7,
-          mapId,
-          disableDefaultUI: true,
-          zoomControl: true,
-        });
+        mapRef.current = L.map(containerRef.current, { center: [36.5, 127.7], zoom: 7 });
+        L.tileLayer(OSM_TILE_URL, { maxZoom: 19, attribution: OSM_ATTRIBUTION }).addTo(mapRef.current);
+        layerRef.current = L.layerGroup().addTo(mapRef.current);
       }
-      // 기존 마커 제거
-      markersRef.current.forEach((m) => m.map = null);
-      markersRef.current = [];
+      layerRef.current.clearLayers();
 
       const filtered = activeYear ? buildings.filter((b) => b.awardYear === activeYear) : buildings;
 
       filtered.forEach((b) => {
         // 오버레이 시 이동·확대 없이 색만 전환되는 CSS 마커
-        const dot = document.createElement("div");
-        dot.className = activeYear ? "award-pin award-pin--active" : "award-pin";
-        const marker = new g.maps.marker.AdvancedMarkerElement({
-          map: mapRef.current,
-          position: b.coordinates,
-          title: b.titleKo,
-          content: dot,
+        const icon = L.divIcon({
+          className: "",
+          html: `<div class="${activeYear ? "award-pin award-pin--active" : "award-pin"}"></div>`,
+          iconSize: [14, 14],
+          iconAnchor: [7, 7],
         });
-        markersRef.current.push(marker);
+        const marker = L.marker([b.coordinates.lat, b.coordinates.lng], { icon, title: b.titleKo });
+        const popup = document.createElement("div");
+        const name = document.createElement("strong");
+        name.textContent = `${b.titleKo} (${b.awardYear})`;
+        const meta = document.createElement("div");
+        meta.textContent = `${b.architectNames.join(" · ")} / ${b.office}`;
+        popup.append(name, meta);
+        marker.bindPopup(popup);
+        marker.addTo(layerRef.current);
       });
-    }).catch(() => {});
+    }).catch(() => setFailed(true));
+
+    return () => {
+      cancelled = true;
+    };
   }, [buildings, activeYear]);
 
+  useEffect(() => {
+    return () => {
+      mapRef.current?.remove();
+      mapRef.current = null;
+      layerRef.current = null;
+    };
+  }, []);
+
   return (
-    <div ref={containerRef} className="lattice-fill" style={{ width: "100%", height: "420px" }}>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", color: "var(--ink-muted)", fontSize: "12px", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase" }}>
-        MAP LOADING
-      </div>
+    <div style={{ position: "relative", width: "100%", height: "420px" }}>
+      <div ref={containerRef} style={{ width: "100%", height: "100%" }} aria-label="Award project map" />
+      {failed && (
+        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "var(--ink-muted)", fontSize: "12px", fontWeight: 700 }}>
+          MAP FAILED TO LOAD
+        </div>
+      )}
     </div>
   );
 }
